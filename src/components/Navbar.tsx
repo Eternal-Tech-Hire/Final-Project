@@ -20,7 +20,7 @@ const Navbar = () => {
   });
 
   return (
-    <header className="sticky inset-0 z-50 bg-cyan-950 backdrop-filter backdrop-blur-lg bg-opacity-30">
+    <header className="fixed inset-x-0 top-0 z-50 bg-cyan-950 backdrop-filter backdrop-blur-lg bg-opacity-30">
       <nav className="mx-auto flex max-w-6xl gap-8 px-6 transition-all duration-200 ease-in-out lg:px-12 py-4">
         <div className="flex items-center">
           <a href="/">
@@ -28,7 +28,7 @@ const Navbar = () => {
               src="/logo_transparant.png"
               loading="lazy"
               style={{ color: "transparent" }}
-              className="w-28 h-28 fixed z-10 -top-5"
+              className="w-28 h-28 fixed z-10 lg:-top-5 -top-7"
             />
           </a>
         </div>

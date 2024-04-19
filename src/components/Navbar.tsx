@@ -1,6 +1,7 @@
-"use client"
+"use client";
 import { useState, useEffect } from "react";
 import { getCookie, deleteCookie } from "cookies-next";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -20,12 +21,11 @@ const Navbar = () => {
       setCookiesStore(null);
     };
 
-    
     const handleScroll = () => {
       setScrollPosition(window.scrollY);
       setMaxScroll(
         document.documentElement.scrollHeight -
-        document.documentElement.clientHeight
+          document.documentElement.clientHeight
       );
     };
 
@@ -34,7 +34,7 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  
+
   useEffect(() => {
     const accessToken = getCookie("Authorization") as string;
     if (accessToken != null) {
@@ -46,12 +46,12 @@ const Navbar = () => {
     <header
       className={`fixed lg:fixed inset-x-0 top-0 z-50 ${
         scrollPosition === 0 || scrollPosition === maxScroll
+          ? "bg-transparent"
+          : ""
+      } ${
+        scrollPosition >= 90 && scrollPosition !== maxScroll
           ? "bg-cyan-950"
           : "bg-transparent"
-      } ${
-        scrollPosition > 100 && scrollPosition !== maxScroll
-          ? "backdrop-filter backdrop-blur-lg bg-opacity-10"
-          : ""
       } transition-all duration-100 ease-in-out`}
     >
       <nav className="mx-auto flex max-w-6xl gap-8 px-6 lg:px-12 py-4">
@@ -66,33 +66,42 @@ const Navbar = () => {
           </a>
         </div>
         <ul className="hidden items-center justify-center gap-6 ms-20 md:flex">
-          <li className="pt-1.5 font-dm text-sm font-medium text-gray-400 hover:text-white">
-            <a href="#" className="text-md font-bold">
-              Home
-            </a>
+          <li className="pt-1.5 font-dm text-sm font-medium text-white">
+            <Link href="/">
+              <button className="text-md font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
+                Home
+                <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
+              </button>
+            </Link>
           </li>
-          <li className="pt-1.5 font-dm text-sm font-medium text-gray-400 hover:text-white">
-            <a href="#" className="text-md font-bold">
-              Job Fair
-            </a>
+          <li className="pt-1.5 font-dm text-sm font-medium text-white">
+            <Link href="/events">
+              <button className="text-md font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
+                Job Fairs
+                <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
+              </button>
+            </Link>
           </li>
-          <li className="pt-1.5 font-dm text-sm font-medium text-gray-400 hover:text-white">
-            <a href="#" className="text-md font-bold">
-              Companies
-            </a>
+          <li className="pt-1.5 font-dm text-sm font-medium text-white">
+            <Link href="/">
+              <button className="text-md font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
+                Companies
+                <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
+              </button>
+            </Link>
           </li>
         </ul>
         <div className="flex-grow" />
         <div className="hidden items-center justify-center gap-6 md:flex">
+          <Link href="/login">
+            <button className="text-md text-white font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
+              Sign In
+              <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
+            </button>
+          </Link>
           <a
             href="#"
-            className="font-dm text-md font-semibold text-gray-400 hover:hover:text-white"
-          >
-            Sign in
-          </a>
-          <a
-            href="#"
-            className="rounded-md bg-gradient-to-br bg-sky-900 px-3 py-1.5 font-dm text-sm font-medium text-white shadow-sm hover:shadow-sky-600 transition-transform duration-200 ease-in-out hover:scale-[1.03]"
+            className="rounded-md bg-gradient-to-br bg-sky-600 px-3 py-1.5 font-dm text-sm font-medium text-white shadow-md  hover:shadow-cyan-400 transition-transform duration-200 ease-in-out hover:scale-[1.03]"
           >
             Sign up for free
           </a>

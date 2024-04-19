@@ -1,15 +1,16 @@
-"use client"
+"use client";
 import CardCompany from "@/components/CardCompany";
 import CardFair from "@/components/CardFair";
 import Carousel from "@/components/Carousle";
 import React, { useEffect, useState } from "react";
 
 export default function Home() {
-  
   return (
     <>
       <main>
-        <Carousel />
+        <div>
+          <Carousel />
+        </div>
         <div>
           <h1 className="text-3xl font-semibold font-sans py-10 text-center">
             — <span className="ml-5 mr-5">Job Fair</span> —
@@ -32,19 +33,19 @@ export default function Home() {
           </div>
           <div className="carousel carousel-center max-w-full p-4 bg-white rounded-box">
             <div className="carousel-item w-[40%]">
-                <CardCompany />
-              </div>
-            <div className="carousel-item w-[40%]">
-                <CardCompany />
+              <CardCompany />
             </div>
             <div className="carousel-item w-[40%]">
-                <CardCompany />
+              <CardCompany />
             </div>
             <div className="carousel-item w-[40%]">
-                <CardCompany />
+              <CardCompany />
             </div>
             <div className="carousel-item w-[40%]">
-                <CardCompany />
+              <CardCompany />
+            </div>
+            <div className="carousel-item w-[40%]">
+              <CardCompany />
             </div>
           </div>
         </div>

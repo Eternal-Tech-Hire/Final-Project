@@ -20,19 +20,12 @@ const Navbar = () => {
       setCookiesStore(null);
     };
 
-    useEffect(() => {
-      const accessToken = getCookie("Authorization") as string;
-      if (accessToken != null) {
-        setIsLoggedIn(true);
-        setCookiesStore(accessToken);
-      }
-    });
-
+    
     const handleScroll = () => {
       setScrollPosition(window.scrollY);
       setMaxScroll(
         document.documentElement.scrollHeight -
-          document.documentElement.clientHeight
+        document.documentElement.clientHeight
       );
     };
 
@@ -41,10 +34,17 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
+  
+  useEffect(() => {
+    const accessToken = getCookie("Authorization") as string;
+    if (accessToken != null) {
+      setIsLoggedIn(true);
+      setCookiesStore(accessToken);
+    }
+  }, []);
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 ${
+      className={`fixed lg:fixed inset-x-0 top-0 z-50 ${
         scrollPosition === 0 || scrollPosition === maxScroll
           ? "bg-cyan-950"
           : "bg-transparent"

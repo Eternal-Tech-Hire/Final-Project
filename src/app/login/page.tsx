@@ -4,23 +4,21 @@ const LoginPage = () => {
         {/* This is an example component */}
         <div className="font-sans">
           <div
-            className="relative min-h-screen flex flex-col sm:justify-center items-center"
+            className="relative h-screen flex flex-col sm:justify-center items-center"
             style={{
               backgroundImage: `url(/vector-bg.jpg)`,
-              backgroundSize: "100%",
+              backgroundSize: "cover", // Menggunakan cover agar gambar latar belakang menutupi seluruh area
+              backgroundAttachment: "fixed", // Tetapkan posisi gambar latar belakang
+              backgroundPosition: "center", // Atur posisi gambar latar belakang di tengah
             }}
           >
             <div className="relative sm:max-w-sm w-full">
-              <div className="card bg-cyan-400 shadow-lg w-full h-full rounded-3xl absolute transform -rotate-12" />
-              <div className="card bg-purple-200 shadow-lg w-full h-full rounded-3xl absolute transform rotate-12" />
+              <div className="card bg-cyan-400 shadow-lg w-full h-full rounded-3xl absolute transform -rotate-6" />
+              <div className="card bg-purple-200 shadow-lg w-full h-full rounded-3xl absolute transform rotate-6" />
               <div className="relative w-full rounded-3xl px-6 py-4 bg-purple-700 shadow-md">
                 <div className="flex flex-col items-center mb-6">
                   <div>
-                    <img
-                      src="/logo_transparant.png"
-                      alt="Logo"
-                      className="w-36"
-                    />
+                    <img src="/logo_transparant.png" alt="Logo" className="w-36" />
                   </div>
                   <label
                     htmlFor=""
@@ -62,9 +60,7 @@ const LoginPage = () => {
                     <hr className="border-gray-300 border-1 w-full rounded-md" />
                   </div>
                   <div className="mt-5">
-                    <h1
-                      className="block text-sm text-white text-center hover:underline hover:font-semibold mb-4"
-                    >
+                    <h1 className="block text-sm text-white text-center hover:underline hover:font-semibold mb-4">
                       Don't have an account yet? Sign Up Below..
                     </h1>
                     <button

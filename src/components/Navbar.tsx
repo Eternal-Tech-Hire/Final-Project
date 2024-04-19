@@ -8,6 +8,7 @@ const Navbar = () => {
   const [cookiesStore, setCookiesStore] = useState<string | null>(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [maxScroll, setMaxScroll] = useState(0);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   useEffect(() => {
     const accessToken = getCookie("Authorization") as string;
@@ -42,6 +43,10 @@ const Navbar = () => {
       setCookiesStore(accessToken);
     }
   }, []);
+
+  const toggleMobileNav = () => {
+    setIsMobileNavOpen(!isMobileNavOpen);
+  };
   return (
     <header
       className={`fixed lg:fixed inset-x-0 top-0 z-50 ${
@@ -49,9 +54,9 @@ const Navbar = () => {
           ? "bg-transparent"
           : ""
       } ${
-        scrollPosition >= 90 && scrollPosition !== maxScroll
+        scrollPosition > 90 && scrollPosition !== maxScroll
           ? "bg-cyan-950"
-          : "bg-transparent"
+          : ""
       } transition-all duration-100 ease-in-out`}
     >
       <nav className="mx-auto flex max-w-6xl gap-8 px-6 lg:px-12 py-4">

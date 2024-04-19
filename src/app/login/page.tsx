@@ -14,15 +14,17 @@ const LoginPage = () => {
             <div className="card bg-cyan-400 shadow-lg  w-full h-full rounded-3xl absolute  transform -rotate-12" />
             <div className="card  bg-purple-200 shadow-lg  w-full h-full rounded-3xl absolute  transform rotate-12" />
             <div className="relative w-full rounded-3xl  px-6 py-4 bg-purple-500 shadow-md">
-              <div className="flex flex-col items-center mb-6">
-                <img
-                  src="/logo_transparant.png"
-                  alt="Logo"
-                  className="w-36"
-                />{" "}
+              <div className="flex flex-col items-center mb-6 ">
+                <div>
+                  <img
+                    src="/logo_transparant.png"
+                    alt="Logo"
+                    className="w-36"
+                  />{" "}
+                </div>
                 <label
                   htmlFor=""
-                  className="block text-2xl text-white text-center font-bold"
+                  className="block text-2xl text-white text-center font-bold -mt-6 z-40"
                 >
                   Login
                 </label>
@@ -52,12 +54,26 @@ const LoginPage = () => {
                 </div>
                 <div className="mt-7">
                   <button className="bg-gradient-to-br bg-violet-800 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-indigo-700 focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
-                    Login
+                    Sign In
                   </button>
                 </div>
-                <div className="flex mt-8 items-center text-center">
+                <div className="flex mt-3 items-center text-center">
                   <hr className="border-gray-300 border-1 w-full rounded-md" />
                   <hr className="border-gray-300 border-1 w-full rounded-md" />
+                </div>
+                <div className="mt-5">
+                  <label
+                    htmlFor="signup"
+                    className="block text-sm text-white text-center font-semibold underline  mb-4"
+                  >
+                    Don't have an account yet ? Sign Up Below..
+                  </label>
+                  <button
+                    id="signup"
+                    className="bg-gradient-to-br bg-violet-800 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-indigo-700 focus:outline-none transition duration-500 ease-in-out transform hover:-translate-x hover:scale-105"
+                  >
+                    Sign Up
+                  </button>
                 </div>
               </form>
             </div>

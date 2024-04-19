@@ -16,12 +16,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en" className="bg-white">
-      <body className={inter.className}>
-        {/* <Navbar /> */}
+      <body
+      className={inter.className}>
+        <Navbar />
         {children}
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );

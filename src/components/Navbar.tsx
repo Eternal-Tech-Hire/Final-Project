@@ -1,15 +1,12 @@
-"use client";
+"use client"
 import { useState, useEffect } from "react";
 import { getCookie, deleteCookie } from "cookies-next";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cookiesStore, setCookiesStore] = useState<string | null>(null);
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setCookiesStore(null);
-  };
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [maxScroll, setMaxScroll] = useState(0);
 
   useEffect(() => {
     const accessToken = getCookie("Authorization") as string;
@@ -17,11 +14,47 @@ const Navbar = () => {
       setIsLoggedIn(true);
       setCookiesStore(accessToken);
     }
-  });
+
+    const handleLogout = () => {
+      setIsLoggedIn(false);
+      setCookiesStore(null);
+    };
+
+    useEffect(() => {
+      const accessToken = getCookie("Authorization") as string;
+      if (accessToken != null) {
+        setIsLoggedIn(true);
+        setCookiesStore(accessToken);
+      }
+    });
+
+    const handleScroll = () => {
+      setScrollPosition(window.scrollY);
+      setMaxScroll(
+        document.documentElement.scrollHeight -
+          document.documentElement.clientHeight
+      );
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-cyan-950 backdrop-filter backdrop-blur-lg bg-opacity-30">
-      <nav className="mx-auto flex max-w-6xl gap-8 px-6 transition-all duration-200 ease-in-out lg:px-12 py-4">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 ${
+        scrollPosition === 0 || scrollPosition === maxScroll
+          ? "bg-cyan-950"
+          : "bg-transparent"
+      } ${
+        scrollPosition > 100 && scrollPosition !== maxScroll
+          ? "backdrop-filter backdrop-blur-lg bg-opacity-10"
+          : ""
+      } transition-all duration-100 ease-in-out`}
+    >
+      <nav className="mx-auto flex max-w-6xl gap-8 px-6 lg:px-12 py-4">
         <div className="flex items-center">
           <a href="/">
             <img
@@ -33,17 +66,17 @@ const Navbar = () => {
           </a>
         </div>
         <ul className="hidden items-center justify-center gap-6 ms-20 md:flex">
-          <li className="pt-1.5 font-dm text-sm font-medium text-gray-400 hover:text-white ">
+          <li className="pt-1.5 font-dm text-sm font-medium text-gray-400 hover:text-white">
             <a href="#" className="text-md font-bold">
               Home
             </a>
           </li>
-          <li className="pt-1.5 font-dm text-sm font-medium text-gray-400 hover:text-white ">
+          <li className="pt-1.5 font-dm text-sm font-medium text-gray-400 hover:text-white">
             <a href="#" className="text-md font-bold">
               Job Fair
             </a>
           </li>
-          <li className="pt-1.5 font-dm text-sm font-medium text-gray-400 hover:text-white ">
+          <li className="pt-1.5 font-dm text-sm font-medium text-gray-400 hover:text-white">
             <a href="#" className="text-md font-bold">
               Companies
             </a>
@@ -59,7 +92,7 @@ const Navbar = () => {
           </a>
           <a
             href="#"
-            className="rounded-md bg-gradient-to-br bg-sky-900  px-3 py-1.5 font-dm text-sm font-medium text-white shadow-sm hover:shadow-sky-600 transition-transform duration-200 ease-in-out hover:scale-[1.03]"
+            className="rounded-md bg-gradient-to-br bg-sky-900 px-3 py-1.5 font-dm text-sm font-medium text-white shadow-sm hover:shadow-sky-600 transition-transform duration-200 ease-in-out hover:scale-[1.03]"
           >
             Sign up for free
           </a>

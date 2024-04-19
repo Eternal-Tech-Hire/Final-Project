@@ -1,9 +1,11 @@
+"use client"
 import CardCompany from "@/components/CardCompany";
 import CardFair from "@/components/CardFair";
 import Carousel from "@/components/Carousle";
 import React, { useEffect, useState } from "react";
 
 export default function Home() {
+  
   return (
     <>
       <main>

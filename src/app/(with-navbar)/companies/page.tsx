@@ -25,7 +25,7 @@ const Header = () => {
             <p className="text-lg inline-block sm:block">
             Companies collaborating with us.
             </p>
-            <div className="mt-3 flex items-center">
+            <div className="mt-3 lg:flex lg:items-center mx-auto">
               <input
                 type="text"
                 // value={searchTerm}

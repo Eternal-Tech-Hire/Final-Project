@@ -1,4 +1,40 @@
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+
 const LoginPage = () => {
+
+  
+  async function loginAction(formData: FormData) {
+    "use server"
+    cookies().delete("Authorization");
+    try {
+        const rawFormData = {
+            email: formData.get("email"),
+            password: formData.get("password"),
+        };
+
+        const response = await fetch("http://localhost:3000/api/auth/login", {
+            method: "POST",
+            cache: "no-store",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(rawFormData),
+        });
+
+        if (response.status != 200) {
+            throw new Error("Failed to Login" + response.status);
+        }
+        const responseJson = await response.json();
+        console.error(responseJson);
+        cookies().set("Authorization", `Bearer ${responseJson.data.accessToken}`);
+    } catch (error) {
+        console.error("Login Error", error);
+        redirect("/login");
+    }
+    return redirect("/");
+}
+
   return (
     <>
       {/* This is an example component */}
@@ -31,13 +67,14 @@ const LoginPage = () => {
                   Login
                 </label>
               </div>
-              <form method="#" action="#" className="mt-4">
+              <form action={loginAction} className="mt-4">
                 <div className="mt-4">
                   <label htmlFor="email" className="text-white font-bold">
                     Email:
                   </label>
                   <input
                     type="email"
+                    name="email"
                     id="email"
                     placeholder="Enter Your Email.."
                     className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-2 focus:outline-none pl-2"
@@ -50,6 +87,7 @@ const LoginPage = () => {
                   <input
                     type="password"
                     id="password"
+                    name="password"
                     placeholder="Password.."
                     className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-2 focus:outline-none pl-2"
                   />

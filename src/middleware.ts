@@ -37,4 +37,30 @@ export async function middleware(request: NextRequest) {
         })
         return response
     }
+
+    if (request.nextUrl.pathname.startsWith("/login")) {
+        // console.log("masoookkk");
+    
+        const auth = cookies().get("Authorization")?.value;
+        if (auth) {
+          request.nextUrl.pathname = "/"
+          return NextResponse.redirect(request.nextUrl)
+        }
+    
+      }
+    
+      if (request.nextUrl.pathname.startsWith("/register")) {
+        // console.log("masoookkk");
+    
+        const auth = cookies().get("Authorization")?.value;
+        if (auth) {
+          request.nextUrl.pathname = "/"
+          return NextResponse.redirect(request.nextUrl)
+        }
+      }
 }
+
+export const config = {
+    matcher: ["/api/ticket/:path*", "/login/:path*", "/register/:path"],
+  };
+  

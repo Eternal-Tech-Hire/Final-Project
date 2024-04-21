@@ -12,7 +12,7 @@ const Header = () => {
 
   return (
     <div>
-      <header>
+      <div className="w-screen py-0 px-0">
         <div className="container mx-auto bg-cyan-950 lg:h-96 h-72 flex items-center">
           <div className="sm:ml-20 text-gray-50 mx-auto lg:ml-28 text-center lg:text-start">
               <span className="absolute mx-auto py-4 flex border w-fit bg-gradient-to-r blur-xl from-blue-700 via-emerald-500 to-cyan-500 bg-clip-text lg:text-6xl text-5xl box-content font-extrabold text-transparent text-center select-none">
@@ -29,7 +29,7 @@ const Header = () => {
             </p>
           </div>
         </div>
-      </header>
+      </div>
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 lg:px-28 lg:py-28 px-10 py-10">
         <CardFair />
         <CardFair />

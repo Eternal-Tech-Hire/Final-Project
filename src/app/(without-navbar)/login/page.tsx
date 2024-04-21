@@ -68,7 +68,7 @@ const LoginPage = () => {
                 <div className="mt-5">
                   <div className="flex items-center justify-center space-x-2 my-5">
                     <span className="h-px w-16 bg-gray-100"></span>
-                    <span className="text-gray-300 font-normal">
+                    <span className="text-white font-normal">
                       Don't have an account yet?
                     </span>
                     <span className="h-px w-16 bg-gray-100"></span>

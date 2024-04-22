@@ -8,6 +8,7 @@ const Navbar = () => {
   const [cookiesStore, setCookiesStore] = useState<string | null>(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [maxScroll, setMaxScroll] = useState(0);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   useEffect(() => {
     const accessToken = getCookie("Authorization") as string;
@@ -42,6 +43,10 @@ const Navbar = () => {
       setCookiesStore(accessToken);
     }
   }, []);
+
+  const toggleMobileNav = () => {
+    setIsMobileNavOpen(!isMobileNavOpen);
+  };
   return (
     <header
       className={`fixed lg:fixed inset-x-0 top-0 z-50 ${
@@ -49,9 +54,7 @@ const Navbar = () => {
           ? "bg-transparent"
           : ""
       } ${
-        scrollPosition >= 90 && scrollPosition !== maxScroll
-          ? "bg-cyan-950"
-          : "bg-transparent"
+        scrollPosition > 90 && scrollPosition !== maxScroll ? "bg-cyan-950" : ""
       } transition-all duration-100 ease-in-out`}
     >
       <nav className="mx-auto flex max-w-6xl gap-8 px-6 lg:px-12 py-4">
@@ -83,7 +86,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="pt-1.5 font-dm text-sm font-medium text-white">
-            <Link href="/">
+            <Link href="/companies">
               <button className="text-md font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
                 Companies
                 <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
@@ -99,12 +102,11 @@ const Navbar = () => {
               <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
             </button>
           </Link>
-          <a
-            href="#"
-            className="rounded-md bg-gradient-to-br bg-sky-600 px-3 py-1.5 font-dm text-sm font-medium text-white shadow-md  hover:shadow-cyan-400 transition-transform duration-200 ease-in-out hover:scale-[1.03]"
-          >
-            Sign up for free
-          </a>
+          <Link href="/register">
+            <h1 className="rounded-md bg-gradient-to-br bg-sky-600 px-3 py-1.5 font-dm text-sm font-medium text-white shadow-md  hover:shadow-cyan-400 transition-transform duration-200 ease-in-out hover:scale-[1.03]">
+              Sign up for free
+            </h1>
+          </Link>
         </div>
         <div className="relative flex items-center justify-center md:hidden">
           <button type="button">

@@ -2,9 +2,15 @@
 import CardCompany from "@/components/CardCompany";
 import CardFair from "@/components/CardFair";
 import Carousel from "@/components/Carousle";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 export default function Home() {
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  const handleSlideChange = (index: number) => {
+    setActiveSlide(index);
+  };
   return (
     <>
       <main>
@@ -22,31 +28,56 @@ export default function Home() {
           </div>
         </div>
         <div className="lg:px-32 py-20 bg-gray-100 h-full">
-          <div className="ml-10 mb-10">
-            <h1 className="lg:text-4xl text-2xl font-semibold">
+          <div className="lg:ml-10 mx-6 mb-10">
+            <h1 className="lg:text-4xl text-center lg:text-start text-2xl font-semibold">
               List of Employer Company
             </h1>
-            <h1 className="lg:text-sm text-md mt-5 text-gray-400 max-w-xl">
+            <h1 className="lg:text-md max-w-xl text-md mt-5 text-gray-400 lg:text-start text-center">
               Here are the partner companies - employers that are registered and
               ready to provide you with the job you desire!
             </h1>
+            <div className="flex justify-end -mt-8">
+              <Link href="/events">
+                <h1 className="rounded-md bg-gradient-to-br from-emerald-400 to-sky-600 px-4 py-2 font-dm text-md font-medium text-white shadow-md hover:shadow-lg transition-transform duration-200 ease-in-out hover:scale-[1.03]">
+                  See More
+                </h1>
+              </Link>
+            </div>
           </div>
-          <div className="carousel carousel-center max-w-full p-4 bg-white rounded-box">
-            <div className="carousel-item w-[40%]">
+          {/* Carousel */}
+          <div className="lg:carousel lg:carousel-center grid grid-cols-1 gap-3 lg:max-w-full p-4 bg-transparent rounded-box relative">
+            {/* Carousel items */}
+            <div className="lg:carousel-item lg:w-[40%] py-5 lg:py-0">
               <CardCompany />
             </div>
-            <div className="carousel-item w-[40%]">
+            <div className="lg:carousel-item lg:w-[40%] py-5 lg:py-0">
               <CardCompany />
             </div>
-            <div className="carousel-item w-[40%]">
+            <div className="lg:carousel-item lg:w-[40%] py-5 lg:py-0">
               <CardCompany />
             </div>
-            <div className="carousel-item w-[40%]">
+            <div className="lg:carousel-item lg:w-[40%] py-5 lg:py-0">
               <CardCompany />
             </div>
-            <div className="carousel-item w-[40%]">
+            <div className="lg:carousel-item lg:w-[40%] py-5 lg:py-0">
               <CardCompany />
             </div>
+            <div className="lg:carousel-item lg:w-[40%] py-5 lg:py-0">
+              <CardCompany />
+            </div>
+            {/* Repeat Carousel items for each slide */}
+          </div>
+          {/* Indicator dots */}
+          <div className="flex justify-center mt-4">
+            {[...Array(3)].map((_, index) => (
+              <button
+                key={index}
+                className={`w-3 h-3 mx-1 rounded-full ${
+                  index === activeSlide ? "bg-gray-700" : "bg-gray-400"
+                }`}
+                onClick={() => handleSlideChange(index)}
+              ></button>
+            ))}
           </div>
         </div>
       </main>

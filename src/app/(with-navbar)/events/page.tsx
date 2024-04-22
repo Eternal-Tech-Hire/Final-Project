@@ -12,10 +12,6 @@ const Header = () => {
 
   return (
     <div>
-
-      <div className="w-screen py-0 px-0">
-        <div className="container mx-auto bg-cyan-950 lg:h-96 h-72 flex items-center">
-
       <header className="">
         <div className=" bg-cyan-950 lg:h-96 h-72 flex items-center">
           <div className="sm:ml-20 text-gray-50 mx-auto lg:ml-28 text-center lg:text-start">
@@ -31,9 +27,6 @@ const Header = () => {
             </p>
           </div>
         </div>
-
-      </div>
-
       </header>
 
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 lg:px-28 lg:py-28 px-10 py-10">

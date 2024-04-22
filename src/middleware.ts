@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server'
 import { readPayload, readPayloadJose } from '@/db/utils/jwt'
 
 export async function middleware(request: NextRequest) {
-    console.log('test', request.url);
+    // console.log('test', request.url);
     
     if (request.nextUrl.pathname.startsWith('/api/ticket')) {
         const tokenCookie = cookies().get('Authorization')

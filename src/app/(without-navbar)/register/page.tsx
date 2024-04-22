@@ -1,6 +1,34 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 const RegisterPage = () => {
+  async function registerAction(formData: FormData) {
+    "use server";
+
+    const rawFormData = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      password: formData.get("password"),
+      phoneNumber: formData.get("phoneNumber"),
+      role: "Member",
+    };
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/auth/register`, {
+        method: "post",
+        cache: "no-store",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(rawFormData),
+      });
+      console.log(response);
+      redirect("/login");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
       <link
@@ -12,7 +40,7 @@ const RegisterPage = () => {
         <div className="flex-col flex  self-center lg:px-14 sm:max-w-4xl xl:max-w-lg mr-20 lg:mb-24 z-10">
           <div className="self-start hidden lg:flex flex-col text-white">
             <h1 className="my-3 font-semibold text-3xl">
-              Welcome to{" "} <br />
+              Welcome to <br />
               <span className="font-extrabold text-4xl">
                 <span className="bg-gradient-to-r from-blue-700 to-emerald-500 text-transparent bg-clip-text">
                   Eternal{" "}
@@ -36,8 +64,8 @@ const RegisterPage = () => {
         </div>
         <div className="flex justify-center self-center z-10">
           <form
-            action="#"
             method="#"
+            action={registerAction}
             className="lg:p-8 p-8 bg-blue-950 mx-auto lg:rounded-3xl lg:w-96 w-full "
           >
             <div className="flex flex-col items-center mb-6">
@@ -64,6 +92,7 @@ const RegisterPage = () => {
                   className="w-full text-sm px-4 py-3 bg-gray-200 focus:bg-gray-100 border border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
                   type="text"
                   placeholder="John Doe"
+                  name="name"
                 />
               </div>
               <div className="mb-4">
@@ -75,6 +104,7 @@ const RegisterPage = () => {
                 </label>
                 <input
                   id="email"
+                  name="email"
                   placeholder="johndoe@mail.com"
                   type="text"
                   className="text-sm text-black px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
@@ -89,6 +119,7 @@ const RegisterPage = () => {
                 </label>
                 <input
                   id="phoneNumber"
+                  name="phoneNumber"
                   placeholder="+62 812 345 678.."
                   type="number"
                   className="text-sm text-black px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
@@ -103,6 +134,7 @@ const RegisterPage = () => {
                 </label>
                 <input
                   id="password"
+                  name="password"
                   placeholder="******"
                   type="password"
                   className="text-sm text-black px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"

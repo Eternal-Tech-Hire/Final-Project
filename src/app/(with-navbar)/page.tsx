@@ -2,6 +2,7 @@
 import CardCompany from "@/components/CardCompany";
 import CardFair from "@/components/CardFair";
 import Carousel from "@/components/Carousle";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 export default function Home() {
@@ -19,7 +20,7 @@ export default function Home() {
             <CardFair />
             <CardFair />
             <CardFair />
-          </div>
+          JaAA</div>
         </div>
         <div className="lg:px-32 py-20 bg-gray-100 h-full">
           <div className="lg:ml-10 mx-6 mb-10">

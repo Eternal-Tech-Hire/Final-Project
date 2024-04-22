@@ -84,8 +84,6 @@ export default function pageTicket() {
         async function fetchData() {
             try{
                 "use client";
-                // gunakan link ini untuk select data by ID User (http://localhost:3000/api/ticket/user)
-               // link yang digunakan saat ini merupakan data yang di input oleh user (yang login saat ini)
                 const response = await fetch(`http://localhost:3000/api/ticket`, {
                     method: "GET",
                     cache: "no-store",

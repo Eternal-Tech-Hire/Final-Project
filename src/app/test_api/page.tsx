@@ -2,8 +2,6 @@ import Link from "next/link";
 
 export default function Home() {
 
-
-
   return (
     <>
       <main>
@@ -33,6 +31,11 @@ export default function Home() {
       <h2>Company</h2>
       <div className="flex gap-2">
         <Link className="btn bg-green-500" href="/test_api/company">Company (ADD/SHOW ALL)</Link>
+      </div>
+
+      <h2>Profile</h2>
+      <div className="flex gap-2">
+        <Link className="btn bg-green-500" href="/test_api/profile">Profile (ADD/SHOW ALL)</Link>
       </div>
 
       </main>

@@ -10,12 +10,19 @@ interface Login {
     password: string
 }
 
-interface newUser {
+export interface newUser {
     name: string;
     email: string;
     password: string;
     phoneNumber: string;
     role: string;
+    cv: string
+}
+
+interface updateUser { 
+    name: string;
+    phoneNumber: string;
+    cv: string;
 }
 
 const UserValidation = z.object({
@@ -24,6 +31,15 @@ const UserValidation = z.object({
     }).email(),
     password: z.string({
         required_error: "Password can't be empty"
+    })
+})
+
+const UpdateValidation = z.object({
+    name: z.string({
+        required_error: "Name can't be empty"
+    }),
+    phoneNumber: z.string({
+        required_error: "Phone Number can't be empty"
     })
 })
 
@@ -44,12 +60,33 @@ class UserModel {
             ...newUser,
             password: bcryptjs.hashSync(newUser.password)
         }
+
         const [validateUser] = await db.collection('Users').find({
                     email: user.email
         }).toArray()
         if (validateUser) throw new Error("Email/Username Already Registered")
         const data = await db.collection('Users').insertOne(user)
         return data
+    }
+
+    static async update(id: string, updateUser : updateUser) {
+
+        const _id = new ObjectId(id)
+        const data = (await db.collection('Users').findOne({ _id })) as User | null
+        if (!data) {
+            return NextResponse.json({
+                message: "User Not Found"
+            },
+                { status: 404 })
+        };
+
+        
+        // const validation = UserValidation.safeParse(updateUser);
+
+        // if (!validation.success) {
+        //     const errors = validation.error
+        //     throw errors
+        // }
     }
 
     static async getUserById(id: string) {

@@ -13,6 +13,8 @@
     "@muriukialex/react-infinite-scroll": "^1.0.0",
     "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.1.0",
+    "cloudinary-core": "^2.13.1",
     "cookies-next": "^4.1.1",
     "dotenv": "^16.4.5",
     "jose": "^5.2.3",

@@ -12,7 +12,6 @@ type CompanyTypes =  {
 
 interface RemoveButtonProps {
   id: string;
-
 }
 
 const RemoveButton: React.FC<RemoveButtonProps> = ({ id }) => {

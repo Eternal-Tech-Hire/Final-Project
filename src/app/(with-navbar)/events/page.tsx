@@ -1,6 +1,9 @@
 "use client";
 import CardFair from "@/components/CardFair";
-import { useState } from "react";
+
+import { EventsTypes } from "@/types";
+import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -9,6 +12,61 @@ const Header = () => {
     // Lakukan sesuatu dengan nilai searchTerm, misalnya kirim permintaan pencarian ke server
     console.log("Searching for:", searchTerm);
   };
+
+  const [events, setEvents] = useState<EventsTypes[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    // ======================
+    async function addEvent(formData: FormData) {
+
+        const rawFormData = {
+            name: formData.get("name"),
+            description: formData.get("description"),
+            date: formData.get("date"),
+            location: formData.get("location"),
+            categoryId: formData.get("categoryId")
+        };
+
+        const response = await fetch(`http://localhost:3000/api/events`, {
+            method: "POST",
+            cache: "no-store",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(rawFormData),
+        });
+
+        redirect("/test_api/event");
+    }
+    // ======================
+
+      useEffect(() => {
+        async function fetchData() {
+            try{
+                const response = await fetch(`http://localhost:3000/api/events`, {
+                    method: "GET",
+                    cache: "no-store",
+                    headers: {},
+                });
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch items");
+                }
+
+                const responseJson = await response.json();
+                console.log(responseJson)
+                if(responseJson != null){
+                    setEvents(responseJson.data);
+                }
+            }catch (error){
+                console.error("Error fetching item: ", error)
+            }finally{
+                setLoading(false);
+            }
+        };
+        fetchData();
+      }, []);
+
 
   return (
     <div>
@@ -30,11 +88,9 @@ const Header = () => {
       </header>
 
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 lg:px-28 lg:py-28 px-10 py-10">
-        <CardFair />
-        <CardFair />
-        <CardFair />
-        <CardFair />
-        <CardFair />
+        {events.map((item) =>(
+          <CardFair data={item}/>
+        ))}
       </div>
     </div>
   );

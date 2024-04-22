@@ -1,14 +1,89 @@
 "use client";
 import CardCompany from "@/components/CardCompany";
-import { useState } from "react";
+import { CompanyTypes } from "@/types";
+import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const Header = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [search, setSearch] = useState<string>("");
+  const [data, setData] = useState<CompanyTypes[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleSearch = () => {
-    // Lakukan sesuatu dengan nilai searchTerm, misalnya kirim permintaan pencarian ke server
-    console.log("Searching for:", searchTerm);
+  const fetchSearch = async () => {
+
+    if (search) {
+      // console.log(search, "didalem fetch");
+      const res = await fetch("http://localhost:3000/api/company?search=" + search, {
+        cache: "no-store",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch items");
+      }
+
+      const responseJson = await res.json();
+      // console.log(responseJson)
+
+      if (responseJson != null) {
+        setData(responseJson.data);
+      }
+    }
+    // console.log("Searching for:", search);
   };
+
+  // ======================
+  async function addForm(formData: FormData) {
+    const rawFormData = {
+      name: formData.get("name"),
+      jobOffer: formData.get("jobOffer"),
+    };
+
+    const response = await fetch(`http://localhost:3000/api/company`, {
+      method: "POST",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(rawFormData),
+    });
+
+    redirect("/test_api/company");
+  }
+  // ======================
+  // console.log(search);
+  
+  useEffect(() => {
+    async function fetchData() {
+      
+      try {
+        const response = await fetch(`http://localhost:3000/api/company`, {
+          method: "GET",
+          cache: "no-store",
+          headers: {},
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch items");
+        }
+
+        const responseJson = await response.json();
+        // console.log(responseJson);
+        if (responseJson != null) {
+          setData(responseJson.data);
+        }
+      } catch (error) {
+        console.error("Error fetching item:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (search) {
+      fetchSearch()
+    }else{
+      fetchData();}
+
+  }, [search]);
 
   return (
     <div>
@@ -23,15 +98,16 @@ const Header = () => {
             </h1>
             <h1 className="lg:text-4xl text-2xl font-bold mb-4">Companies.</h1>
             <p className="text-lg inline-block sm:block">
-            Companies collaborating with us.
+              Companies collaborating with us.
             </p>
             <div className="mt-3 flex items-center">
               <input
                 type="text"
-                // value={searchTerm}
-                // onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
                 placeholder="Search Companies.."
-                className="border border-gray-300 rounded-l px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                className="border border-gray-300 rounded-l px-4 py-2 focus:outline-none focus:ring-2 text-black focus:ring-cyan-500 focus:border-transparent"
               />
               <button
                 // onClick={handleSearch}
@@ -45,11 +121,9 @@ const Header = () => {
       </header>
 
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 lg:px-28 lg:py-28 px-10 py-10">
-        <CardCompany />
-        <CardCompany />
-        <CardCompany />
-        <CardCompany />
-        <CardCompany />
+        {data.map((item, index) => (
+          <CardCompany data={item} key={index} />
+        ))}
       </div>
     </div>
   );

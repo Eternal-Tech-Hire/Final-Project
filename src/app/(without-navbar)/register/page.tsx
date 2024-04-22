@@ -12,7 +12,7 @@ const RegisterPage = () => {
         <div className="flex-col flex  self-center lg:px-14 sm:max-w-4xl xl:max-w-lg mr-20 lg:mb-24 z-10">
           <div className="self-start hidden lg:flex flex-col text-white">
             <h1 className="my-3 font-semibold text-3xl">
-              Welcome to{" "} <br />
+              Welcome to <br />
               <span className="font-extrabold text-4xl">
                 <span className="bg-gradient-to-r from-blue-700 to-emerald-500 text-transparent bg-clip-text">
                   Eternal{" "}
@@ -41,9 +41,11 @@ const RegisterPage = () => {
             className="lg:p-8 p-8 bg-blue-950 mx-auto lg:rounded-3xl lg:w-96 w-full "
           >
             <div className="flex flex-col items-center mb-6">
-              <div>
-                <img src="/logo_v2.png" alt="Logo" className="w-28" />
-              </div>
+              <Link href="/">
+                <div>
+                  <img src="/logo_v2.png" alt="Logo" className="w-28" />
+                </div>
+              </Link>
               <label
                 htmlFor=""
                 className="block text-2xl text-white text-center font-bold mt-4"
@@ -107,6 +109,29 @@ const RegisterPage = () => {
                   type="password"
                   className="text-sm text-black px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
                 />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="userType"
+                  className="block text-sm font-semibold text-white mb-1"
+                >
+                  Role :
+                </label>
+                <select
+                  id="userType"
+                  className="text-sm text-black px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
+                >
+                  <option
+                    style={{ color: "#9CA3AF" }}
+                    value=""
+                    disabled
+                    selected
+                  >
+                    Select Role
+                  </option>
+                  <option value="jobSeeker">Job Seeker</option>
+                  <option value="company">Company</option>
+                </select>
               </div>
 
               <div className="flex items-center">

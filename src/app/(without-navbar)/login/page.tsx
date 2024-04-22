@@ -53,9 +53,9 @@ const LoginPage = () => {
           }}
         >
           <div className="relative sm:max-w-sm w-full">
-            <div className="card bg-cyan-500 shadow-lg w-full h-full rounded-3xl absolute transform -rotate-6" />
-            <div className="card bg-violet-600 shadow-lg w-full h-full rounded-3xl absolute transform rotate-6" />
-            <div className="relative w-full rounded-3xl px-6 py-4 bg-blue-950 shadow-md">
+            <div className="card bg-cyan-500 shadow-lg w-full h-full rounded-3xl hidden lg:flex absolute transform -rotate-6" />
+            <div className="card bg-violet-600 shadow-lg w-full h-full hidden lg:flex rounded-3xl absolute transform rotate-6" />
+            <div className="relative w-full rounded-3xl lg:px-6 lg:py-4 p-8 min-h-screen lg:min-h-0 bg-blue-950 shadow-md">
               <div className="flex flex-col items-center mb-6">
                 <div>
                   <img

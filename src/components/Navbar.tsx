@@ -59,19 +59,21 @@ const Navbar = () => {
     >
       <nav className="mx-auto flex max-w-6xl gap-8 px-6 lg:px-12 py-4">
         <div className="flex items-center">
-          <a href="/">
-            <img
-              src="/logo_transparant.png"
-              loading="lazy"
-              style={{ color: "transparent" }}
-              className="w-28 h-28 fixed z-10 lg:-top-5 -top-7"
-            />
-          </a>
+          <Link href="/">
+            <div>
+              <img
+                src="/logo_v2.png"
+                loading="lazy"
+                style={{ color: "transparent" }}
+                className="w-24 ml-6 lg:m-0"
+              />
+            </div>
+          </Link>
         </div>
-        <ul className="hidden items-center justify-center gap-6 ms-20 md:flex">
+        <ul className="hidden items-center justify-center gap-6 md:flex">
           <li className="pt-1.5 font-dm text-sm font-medium text-white">
             <Link href="/">
-              <button className="text-md font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
+              <button className="text-lg font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
                 Home
                 <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
               </button>
@@ -79,7 +81,7 @@ const Navbar = () => {
           </li>
           <li className="pt-1.5 font-dm text-sm font-medium text-white">
             <Link href="/events">
-              <button className="text-md font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
+              <button className="text-lg font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
                 Job Fairs
                 <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
               </button>
@@ -87,7 +89,7 @@ const Navbar = () => {
           </li>
           <li className="pt-1.5 font-dm text-sm font-medium text-white">
             <Link href="/companies">
-              <button className="text-md font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
+              <button className="text-lg font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
                 Companies
                 <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
               </button>
@@ -97,7 +99,7 @@ const Navbar = () => {
         <div className="flex-grow" />
         <div className="hidden items-center justify-center gap-6 md:flex">
           <Link href="/login">
-            <button className="text-md text-white font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
+            <button className="text-lg text-white font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
               Sign In
               <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
             </button>

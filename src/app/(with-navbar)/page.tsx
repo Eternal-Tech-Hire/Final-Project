@@ -90,7 +90,6 @@ export default function Home() {
           <div className="lg:carousel lg:carousel-center grid grid-cols-1 gap-3 lg:max-w-full p-4 bg-transparent rounded-box relative">
             {/* Carousel items */}
             {listCompany.map((item,index)=>(
-              
               <div className="lg:carousel-item lg:w-[40%] py-5 lg:py-0">
               <CardCompany data={item} key={index}/>
               </div>

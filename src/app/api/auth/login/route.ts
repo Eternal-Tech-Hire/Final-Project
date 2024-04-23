@@ -39,14 +39,15 @@ export async function POST(request: Request) {
 
         const accessToken = createToken({
             _id: dataLogin._id,
-            email: dataLogin.email
+            email: dataLogin.email,
+            role: dataLogin.role
         })
 
 
         return NextResponse.json({
             message: "Login Success",
             data: {
-                accessToken
+                accessToken, role : dataLogin.role
             }
         }, {
             status: 200

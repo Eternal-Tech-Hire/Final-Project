@@ -11,6 +11,8 @@ interface CompanyTypesLocal{
 class Company{
 
 	static async store(data: CompanyTypesLocal){
+		console.log(data);
+		
         const data_object = {
         	name: data.name,
 			jobOffer: data.jobOffer

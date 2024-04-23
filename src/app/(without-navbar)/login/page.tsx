@@ -28,6 +28,7 @@ const LoginPage = () => {
       const responseJson = await response.json();
       console.error(responseJson);
       cookies().set("Authorization", `Bearer ${responseJson.data.accessToken}`);
+      cookies().set("Role", `${responseJson.data.role}`);
     } catch (error) {
       console.error("Login Error", error);
       redirect("/login");

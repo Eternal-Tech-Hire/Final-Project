@@ -1,38 +1,33 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-
-import Link from "next/link";
+import { ClientFlashComponent } from "@/components/ClientFlash";
 
 const LoginPage = () => {
   async function loginAction(formData: FormData) {
     "use server";
     cookies().delete("Authorization");
-    try {
-      const rawFormData = {
-        email: formData.get("email"),
-        password: formData.get("password"),
-      };
+    const rawFormData = {
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
 
-      const response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        cache: "no-store",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(rawFormData),
-      });
+    const response = await fetch("http://localhost:3000/api/auth/login", {
+      method: "POST",
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(rawFormData),
+    });
 
-      if (response.status != 200) {
-        throw new Error("Failed to Login" + response.status);
-      }
-      const responseJson = await response.json();
-      console.error(responseJson);
-      cookies().set("Authorization", `Bearer ${responseJson.data.accessToken}`);
-      cookies().set("Role", `${responseJson.data.role}`);
-    } catch (error) {
-      console.error("Login Error", error);
-      redirect("/login");
-    }
+    if (response.status != 200) {
+      return redirect(`/login?error=Wrong Email/Password`);
+    }  
+    const responseJson = await response.json();
+
+    cookies().set("Authorization", `Bearer ${responseJson.data.accessToken}`);
+    cookies().set("Role", `${responseJson.data.role}`);
     return redirect("/");
   }
 
@@ -69,6 +64,9 @@ const LoginPage = () => {
                 >
                   Sign In
                 </label>
+              </div>
+              <div className="my-5 px-1">
+                <ClientFlashComponent />
               </div>
               <form action={loginAction} className="mt-4">
                 <div className="mt-4">

@@ -44,9 +44,19 @@ export default function profile(){
           }
     
           const uploadRes = await upload.json();
-          console.log(uploadRes);
           // insert to mongoDB
-          const res = await fetch('/api/')
+          const res = await fetch('http://localhost:3000/api/auth/users/' + data._id,{
+            method: "POST",
+            body: JSON.stringify({
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phoneNumber: document.getElementById('phoneNumber').value,
+                cv: uploadRes.url,
+                role: data.role
+            })
+          })
+          alert("Berhasil");
+          console.log(res);
 
         } catch (error) {
           console.error("Error uploading image:", error);
@@ -94,13 +104,13 @@ export default function profile(){
        <div>{data?.name}</div>
        <form action="" className="" onSubmit={handleSubmit}>
         <label htmlFor="name">Name</label><br />
-        <input type="text" name="name" id="name" className="mb-5" /><br />
+        <input type="text" name="name" id="name" className="mb-5" defaultValue={data?.name} /><br />
 
         <label htmlFor="email">Email</label><br />
-        <input type="text" name="email" id="email" className="mb-5" /><br />
+        <input type="text" name="email" id="email" className="mb-5" defaultValue={data?.email} /><br />
 
         <label htmlFor="phoneNumber">Phone Number</label><br />
-        <input type="text" name="phoneNumber" id="phoneNumber" className="mb-5" /><br />
+        <input type="text" name="phoneNumber" id="phoneNumber" className="mb-5" defaultValue={data?.phoneNumber} /><br />
 
         <label htmlFor="cv">CV</label><br />
         <input type="file" name="cv" id="cv" className="mb-5" onChange={handleChange} /><br />

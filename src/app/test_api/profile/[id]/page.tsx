@@ -28,7 +28,7 @@ export default function profileId({params} : {params : {id : string}}){
         formData.append("file", file);
         formData.append("upload_preset", "finalproject");
         formData.append("api_key", CLOUD_API);
-    
+        // console.log(formData);
         try {
             // fetch to cloudinary
           const upload = await fetch(
@@ -44,9 +44,12 @@ export default function profileId({params} : {params : {id : string}}){
           }
     
           const uploadRes = await upload.json();
-          console.log(uploadRes);
-          // insert to mongoDB
-          const res = await fetch('/api/')
+          // console.log(uploadRes);
+          // // insert to mongoDB
+          // const res = await fetch('/api/auth/users',{
+          //   method: "POST",
+          //   body: 
+          // })
 
         } catch (error) {
           console.error("Error uploading image:", error);
@@ -96,13 +99,13 @@ export default function profileId({params} : {params : {id : string}}){
        <div>{data?.name}</div>
        <form action="" className="" onSubmit={handleSubmit}>
         <label htmlFor="name">Name</label><br />
-        <input type="text" name="name" id="name" className="mb-5" /><br />
+        <input type="text" name="name" id="name" className="mb-5" defaultValue={data?.name} /><br />
 
         <label htmlFor="email">Email</label><br />
-        <input type="text" name="email" id="email" className="mb-5" /><br />
+        <input type="text" name="email" id="email" className="mb-5" defaultValue={data?.email} /><br />
 
         <label htmlFor="phoneNumber">Phone Number</label><br />
-        <input type="text" name="phoneNumber" id="phoneNumber" className="mb-5" /><br />
+        <input type="text" name="phoneNumber" id="phoneNumber" className="mb-5" defaultValue={data?.phoneNumber} /><br />
 
         <label htmlFor="cv">CV</label><br />
         <input type="file" name="cv" id="cv" className="mb-5" onChange={handleChange} /><br />

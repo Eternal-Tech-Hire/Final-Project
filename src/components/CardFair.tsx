@@ -19,7 +19,7 @@ const CardFair = ({ data, userRole }: CardFairProps) => {
         body: JSON.stringify(input)
        })
     }else if(userRole === "company"){
-
+      
     }
   };
   

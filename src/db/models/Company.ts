@@ -10,7 +10,6 @@ interface CompanyTypesLocal {
 
 
 class Company {
-
 	static async store(data: CompanyTypesLocal) {
 		const data_object = {
 			name: data.name,
@@ -61,7 +60,6 @@ class Company {
 				fav: favs
 			}
 		})
-
 	}
 }
 

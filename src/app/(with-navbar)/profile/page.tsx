@@ -2,6 +2,9 @@
 import Modal from "@/components/Modal";
 import { useState } from "react";
 import { FaPencil } from "react-icons/fa6";
+import QRCode from "qrcode";
+import { newUser } from "@/db/models/Users";
+import ModalQR from "@/components/QR";
 
 const ProfilePage = () => {
   const [showModal, setShowModal] = useState(false);

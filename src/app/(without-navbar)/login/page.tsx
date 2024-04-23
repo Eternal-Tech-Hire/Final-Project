@@ -1,13 +1,12 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-
+import { ClientFlashComponent } from "@/components/ClientFlash";
 import Link from "next/link";
 
 const LoginPage = () => {
   async function loginAction(formData: FormData) {
     "use server";
     cookies().delete("Authorization");
-    try {
       const rawFormData = {
         email: formData.get("email"),
         password: formData.get("password"),
@@ -23,13 +22,11 @@ const LoginPage = () => {
       });
 
       if (response.status != 200) {
-        throw new Error("Failed to Login" + response.status);
+        return redirect(`/login?error=Wrong Email/Password`);
       }
       const responseJson = await response.json();
       console.error(responseJson);
       cookies().set("Authorization", `Bearer ${responseJson.data.accessToken}`);
-    } catch (error) {
-      console.error("Login Error", error);
       redirect("/login");
     }
     return redirect("/");

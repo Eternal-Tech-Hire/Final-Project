@@ -13,7 +13,7 @@ const AddJob = () => {
         <section className="bg-purple-900 top-0 left-0 bg-gradient-to-b from-gray-900 via-gray-900 to-purple-800 py-20 px-28 lg:py-[120px] overflow-hidden relative z-10">
           <div className="container">
             <div className="flex flex-wrap lg:justify-between lg:-mx-4 -mx-16">
-              <div className="w-full lg:w-1/2 xl:w-6/12 px-4">
+              <div className="w-full lg:w-1/2 xl:w-6/12 px-4 mt-40">
                 <div className="max-w-[570px] mb-12 lg:mb-0">
                   <span className="absolute mx-auto py-4 px-7 flex border w-fit bg-gradient-to-r blur-xl from-blue-700 via-emerald-500 to-cyan-500 bg-clip-text lg:text-6xl text-5xl box-content font-extrabold text-transparent text-center select-none">
                     Eternal Tech Hire

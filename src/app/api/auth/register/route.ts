@@ -1,4 +1,3 @@
-import Company from "@/db/models/Company";
 import UserModel from "@/db/models/Users";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod"; 
@@ -7,15 +6,7 @@ export const POST = async (request: Request) => {
 
     try {
         const body = await request.json()
-
-        if (body.role === "jobSeeker") {
-            await UserModel.create(body)
-        }else{
-            const data = {name : body.name, jobOffer : ""}
-            
-            await UserModel.create(body)
-            await Company.store(data)
-        }
+        const data = await UserModel.create(body)
 
         return NextResponse.json({
             message: "Register success"

@@ -48,16 +48,13 @@ export async function POST(request: Request) {
         return NextResponse.json({
             message: "Login Success",
             data: {
-                accessToken, role : dataLogin.role
+                accessToken
             }
         }, {
             status: 200
         })
 
     } catch (error) {
-
-        console.log(error);
-        
         if (error instanceof ZodError) {
             const errorPath = error.issues[0].path[0];
             const errorMessage = error.issues[0].message

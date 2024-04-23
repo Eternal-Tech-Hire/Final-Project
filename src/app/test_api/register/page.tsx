@@ -13,7 +13,6 @@ export default function register() {
             email: formData.get("email"),
             password: formData.get("password"),
             phoneNumber: formData.get("phoneNumber"),
-            role: "Member",
             cv: ""
         };
 

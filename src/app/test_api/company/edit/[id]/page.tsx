@@ -8,6 +8,7 @@ type CompanyTypes = {
     _id: string;
     name: string;
     jobOffer: string;
+    fav: []
 }
 
 type FavTypes = {
@@ -49,7 +50,7 @@ export default function edit(){
 
       const rawFormData = {
         id_event: formData.get("id_event"),
-        url_cv: user.cv,
+        url_cv: user!.cv,
       };
 
       const response = await fetch(`http://localhost:3000/api/company/add_fav/` + params.id, {
@@ -162,7 +163,7 @@ export default function edit(){
                   </thead>
                   <tbody>
                   {
-                    (data.fav.map((item : FavTypes) => (
+                    (data!.fav.map((item : FavTypes) => (
                     <tr>
                         <td>{item.id_event}</td>
                         <td>{item.url}</td>

@@ -16,7 +16,6 @@ export interface newUser {
     email: string;
     password: string;
     phoneNumber: string;
-    role: string;
     cv: string;
 }
 
@@ -25,7 +24,6 @@ interface updateUser {
     phoneNumber: string;
     email: string;
     password: string;
-    role: string;
     cv: string;
 }
 
@@ -62,6 +60,7 @@ class UserModel {
 
         const user = {
             ...newUser,
+            role: "member",
             password: bcryptjs.hashSync(newUser.password)
         }
 
@@ -90,7 +89,6 @@ class UserModel {
                     email: (updateUser.email != null) ? updateUser.email : data.email,
                     password: (updateUser.password != null) ? updateUser.password : data.password,
                     phoneNumber: (updateUser.phoneNumber != null) ? updateUser.phoneNumber : data.phoneNumber,
-                    role: (updateUser.role != null) ? updateUser.role : data.role,
                     cv: (updateUser.cv != null) ? updateUser.cv : data.cv,
             }
         })

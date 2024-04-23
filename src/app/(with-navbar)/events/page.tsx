@@ -70,6 +70,10 @@ const Header = () => {
 
   return (
     <div>
+
+      <div className="w-screen py-0 px-0">
+        <div className="container mx-auto bg-cyan-950 lg:h-96 h-72 flex items-center">
+
       <header className="">
         <div className=" bg-cyan-950 lg:h-96 h-72 flex items-center">
           <div className="sm:ml-20 text-gray-50 mx-auto lg:ml-28 text-center lg:text-start">
@@ -92,6 +96,8 @@ const Header = () => {
           <CardFair data={item}/>
         ))}
       </div>
+    </div>
+    </div>
     </div>
   );
 };

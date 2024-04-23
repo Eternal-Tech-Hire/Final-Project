@@ -7,12 +7,14 @@ export interface User {
   password: string;
   phoneNumber: string;
   role: string;
+  cv: string;
 }
 
 export interface CategoryTypes {
   _id: ObjectId;
   name: string;
   companyId: string;
+  favUser: string[];
 }
 
 export interface CompanyTypes {

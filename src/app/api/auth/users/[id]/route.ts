@@ -10,9 +10,6 @@ type RequestParam = {
 
 export async function GET(request: Request, { params }: RequestParam) {
 
-    // const userId = request.headers.get("x-user-id") as string
-    // console.log("masuk dari middleware",  userId);
-    
     const users = await Users.getUserById(params.id)
     return NextResponse.json({
         data: users
@@ -20,3 +17,21 @@ export async function GET(request: Request, { params }: RequestParam) {
 }
 
 
+export async function POST (request: Request,  { params }: RequestParam){
+    try{
+        const body = await request.json();
+        console.log(body);
+
+        const response = await Users.update(params.id, body)            
+        return NextResponse.json({
+            data: response
+        }, {status : 200})
+
+    } catch (error) {
+        return NextResponse.json({
+            message: ""
+        },{
+            status: 500
+        })
+    }
+}

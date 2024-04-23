@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { getCookie, deleteCookie } from "cookies-next";
 import Link from "next/link";
+import Swal from 'sweetalert2'
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -32,9 +33,31 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will be logged out",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, log me out",
+    }).then((result: { isConfirmed: boolean }) => {
+      if (result.isConfirmed) {
+        logoutUser();
+      }
+    });
+  };
+
+  const logoutUser = () => {
     setIsLoggedIn(false);
     setCookiesStore(null);
     deleteCookie("Authorization");
+    Swal.fire({
+      title: "Logged Out",
+      text: "You have been successfully logged out",
+      icon: "success",
+      confirmButtonColor: "#3085d6",
+    });
   };
 
   useEffect(() => {
@@ -55,7 +78,7 @@ const Navbar = () => {
           ? "bg-transparent"
           : ""
       } ${
-        scrollPosition > 90 && scrollPosition !== maxScroll ? "bg-cyan-950" : ""
+        scrollPosition >= 90 && scrollPosition !== maxScroll ? "bg-cyan-950" : ""
       } transition-all duration-100 ease-in-out`}
     >
       <nav className="mx-auto flex max-w-6xl gap-8 px-6 lg:px-12 py-4">
@@ -101,12 +124,16 @@ const Navbar = () => {
         <div className="hidden items-center justify-center gap-6 md:flex">
           {isLoggedIn ? (
             <>
+              <Link href="/profile">
+                <button className="rounded-md  bg-gradient-to-br from-emerald-400 to-sky-600 px-3 py-2 font-dm text-sm font-medium text-white shadow-md  hover:shadow-cyan-400 transition-transform duration-200 ease-in-out hover:scale-[1.03]">
+                 My Profie
+                </button>
+              </Link>
               <button
-                className="text-lg text-white font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"
                 onClick={handleLogout}
+                className="rounded-md bg-gradient-to-br from-purple-700 to-rose-500 px-3 py-2 font-dm text-sm font-medium text-white shadow-md hover:shadow-rose-500 transition-transform duration-200 ease-in-out hover:scale-[1.05]"
               >
                 Logout
-                <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
               </button>
             </>
           ) : (
@@ -146,7 +173,7 @@ const Navbar = () => {
         </div>
       </nav>
     </header>
-  );
+  );  
 };
 
 export default Navbar;

@@ -4,6 +4,7 @@ import { createToken } from "@/db/utils/jwt"
 import { NextResponse } from "next/server"
 import { ZodError, z } from "zod"
 
+
 const UserValidation = z.object({
     email: z.string(),
     password: z.string()

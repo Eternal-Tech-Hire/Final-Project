@@ -4,15 +4,26 @@ import { useEffect, useState } from "react";
 import { FaPencil } from "react-icons/fa6";
 import QRCode from "qrcode";
 import { newUser } from "@/db/models/Users";
+import ModalQR from "@/components/QR";
 
 const ProfilePage = () => {
   const [showModal, setShowModal] = useState(false);
-  const [data, setData] = useState<newUser>()
-  const [qr, setQR] = useState<string>()
+  const [showQR, setShowQR] = useState(false);
+  const [data, setData] = useState<newUser>();
+  const [qr, setQR] = useState<string>();
 
   const toggleModal = () => {
     setShowModal(!showModal);
     if (!showModal) {
+      document.body.classList.add("modal-open");
+    } else {
+      document.body.classList.remove("modal-open");
+    }
+  };
+
+  const toggleModalQR = () => {
+    setShowQR(!showQR);
+    if (!showQR) {
       document.body.classList.add("modal-open");
     } else {
       document.body.classList.remove("modal-open");
@@ -46,13 +57,13 @@ const ProfilePage = () => {
 
   const generate = () => {
     console.log("masuk?");
-    
-    QRCode.toDataURL('http://localhost:3000/profile/' + data?._id).then(setQR)
+
+    QRCode.toDataURL("http://localhost:3000/profile/" + data?._id).then(setQR);
     // setQR(generateQR)
-  }
+    toggleModalQR();
+  };
 
   console.log(qr);
-  
 
   return (
     <>
@@ -93,7 +104,7 @@ const ProfilePage = () => {
               Senior Software Engineer at Tailwind CSS
             </p>
             <p className="text-sm text-gray-500">{data?.email}</p>
-            {qr ? <img src={qr} alt="" /> : ""}
+            {/* {qr ? <img src={qr} alt="" /> : ""} */}
           </div>
           <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
             <div className="flex items-center space-x-4 mt-2">
@@ -104,9 +115,21 @@ const ProfilePage = () => {
                 <FaPencil className="h-4 w-4" />
                 <span>Edit Profile</span>
               </button>
-              <button onClick={generate}>generate QR</button>
+              <button
+                className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
+                onClick={generate}
+              >
+                Generate QR
+              </button>
             </div>
           </div>
+          {showQR && (
+            <div
+              className="fixed inset-0 w-screen h-screen bg-black opacity-50 z-50"
+              onClick={toggleModalQR}
+            ></div>
+          )}
+          {showQR && <ModalQR qr={qr || ""} onClose={toggleModalQR} />}
           {showModal && (
             <div
               className="fixed inset-0 bg-black opacity-50 z-50"

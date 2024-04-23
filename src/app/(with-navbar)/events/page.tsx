@@ -89,9 +89,6 @@ const Header = () => {
             </p>
           </div>
         </div>
-
-      </div>
-
       </header>
 
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 lg:px-28 lg:py-28 px-10 py-10">
@@ -99,6 +96,8 @@ const Header = () => {
           <CardFair data={item}/>
         ))}
       </div>
+    </div>
+    </div>
     </div>
   );
 };

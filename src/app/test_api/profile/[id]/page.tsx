@@ -23,6 +23,14 @@ export default function profileId({ params }: { params: { id: string } }) {
             return;
         }
 
+    // async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    //     event.preventDefault();
+    
+    //     if (!file) {
+    //       console.error("No file selected.");
+    //       return;
+    //     }
+
         const formData = new FormData();
         formData.append("file", file);
         formData.append("upload_preset", "finalproject");
@@ -30,17 +38,20 @@ export default function profileId({ params }: { params: { id: string } }) {
         // console.log(formData);
         try {
             // fetch to cloudinary
-            const upload = await fetch(
-                "https://api.cloudinary.com/v1_1/dzdi4yqlr/raw/upload",
-                {
-                    method: "POST",
-                    body: formData,
-                }
-            );
+          const upload = await fetch(
+            "https://api.cloudinary.com/v1_1/dzdi4yqlr/raw/upload",
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+    
+    //       if (!upload.ok) {
+    //         throw new Error("Failed to upload.");
+    //       }
+    
 
-            //       if (!upload.ok) {
-            //         throw new Error("Failed to upload.");
-            //       }
+
 
             const uploadRes = await upload.json();
             // console.log(uploadRes);

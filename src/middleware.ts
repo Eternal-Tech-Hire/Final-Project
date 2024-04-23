@@ -78,7 +78,7 @@ export async function middleware(request: NextRequest) {
         const auth = cookies().get("Authorization")?.value;
         if (auth) {
           request.nextUrl.pathname = "/"
-          return NextResponse.redirect(request.nextUrl)
+          return NextResponse.redirect(new URL("/", request.nextUrl))
         }
     
       }

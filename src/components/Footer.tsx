@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     <>
-      <div className="relative mt-16 bg-gray-800">
+      <div className="relative z-50 -mt-1 bg-gray-800">
         <svg
           className="absolute top-0 w-full h-8 -mt-5 sm:-mt-10 sm:h-16 text-deep-purple-accent-400"
           preserveAspectRatio="none"

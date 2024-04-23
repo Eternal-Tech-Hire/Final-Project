@@ -1,44 +1,15 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 const RegisterPage = () => {
-  async function registerAction(formData: FormData) {
-    "use server";
-
-    const rawFormData = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      password: formData.get("password"),
-      phoneNumber: formData.get("phoneNumber"),
-      role: "Member",
-    };
-
-    try {
-      const response = await fetch(`http://localhost:3000/api/auth/register`, {
-        method: "post",
-        cache: "no-store",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(rawFormData),
-      });
-      console.log(response);
-      redirect("/login");
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   return (
     <>
       <link
         href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
         rel="stylesheet"
       />
-      <div className="bg-purple-900 absolute top-0 left-0 bg-gradient-to-b from-gray-900 via-gray-900 to-purple-800 bottom-0 leading-5 h-full w-full overflow-hidden"></div>
-      <div className="relative min-h-screen sm:flex sm:flex-row justify-center bg-transparent rounded-3xl shadow-xl">
-        <div className="flex-col flex  self-center lg:px-14 sm:max-w-4xl xl:max-w-lg mr-20 lg:mb-24 z-10">
-          <div className="self-start hidden lg:flex flex-col text-white">
+      <div className="bg-purple-900 fixed top-0 left-0 bg-gradient-to-b from-gray-900 via-gray-900 to-purple-800 bottom-0 leading-5 h-full w-full overflow-hidden"></div>
+        <div className="flex-col flex fixed w-3/4 ml-72 justify-center items-center min-h-screen  lg:px-14 lg:mb-24 z-10">
+          <div className="self-start hidden lg:flex flex-col text-white sticky mb-36 top-0 w-96">
             <h1 className="my-3 font-semibold text-3xl">
               Welcome to <br />
               <span className="font-extrabold text-4xl">
@@ -62,16 +33,19 @@ const RegisterPage = () => {
             </p>
           </div>
         </div>
-        <div className="flex justify-center self-center z-10">
+      <div className="flex min-h-screen justify-center sm:flex sm:flex-row py-5 bg-transparent rounded-3xl shadow-xl">
+        <div className="flex w-3/4 justify-center lg:justify-end self-end z-10 overflow-auto">
           <form
+            action="#"
             method="#"
-            action={registerAction}
-            className="lg:p-8 p-8 bg-blue-950 mx-auto lg:rounded-3xl lg:w-96 w-full "
+            className="lg:px-8 lg:py-8 p-8 bg-blue-950  rounded-3xl lg:w-96 w-full "
           >
             <div className="flex flex-col items-center mb-6">
-              <div>
-                <img src="/logo_v2.png" alt="Logo" className="w-28" />
-              </div>
+              <Link href="/">
+                <div>
+                  <img src="/logo_v2.png" alt="Logo" className="w-28" />
+                </div>
+              </Link>
               <label
                 htmlFor=""
                 className="block text-2xl text-white text-center font-bold mt-4"
@@ -92,7 +66,6 @@ const RegisterPage = () => {
                   className="w-full text-sm px-4 py-3 bg-gray-200 focus:bg-gray-100 border border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
                   type="text"
                   placeholder="John Doe"
-                  name="name"
                 />
               </div>
               <div className="mb-4">
@@ -104,7 +77,6 @@ const RegisterPage = () => {
                 </label>
                 <input
                   id="email"
-                  name="email"
                   placeholder="johndoe@mail.com"
                   type="text"
                   className="text-sm text-black px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
@@ -119,7 +91,6 @@ const RegisterPage = () => {
                 </label>
                 <input
                   id="phoneNumber"
-                  name="phoneNumber"
                   placeholder="+62 812 345 678.."
                   type="number"
                   className="text-sm text-black px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
@@ -134,11 +105,33 @@ const RegisterPage = () => {
                 </label>
                 <input
                   id="password"
-                  name="password"
                   placeholder="******"
                   type="password"
                   className="text-sm text-black px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
                 />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="userType"
+                  className="block text-sm font-semibold text-white mb-1"
+                >
+                  Role :
+                </label>
+                <select
+                  id="userType"
+                  className="text-sm text-black px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
+                >
+                  <option
+                    style={{ color: "#9CA3AF" }}
+                    value=""
+                    disabled
+                    selected
+                  >
+                    Select Role
+                  </option>
+                  <option value="jobSeeker">Job Seeker</option>
+                  <option value="company">Company</option>
+                </select>
               </div>
 
               <div className="flex items-center">
@@ -163,7 +156,7 @@ const RegisterPage = () => {
         </div>
       </div>
       <svg
-        className="absolute bottom-0 left-0 opacity-0 lg:opacity-100"
+        className="bottom-0 left-0 opacity-0 lg:opacity-100 fixed"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1440 320"
       >

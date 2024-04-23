@@ -1,27 +1,11 @@
 "use client";
-import Modal from "@/components/Modal";
-import { useState } from "react";
-import { FaPencil } from "react-icons/fa6";
+import { FaRegBookmark } from "react-icons/fa6";
 
 const ProfilePage = () => {
-  const [showModal, setShowModal] = useState(false);
-
-  const toggleModal = () => {
-    setShowModal(!showModal);
-    if (!showModal) {
-      document.body.classList.add("modal-open");
-    } else {
-      document.body.classList.remove("modal-open");
-    }
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
 
   return (
     <>
-      <div className="h-full bg-gradient-to-b from-gray-900 via-gray-900 to-purple-800 px-16 pb-24">
+      <div className="h-full bg-gray-200 px-8 pb-8">
         <div className="bg-white rounded-lg shadow-xl pb-8">
           <div className="absolute right-12 mt-4 rounded"></div>
           <div className="w-full h-[250px]">
@@ -63,20 +47,12 @@ const ProfilePage = () => {
             <div className="flex items-center space-x-4 mt-2">
               <button
                 className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
-                onClick={toggleModal}
               >
-                <FaPencil className="h-4 w-4" />
-                <span>Edit Profile</span>
+                <FaRegBookmark className="h-4 w-4" />
+                <span>BookMark</span>
               </button>
             </div>
           </div>
-          {showModal && (
-            <div
-              className="fixed inset-0 bg-black opacity-50 z-50"
-              onClick={toggleModal}
-            ></div>
-          )}
-          {showModal && <Modal onClose={toggleModal} />}
         </div>
       </div>
     </>

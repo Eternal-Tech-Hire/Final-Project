@@ -13,17 +13,17 @@ const CLOUD_API = process.env.CLOUD_API as string;
 
 export default function profileId({params} : {params : {id : string}}){
 
-    const [file, setFile] = useState<File | undefined>()
+    // const [file, setFile] = useState<File | undefined>()
     const [data, setData] = useState<newUser>()
 
-    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault();
+    // async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    //     event.preventDefault();
     
-        if (!file) {
-          console.error("No file selected.");
-          return;
-        }
-    
+    //     if (!file) {
+    //       console.error("No file selected.");
+    //       return;
+    //     }
+
         const formData = new FormData();
         formData.append("file", file);
         formData.append("upload_preset", "finalproject");
@@ -39,10 +39,11 @@ export default function profileId({params} : {params : {id : string}}){
             }
           );
     
-          if (!upload.ok) {
-            throw new Error("Failed to upload.");
-          }
+    //       if (!upload.ok) {
+    //         throw new Error("Failed to upload.");
+    //       }
     
+
           const uploadRes = await upload.json();
           // console.log(uploadRes);
           // // insert to mongoDB
@@ -51,22 +52,22 @@ export default function profileId({params} : {params : {id : string}}){
           //   body: 
           // })
 
-        } catch (error) {
-          console.error("Error uploading image:", error);
-        }
-      }
+         } catch (error) {
+           console.error("Error uploading image:", error);
+         }
+       }
 
 
-    function handleChange(event: ChangeEvent<HTMLInputElement>){
-        // console.log("masuk?");
+    // function handleChange(event: ChangeEvent<HTMLInputElement>){
+    //     // console.log("masuk?");
         
-        const target = event.target as HTMLInputElement & {
-            files : FileList
-        }
-        console.log(target.files);
+    //     const target = event.target as HTMLInputElement & {
+    //         files : FileList
+    //     }
+    //     console.log(target.files);
         
-        setFile(target.files[0])
-    }
+    //     setFile(target.files[0])
+    // }
 
     async function fetchData(userId : string){
 
@@ -97,7 +98,7 @@ export default function profileId({params} : {params : {id : string}}){
     return(
         <>
        <div>{data?.name}</div>
-       <form action="" className="" onSubmit={handleSubmit}>
+       {/* <form action="" className="" onSubmit={handleSubmit}>
         <label htmlFor="name">Name</label><br />
         <input type="text" name="name" id="name" className="mb-5" defaultValue={data?.name} /><br />
 
@@ -111,7 +112,7 @@ export default function profileId({params} : {params : {id : string}}){
         <input type="file" name="cv" id="cv" className="mb-5" onChange={handleChange} /><br />
 
         <button type="submit">Submit</button>
-      </form>
+      </form> */}
         </>
     )
 }

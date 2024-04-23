@@ -1,43 +1,39 @@
-
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
 import Link from "next/link";
 
-
 const LoginPage = () => {
-
-  
   async function loginAction(formData: FormData) {
-    "use server"
+    "use server";
     cookies().delete("Authorization");
     try {
-        const rawFormData = {
-            email: formData.get("email"),
-            password: formData.get("password"),
-        };
+      const rawFormData = {
+        email: formData.get("email"),
+        password: formData.get("password"),
+      };
 
-        const response = await fetch("http://localhost:3000/api/auth/login", {
-            method: "POST",
-            cache: "no-store",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(rawFormData),
-        });
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        cache: "no-store",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(rawFormData),
+      });
 
-        if (response.status != 200) {
-            throw new Error("Failed to Login" + response.status);
-        }
-        const responseJson = await response.json();
-        console.error(responseJson);
-        cookies().set("Authorization", `Bearer ${responseJson.data.accessToken}`);
+      if (response.status != 200) {
+        throw new Error("Failed to Login" + response.status);
+      }
+      const responseJson = await response.json();
+      console.error(responseJson);
+      cookies().set("Authorization", `Bearer ${responseJson.data.accessToken}`);
     } catch (error) {
-        console.error("Login Error", error);
-        redirect("/login");
+      console.error("Login Error", error);
+      redirect("/login");
     }
     return redirect("/");
-}
+  }
 
   return (
     <>
@@ -57,13 +53,15 @@ const LoginPage = () => {
             <div className="card bg-violet-600 shadow-lg w-full h-full hidden lg:flex rounded-3xl absolute transform rotate-6" />
             <div className="relative w-full rounded-3xl lg:px-6 lg:py-4 p-8 min-h-screen lg:min-h-0 bg-blue-950 shadow-md">
               <div className="flex flex-col items-center mb-6">
-                <div>
-                  <img
-                    src="/logo_v2.png"
-                    alt="Logo"
-                    className="w-28 mt-6 flex justify-center mx-auto"
-                  />
-                </div>
+                <Link href="/">
+                  <div>
+                    <img
+                      src="/logo_v2.png"
+                      alt="Logo"
+                      className="w-28 mt-6 flex justify-center mx-auto"
+                    />
+                  </div>
+                </Link>
                 <label
                   htmlFor=""
                   className="block text-2xl text-white text-center font-bold mt-6"

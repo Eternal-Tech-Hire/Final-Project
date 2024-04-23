@@ -1,16 +1,10 @@
 "use client";
 import Modal from "@/components/Modal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaPencil } from "react-icons/fa6";
-import QRCode from "qrcode";
-import { newUser } from "@/db/models/Users";
-import ModalQR from "@/components/QR";
 
 const ProfilePage = () => {
   const [showModal, setShowModal] = useState(false);
-  const [showQR, setShowQR] = useState(false);
-  const [data, setData] = useState<newUser>();
-  const [qr, setQR] = useState<string>();
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -21,49 +15,9 @@ const ProfilePage = () => {
     }
   };
 
-  const toggleModalQR = () => {
-    setShowQR(!showQR);
-    if (!showQR) {
-      document.body.classList.add("modal-open");
-    } else {
-      document.body.classList.remove("modal-open");
-    }
-  };
-
   const closeModal = () => {
     setShowModal(false);
   };
-
-  async function fetchData() {
-    try {
-      const res = await fetch(`/api/auth/users/`, {
-        cache: "no-store",
-      });
-
-      if (res.ok) {
-        const userData = await res.json();
-        setData(userData.data);
-      } else {
-        console.error("Failed to fetch user data.");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const generate = () => {
-    console.log("masuk?");
-
-    QRCode.toDataURL("http://localhost:3000/profile/" + data?._id).then(setQR);
-    // setQR(generateQR)
-    toggleModalQR();
-  };
-
-  console.log(qr);
 
   return (
     <>
@@ -82,7 +36,7 @@ const ProfilePage = () => {
               className="w-40 border-4 border-white rounded-full"
             />
             <div className="flex items-center space-x-2 mt-2">
-              <p className="text-2xl">{data?.name}</p>
+              <p className="text-2xl">Amanda Ross</p>
               <span className="bg-blue-500 rounded-full p-1" title="Verified">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -103,8 +57,7 @@ const ProfilePage = () => {
             <p className="text-gray-700">
               Senior Software Engineer at Tailwind CSS
             </p>
-            <p className="text-sm text-gray-500">{data?.email}</p>
-            {/* {qr ? <img src={qr} alt="" /> : ""} */}
+            <p className="text-sm text-gray-500">New York, USA</p>
           </div>
           <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
             <div className="flex items-center space-x-4 mt-2">
@@ -115,21 +68,8 @@ const ProfilePage = () => {
                 <FaPencil className="h-4 w-4" />
                 <span>Edit Profile</span>
               </button>
-              <button
-                className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
-                onClick={generate}
-              >
-                Generate QR
-              </button>
             </div>
           </div>
-          {showQR && (
-            <div
-              className="fixed inset-0 w-screen h-screen bg-black opacity-50 z-50"
-              onClick={toggleModalQR}
-            ></div>
-          )}
-          {showQR && <ModalQR qr={qr || ""} onClose={toggleModalQR} />}
           {showModal && (
             <div
               className="fixed inset-0 bg-black opacity-50 z-50"

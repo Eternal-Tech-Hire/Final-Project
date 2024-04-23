@@ -1,4 +1,4 @@
-import UserModel from "@/db/models/Users"
+import CompanyModel from "@/db/models/Company";
 import { compareTextWithHash } from "@/db/utils/hash"
 import { createToken } from "@/db/utils/jwt" 
 import { NextResponse } from "next/server"
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
             throw validation.error
         }
 
-        const dataLogin = await UserModel.getUserByEmail(email)
+        const dataLogin = await CompanyModel.getByEmail(email)
         
         if (!dataLogin) {
             return NextResponse.json({
@@ -46,7 +46,7 @@ export async function POST(request: Request) {
 
 
         return NextResponse.json({
-            message: "Login Success",
+            message: "Login Success Sebagai Company",
             data: {
                 accessToken
             }

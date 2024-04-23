@@ -5,7 +5,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      <div className="h-full bg-gradient-to-b from-gray-900 via-gray-900 to-purple-800 px-16 pb-24">
+      <div className="h-full bg-gray-200 px-8 pb-8">
         <div className="bg-white rounded-lg shadow-xl pb-8">
           <div className="absolute right-12 mt-4 rounded"></div>
           <div className="w-full h-[250px]">

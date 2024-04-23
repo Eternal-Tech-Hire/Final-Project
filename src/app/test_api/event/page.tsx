@@ -18,6 +18,17 @@ interface RemoveButtonProps {
 
 }
 
+interface AuthTypes{
+  _id: string;
+  email: string;
+  role: string;
+}
+
+interface JoinButtonProps {
+  eventId: string;
+  companyId: string;
+}
+
 const RemoveButton: React.FC<RemoveButtonProps> = ({ eventId }) => {
     const router = useRouter();
     const removeById = async () => {
@@ -33,7 +44,7 @@ const RemoveButton: React.FC<RemoveButtonProps> = ({ eventId }) => {
           if (!response.ok) {
             throw new Error('Failed to remove item');
           }
-          router.push('/test_api')
+          router.push('/test_api/')
 
         } catch (error) {
           console.error('Error removing item:', error);
@@ -45,9 +56,40 @@ const RemoveButton: React.FC<RemoveButtonProps> = ({ eventId }) => {
     );
 };
 
+const JoinButton: React.FC<JoinButtonProps> = ({ eventId, companyId }) => {
+    const router = useRouter();
+    const actionButton = async () => {
+        try {
+          const response = await fetch(`http://localhost:3000/api/events/company_join`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                _id: eventId,
+                idCompany: companyId
+                }), 
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to remove item');
+          }
+          alert("Berhasil Bergabung")
+
+        } catch (error) {
+          console.error('Error removing item:', error);
+        }
+    };
+
+    return (
+      <button onClick={actionButton} className="btn btn-warning">Join</button>
+    );
+};
+
 
 export default function pageTicket() {
     const [events, setEvents] = useState<Events[]>([]);
+    const [user, setUser] = useState<AuthTypes>();
     const [loading, setLoading] = useState(true);
 
     // ======================
@@ -94,6 +136,22 @@ export default function pageTicket() {
                 console.log(responseJson)
                 if(responseJson != null){
                     setEvents(responseJson.data);
+                }
+
+                const responseUser = await fetch(`http://localhost:3000/api/auth/users`, {
+                    method: "GET",
+                    cache: "no-store",
+                    headers: {},
+                });
+
+                if (!responseUser.ok) {
+                    throw new Error("Failed to fetch items");
+                }
+
+                const responseUserJson = await responseUser.json();
+                console.log(responseUserJson)
+                if(responseUserJson != null){
+                    setUser(responseUserJson.data);
                 }
             }catch (error){
                 console.error("Error fetching item:", error)
@@ -143,11 +201,11 @@ export default function pageTicket() {
             <thead>
                 <tr>
                     <td>Name</td>
-                    <td>Description</td>
                     <td>Date</td>
                     <td>Location</td>
                     <td>Category</td>
                     <td>Action</td>
+                    <td>Join (only company) </td>
                 </tr>
             </thead>
             <tbody>
@@ -158,7 +216,6 @@ export default function pageTicket() {
             ):(events.map((item: Events) => (
                 <tr>
                     <td>{item.name}</td>
-                    <td>{item.description}</td>
                     <td>{item.date}</td>
                     <td>{item.location}</td>
                     <td>{item.categoryId}</td>
@@ -166,11 +223,23 @@ export default function pageTicket() {
                         <RemoveButton eventId={item._id} />
                         <Link href={"/test_api/event/edit/" + item._id} className="btn bg-red-600"> Edit </Link>
                     </td>
+                    {
+                        user!.role == "company" ? (
+                            <JoinButton eventId={item._id} companyId={user!._id} />
+                        ):(
+                            <></>
+                        )
+                    }
+                    <td>
+                    </td>
+
                 </tr>
             )))}
             </tbody>
 
         </table>
+
+        <a href="http://localhost:3000/api/events"> Check Data </a>
         </>
     );
 }

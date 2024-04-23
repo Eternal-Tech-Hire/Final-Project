@@ -1,28 +1,6 @@
-"use client"
 import { EventsTypes } from "@/types";
 
-interface CardFairProps {
-  data: EventsTypes;
-  userRole?: string;
-}
-
-const CardFair = ({ data, userRole }: CardFairProps) => {
-
-  // console.log(userRole);
-  const joinFair = async () => {
-
-    const input = {eventId : data?._id, name: data?.name, paymentStatus: "false"}
-
-    if (userRole === "jobSeeker") {
-       await fetch('/api/ticket',{
-        method:"POST",
-        body: JSON.stringify(input)
-       })
-    }else if(userRole === "company"){
-      
-    }
-  };
-  
+const CardFair = ({ data }: { data: EventsTypes }) => {
   return (
     <>
       <div className="rounded overflow-hidden shadow-lg">
@@ -34,7 +12,7 @@ const CardFair = ({ data, userRole }: CardFairProps) => {
           <p className="text-gray-700 text-base">{data?.location}</p>
         </div>
         <div className="flex justify-end mr-5 mt-8">
-            <button onClick={joinFair} className="rounded-md bg-gradient-to-br from-emerald-400 to-sky-600 px-2 py-2 font-dm text-sm font-medium text-white shadow-md hover:shadow-lg transition-transform duration-200 ease-in-out hover:scale-[1.03]">
+            <button className="rounded-md bg-gradient-to-br from-emerald-400 to-sky-600 px-2 py-2 font-dm text-sm font-medium text-white shadow-md hover:shadow-lg transition-transform duration-200 ease-in-out hover:scale-[1.03]">
               Join Now
             </button>
         </div>

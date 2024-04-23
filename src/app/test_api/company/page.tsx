@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 type CompanyTypes =  {
     _id: string;
     name: string;
+    email : string;
+    role: string;
     jobOffer: string;
 }
 
@@ -47,24 +49,24 @@ export default function page() {
     const [loading, setLoading] = useState(true);
 
     // ======================
-    async function addForm(formData: FormData) {
+    // async function addForm(formData: FormData) {
 
-        const rawFormData = {
-            name: formData.get("name"),
-            jobOffer: formData.get("jobOffer")
-        };
+    //     const rawFormData = {
+    //         name: formData.get("name"),
+    //         jobOffer: formData.get("jobOffer")
+    //     };
 
-        const response = await fetch(`http://localhost:3000/api/company`, {
-            method: "POST",
-            cache: "no-store",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(rawFormData),
-        });
+    //     const response = await fetch(`http://localhost:3000/api/company`, {
+    //         method: "POST",
+    //         cache: "no-store",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify(rawFormData),
+    //     });
 
-        redirect("/test_api/company");
-    }
+    //     redirect("/test_api/company");
+    // }
     // ======================
 
       useEffect(() => {
@@ -99,25 +101,19 @@ export default function page() {
 
     return (
         <>
-        <form action={addForm} className="space-y-4 p-8">
-            <h1>TEST ADD Company</h1>
-            <div>
-                <span>Name</span>
-                <input type="text" name="name" id="name" className="border broder-2 ml-2" />
-            </div>
-            <div>
-                <span>Job Offer</span>
-                <input type="text" name="jobOffer" id="jobOffer" className="border broder-2 ml-2" />
-            </div>
-
-            <button type="submit" className="btn">Add</button>
-        </form>
+        <h2>Authetication (Company)</h2>
+          <div className="flex gap-2">
+            <Link className="btn" href="/test_api/company/login">Login</Link>
+            <Link className="btn btn-warning" href="/test_api/company/register">Register</Link>        
+          </div>
 
 
         <table className="table p-8">
             <thead>
                 <tr>
                     <td>Name</td>
+                    <td>Email</td>
+                    <td>Role</td>
                     <td>Job Offer</td>
                     <td>Action</td>
                 </tr>
@@ -130,7 +126,8 @@ export default function page() {
             ):(data.map((item : CompanyTypes) => (
                 <tr>
                     <td>{item.name}</td>
-                    <td>{item.name}</td>
+                    <td>{item.email}</td>
+                    <td>{item.role}</td>
                     <td>{item.jobOffer}</td>
                     <td>
                         <RemoveButton id={item._id} />

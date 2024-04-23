@@ -1,4 +1,4 @@
-import UserModel from "@/db/models/Users";
+import CompanyModel from "@/db/models/Company";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod"; 
 
@@ -6,7 +6,7 @@ export const POST = async (request: Request) => {
 
     try {
         const body = await request.json()
-        const data = await UserModel.create(body)
+        const data = await CompanyModel.store(body)
 
         return NextResponse.json({
             message: "Register success"

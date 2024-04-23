@@ -32,7 +32,7 @@ export default async function login() {
             console.error("Login Error", error);
             redirect("/test_api/login");
         }
-        return redirect("/test_api");4
+        return redirect("/test_api");
     }
 
     return (

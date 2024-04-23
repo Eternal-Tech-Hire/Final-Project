@@ -17,11 +17,6 @@ const Navbar = () => {
       setCookiesStore(accessToken);
     }
 
-    const handleLogout = () => {
-      setIsLoggedIn(false);
-      setCookiesStore(null);
-    };
-
     const handleScroll = () => {
       setScrollPosition(window.scrollY);
       setMaxScroll(
@@ -35,6 +30,12 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setCookiesStore(null);
+    deleteCookie("Authorization");
+  };
 
   useEffect(() => {
     const accessToken = getCookie("Authorization") as string;
@@ -98,17 +99,31 @@ const Navbar = () => {
         </ul>
         <div className="flex-grow" />
         <div className="hidden items-center justify-center gap-6 md:flex">
-          <Link href="/login">
-            <button className="text-lg text-white font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
-              Sign In
-              <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
-            </button>
-          </Link>
-          <Link href="/register">
-            <h1 className="rounded-md bg-gradient-to-br bg-sky-600 px-3 py-1.5 font-dm text-sm font-medium text-white shadow-md  hover:shadow-cyan-400 transition-transform duration-200 ease-in-out hover:scale-[1.03]">
-              Sign up for free
-            </h1>
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <button
+                className="text-lg text-white font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"
+                onClick={handleLogout}
+              >
+                Logout
+                <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
+              </button>
+            </>
+          ) : (
+            <>
+              <Link href="/login">
+                <button className="text-lg text-white font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
+                  Sign In
+                  <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
+                </button>
+              </Link>
+              <Link href="/register">
+                <h1 className="rounded-md bg-gradient-to-br bg-sky-600 px-3 py-1.5 font-dm text-sm font-medium text-white shadow-md  hover:shadow-cyan-400 transition-transform duration-200 ease-in-out hover:scale-[1.03]">
+                  Sign up for free
+                </h1>
+              </Link>
+            </>
+          )}
         </div>
         <div className="relative flex items-center justify-center md:hidden">
           <button type="button">

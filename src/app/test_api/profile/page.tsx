@@ -11,7 +11,7 @@ const CLOUD_API = process.env.CLOUD_API as string;
 //     cv
 // }
 
-export default function profile({params} : {params : {id : string}}){
+export default function profile(){
 
     const [file, setFile] = useState<File | undefined>()
     const [data, setData] = useState<newUser>()
@@ -61,8 +61,7 @@ export default function profile({params} : {params : {id : string}}){
         } catch (error) {
           console.error("Error uploading image:", error);
         }
-      }
-
+    }
 
     function handleChange(event: ChangeEvent<HTMLInputElement>){
         // console.log("masuk?");
@@ -76,7 +75,6 @@ export default function profile({params} : {params : {id : string}}){
     }
 
     async function fetchData(){
-
         try {
             const res = await fetch(`/api/auth/users/`,{
                 cache:"no-store"

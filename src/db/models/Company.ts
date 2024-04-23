@@ -51,7 +51,7 @@ class Company {
 		const id_company = new ObjectId(idCompany)
 		const idEventObject = new ObjectId(idEvent);
 		let data = await db.collection('Company').findOne({ _id: id_company });
-		const favs = data.fav;
+		const favs = data!.fav;
 		favs.push({
 			id_event: idEventObject,
 			url: url_fav

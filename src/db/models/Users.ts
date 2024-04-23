@@ -11,6 +11,7 @@ interface Login {
 }
 
 export interface newUser {
+    _id: ObjectId;
     name: string;
     email: string;
     password: string;
@@ -19,9 +20,12 @@ export interface newUser {
     cv: string;
 }
 
-interface updateUser {
+interface updateUser { 
     name: string;
     phoneNumber: string;
+    email: string;
+    password: string;
+    role: string;
     cv: string;
 }
 
@@ -62,14 +66,14 @@ class UserModel {
         }
 
         const [validateUser] = await db.collection('Users').find({
-            email: user.email
+                    email: user.email
         }).toArray()
         if (validateUser) throw new Error("Email/Username Already Registered")
         const data = await db.collection('Users').insertOne(user)
         return data
     }
 
-    static async update(id: string, updateUser: updateUser) {
+    static async update(id: string, updateUser : updateUser) {
 
         const _id = new ObjectId(id)
         const data = (await db.collection('Users').findOne({ _id })) as User | null
@@ -80,14 +84,14 @@ class UserModel {
                 { status: 404 })
         };
 
-        return await db.collection("Users").updateOne({ _id: _id }, {
+        return await db.collection("Users").updateOne({_id: _id},{
             $set: {
-                name: (updateUser.name != null) ? updateUser.name : data.name,
-                email: (updateUser.email != null) ? updateUser.email : data.email,
-                password: (updateUser.password != null) ? updateUser.password : data.password,
-                phoneNumber: (updateUser.phoneNumber != null) ? updateUser.phoneNumber : data.phoneNumber,
-                role: (updateUser.role != null) ? updateUser.role : data.role,
-                cv: (updateUser.cv != null) ? updateUser.cv : data.cv,
+                    name: (updateUser.name != null) ? updateUser.name : data.name,
+                    email: (updateUser.email != null) ? updateUser.email : data.email,
+                    password: (updateUser.password != null) ? updateUser.password : data.password,
+                    phoneNumber: (updateUser.phoneNumber != null) ? updateUser.phoneNumber : data.phoneNumber,
+                    role: (updateUser.role != null) ? updateUser.role : data.role,
+                    cv: (updateUser.cv != null) ? updateUser.cv : data.cv,
             }
         })
     }
@@ -108,7 +112,7 @@ class UserModel {
         try {
             const { email, password } = data
             const user = await this.getUserByEmail(email);
-            if (!user) {
+            if(!user) {
                 throw new Error("Invalid Username or Password")
             }
         } catch (error) {

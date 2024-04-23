@@ -12,7 +12,6 @@ const Header = () => {
   const fetchSearch = async () => {
 
     if (search) {
-      // console.log(search, "didalem fetch");
       const res = await fetch("http://localhost:3000/api/company?search=" + search, {
         cache: "no-store",
       });
@@ -22,13 +21,11 @@ const Header = () => {
       }
 
       const responseJson = await res.json();
-      // console.log(responseJson)
 
       if (responseJson != null) {
         setData(responseJson.data);
       }
     }
-    // console.log("Searching for:", search);
   };
 
   // ======================
@@ -67,7 +64,6 @@ const Header = () => {
         }
 
         const responseJson = await response.json();
-        // console.log(responseJson);
         if (responseJson != null) {
           setData(responseJson.data);
         }
@@ -110,7 +106,6 @@ const Header = () => {
                 className="border border-gray-300 rounded-l px-4 py-2 focus:outline-none focus:ring-2 text-black focus:ring-cyan-500 focus:border-transparent"
               />
               <button
-                // onClick={handleSearch}
                 className="bg-gray-600 px-4 py-2 rounded-r text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50"
               >
                 Search

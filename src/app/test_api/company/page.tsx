@@ -130,6 +130,7 @@ export default function page() {
             ):(data.map((item : CompanyTypes) => (
                 <tr>
                     <td>{item.name}</td>
+                    <td>{item.name}</td>
                     <td>{item.jobOffer}</td>
                     <td>
                         <RemoveButton id={item._id} />

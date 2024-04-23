@@ -11,6 +11,8 @@ interface CompanyTypesLocal{
 class Company{
 
 	static async store(data: CompanyTypesLocal){
+		console.log(data);
+		
         const data_object = {
         	name: data.name,
 			jobOffer: data.jobOffer
@@ -40,6 +42,28 @@ class Company{
 			$set: {
 				    name: data.name,
 					jobOffer: data.jobOffer
+			}
+		})
+	}
+
+	static async findFeaturedCompany() {
+        const find = await this.getAll()
+		
+        return find?.slice(0, 5)    
+    }
+
+	static async updateFavEvent(idCompany: string, idEvent: string, url_fav: string) {
+		const id_company = new ObjectId(idCompany)
+		const idEventObject = new ObjectId(idEvent);
+		let data = await db.collection('Company').findOne({ _id: id_company });
+		const favs = data!.fav;
+		favs.push({
+			id_event: idEventObject,
+			url: url_fav
+		})
+		return await db.collection("Company").updateOne({ _id: id_company }, {
+			$set: {
+				fav: favs
 			}
 		})
 	}

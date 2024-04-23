@@ -23,10 +23,11 @@ const LoginPage = () => {
 
     if (response.status != 200) {
       return redirect(`/login?error=Wrong Email/Password`);
-    }
+    }  
     const responseJson = await response.json();
 
     cookies().set("Authorization", `Bearer ${responseJson.data.accessToken}`);
+    cookies().set("Role", `${responseJson.data.role}`);
     return redirect("/");
   }
 

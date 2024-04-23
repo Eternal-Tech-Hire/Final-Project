@@ -11,17 +11,21 @@ interface Login {
 }
 
 export interface newUser {
+    _id: ObjectId;
     name: string;
     email: string;
     password: string;
     phoneNumber: string;
     role: string;
-    cv: string
+    cv: string;
 }
 
 interface updateUser { 
     name: string;
     phoneNumber: string;
+    email: string;
+    password: string;
+    role: string;
     cv: string;
 }
 
@@ -80,13 +84,16 @@ class UserModel {
                 { status: 404 })
         };
 
-        
-        // const validation = UserValidation.safeParse(updateUser);
-
-        // if (!validation.success) {
-        //     const errors = validation.error
-        //     throw errors
-        // }
+        return await db.collection("Users").updateOne({_id: _id},{
+            $set: {
+                    name: (updateUser.name != null) ? updateUser.name : data.name,
+                    email: (updateUser.email != null) ? updateUser.email : data.email,
+                    password: (updateUser.password != null) ? updateUser.password : data.password,
+                    phoneNumber: (updateUser.phoneNumber != null) ? updateUser.phoneNumber : data.phoneNumber,
+                    role: (updateUser.role != null) ? updateUser.role : data.role,
+                    cv: (updateUser.cv != null) ? updateUser.cv : data.cv,
+            }
+        })
     }
 
     static async getUserById(id: string) {

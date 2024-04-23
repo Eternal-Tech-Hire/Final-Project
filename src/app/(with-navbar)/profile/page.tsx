@@ -1,10 +1,14 @@
 "use client";
 import Modal from "@/components/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaPencil } from "react-icons/fa6";
+import QRCode from "qrcode";
+import { newUser } from "@/db/models/Users";
 
 const ProfilePage = () => {
   const [showModal, setShowModal] = useState(false);
+  const [data, setData] = useState<newUser>()
+  const [qr, setQR] = useState<string>()
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -18,6 +22,37 @@ const ProfilePage = () => {
   const closeModal = () => {
     setShowModal(false);
   };
+
+  async function fetchData() {
+    try {
+      const res = await fetch(`/api/auth/users/`, {
+        cache: "no-store",
+      });
+
+      if (res.ok) {
+        const userData = await res.json();
+        setData(userData.data);
+      } else {
+        console.error("Failed to fetch user data.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const generate = () => {
+    console.log("masuk?");
+    
+    QRCode.toDataURL('http://localhost:3000/profile/' + data?._id).then(setQR)
+    // setQR(generateQR)
+  }
+
+  console.log(qr);
+  
 
   return (
     <>
@@ -36,7 +71,7 @@ const ProfilePage = () => {
               className="w-40 border-4 border-white rounded-full"
             />
             <div className="flex items-center space-x-2 mt-2">
-              <p className="text-2xl">Amanda Ross</p>
+              <p className="text-2xl">{data?.name}</p>
               <span className="bg-blue-500 rounded-full p-1" title="Verified">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +92,8 @@ const ProfilePage = () => {
             <p className="text-gray-700">
               Senior Software Engineer at Tailwind CSS
             </p>
-            <p className="text-sm text-gray-500">New York, USA</p>
+            <p className="text-sm text-gray-500">{data?.email}</p>
+            {qr ? <img src={qr} alt="" /> : ""}
           </div>
           <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
             <div className="flex items-center space-x-4 mt-2">
@@ -68,6 +104,7 @@ const ProfilePage = () => {
                 <FaPencil className="h-4 w-4" />
                 <span>Edit Profile</span>
               </button>
+              <button onClick={generate}>generate QR</button>
             </div>
           </div>
           {showModal && (

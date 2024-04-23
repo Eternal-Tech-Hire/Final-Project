@@ -25,7 +25,7 @@ class Ticket {
 			const ticket_order = {
 				name: data.name,
 				paymentStatus: data.paymentStatus,
-				eventId: eventId,
+				eventId: new ObjectId(eventId),
 				userId: new ObjectId(userId)
 			}
 			// console.log(ticket_order);

@@ -14,7 +14,7 @@ const CLOUD_API = process.env.CLOUD_API as string;
 export default function profile(){
 
     const [file, setFile] = useState<File | undefined>()
-    const [data, setData] = useState<newUser>()
+    const [data, setData] = useState<newUser | undefined>()
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();

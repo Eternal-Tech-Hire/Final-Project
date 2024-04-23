@@ -43,6 +43,12 @@ class Company{
 			}
 		})
 	}
+
+	static async findFeaturedCompany() {
+        const find = await this.getAll()
+		
+        return find?.slice(0, 5)    
+    }
 }
 
 export default Company;

@@ -25,8 +25,7 @@ export const GET = async (request: NextRequest) => {
     let response;
 
     if (search) {
-        // console.log("masuk?");
-        // console.log(search);
+
         response = await db
           .collection("Company")
           .find({
@@ -42,7 +41,6 @@ export const GET = async (request: NextRequest) => {
       //   console.log("masuk tanpa search");
         response = await Company.getAll();
       }
-    // const response = await Company.getAll()
     return NextResponse.json({
         data: response
     }, {status : 200})

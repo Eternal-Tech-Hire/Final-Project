@@ -5,12 +5,52 @@ import Carousel from "@/components/Carousle";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
+
+
 export default function Home() {
+  //=====================================
   const [activeSlide, setActiveSlide] = useState(0);
+  const [listCompany ,setlistCompany] = useState([]);
+  const [listEvents ,setlistEvents] = useState([]);
 
   const handleSlideChange = (index: number) => {
     setActiveSlide(index);
   };
+  //=====================================
+
+  async function fetchDataCompany(){
+    try {
+      const response = await fetch("http://localhost:3000/api/home/company", {
+        cache: "no-store",
+      });
+      const data = await response.json();
+
+      setlistCompany(data.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function fetchDataEvents(){
+    try {
+      const response = await fetch("http://localhost:3000/api/home/events", {
+        cache: "no-store",
+      });
+      const data = await response.json();
+
+      setlistEvents(data.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(()=>{
+    fetchDataCompany()
+    fetchDataEvents()
+  },[])
+
+  // console.log(listCompany);
+  
   return (
     <>
       <main>
@@ -22,9 +62,11 @@ export default function Home() {
             — <span className="ml-5 mr-5">Job Fair</span> —
           </h1>
           <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5">
-            <CardFair />
-            <CardFair />
-            <CardFair />
+            {listEvents.map((item, index)=>(
+             <CardFair data={item} key={index}/>
+            ))}
+            {/* <CardFair />
+            <CardFair /> */}
           </div>
         </div>
         <div className="lg:px-32 py-20 bg-gray-100 h-full">
@@ -47,7 +89,14 @@ export default function Home() {
           {/* Carousel */}
           <div className="lg:carousel lg:carousel-center grid grid-cols-1 gap-3 lg:max-w-full p-4 bg-transparent rounded-box relative">
             {/* Carousel items */}
-            <div className="lg:carousel-item lg:w-[40%] py-5 lg:py-0">
+            {listCompany.map((item,index)=>(
+              
+              <div className="lg:carousel-item lg:w-[40%] py-5 lg:py-0">
+              <CardCompany data={item} key={index}/>
+              </div>
+            ))}
+            
+            {/* <div className="lg:carousel-item lg:w-[40%] py-5 lg:py-0">
               <CardCompany />
             </div>
             <div className="lg:carousel-item lg:w-[40%] py-5 lg:py-0">
@@ -61,10 +110,7 @@ export default function Home() {
             </div>
             <div className="lg:carousel-item lg:w-[40%] py-5 lg:py-0">
               <CardCompany />
-            </div>
-            <div className="lg:carousel-item lg:w-[40%] py-5 lg:py-0">
-              <CardCompany />
-            </div>
+            </div> */}
             {/* Repeat Carousel items for each slide */}
           </div>
           {/* Indicator dots */}

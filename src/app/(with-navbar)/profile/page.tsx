@@ -1,6 +1,6 @@
 "use client";
 import Modal from "@/components/Modal";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { FaPencil } from "react-icons/fa6";
 import { TbBarcode } from "react-icons/tb";
 import { FaCloudArrowUp } from "react-icons/fa6";
@@ -9,16 +9,17 @@ import { newUser } from "@/db/models/Users";
 import ModalQR from "@/components/QR";
 import ModalCV from "@/components/UploadCV";
 
+
 const ProfilePage = () => {
   const [showModal, setShowModal] = useState(false);
   const [showQR, setShowQR] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
   const [data, setData] = useState<newUser>();
   const [qr, setQR] = useState<string>();
-
+ 
   const toggleModal = () => {
-    console.log("ok");
-    
+    // console.log("ok");
+
     setShowModal(!showModal);
     if (!showModal) {
       document.body.classList.add("modal-open");
@@ -66,19 +67,17 @@ const ProfilePage = () => {
     }
   }
 
+
   useEffect(() => {
     fetchData();
   }, []);
 
   const generate = () => {
-    console.log("masuk?");
-
     QRCode.toDataURL("http://localhost:3000/profile/" + data?._id).then(setQR);
     // setQR(generateQR)
     toggleModalQR();
   };
 
-  console.log(qr);
 
   return (
     <>
@@ -97,7 +96,7 @@ const ProfilePage = () => {
               className="w-40 border-4 border-white rounded-full"
             />
             <div className="flex items-center space-x-2 mt-2">
-              <p className="text-2xl">Amanda Ross</p>
+              <p className="text-2xl">{data?.name}</p>
               <span className="bg-blue-500 rounded-full p-1" title="Verified">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -166,7 +165,7 @@ const ProfilePage = () => {
               onClick={toggleModalUpload}
             ></div>
           )}
-          {showUpload && <ModalCV onClose={toggleModalUpload} />}
+          {showUpload && <ModalCV onClose={toggleModalUpload} userId={data?._id}/>}
         </div>
       </div>
     </>

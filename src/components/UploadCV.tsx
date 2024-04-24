@@ -1,14 +1,93 @@
-import React from 'react';
+import { ObjectId } from 'mongodb';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 
 interface ModalProps {
   onClose: () => void;
+  userId: string | undefined |  ObjectId;
 }
+const CLOUD_API = process.env.CLOUD_API as string;
 
-const ModalCV: React.FC<ModalProps> = ({ onClose }) => {
+const ModalCV: React.FC<ModalProps> = ({ onClose, userId}) => {
   const closeModal = () => {
     onClose();
   };
 
+  // const [file, setFile] = useState<File | undefined>();
+
+  async function handleSubmit(event: ChangeEvent<HTMLInputElement>) {
+    event.preventDefault();
+
+    const target = event.target as HTMLInputElement & {
+      files: FileList;
+    };
+    // console.log(target.files);
+
+    // setFile(target.files[0]);
+
+    console.log(target.files[0], "di handle ");
+    
+    if (!target.files[0]) {
+      console.error("No file selected.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", target.files[0]);
+    formData.append("upload_preset", "finalproject");
+    formData.append("api_key", CLOUD_API);
+
+    try {
+      // fetch to cloudinary
+      const upload = await fetch(
+        "https://api.cloudinary.com/v1_1/dzdi4yqlr/raw/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      console.log(upload, "upload status");
+      
+      if (!upload.ok) {
+        throw new Error("Failed to upload.");
+      }
+
+      const uploadRes = await upload.json();
+      console.log(uploadRes, "uploadRes");
+      
+      // insert to mongoDB
+      const res = await fetch(
+        "http://localhost:3000/api/auth/users/" + userId,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            // name: document.getElementById("name").value,
+            // email: document.getElementById("email").value,
+            // phoneNumber: document.getElementById("phoneNumber").value,
+            cv: uploadRes.url,
+            // role: data?.role,
+          }),
+        }
+      );
+      alert("Berhasil");
+      closeModal()
+      console.log(res);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  }
+
+  // function handleChange(event: ChangeEvent<HTMLInputElement>) {
+  //   // console.log("masuk?");
+
+  //   const target = event.target as HTMLInputElement & {
+  //     files: FileList;
+  //   };
+  //   // console.log(target.files);
+
+  //   setFile(target.files[0]);
+  // }
+  // console.log(file);
+  
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="bg-gray-900 bg-opacity-75 fixed inset-0"></div>
@@ -34,8 +113,9 @@ const ModalCV: React.FC<ModalProps> = ({ onClose }) => {
           </button>
         </div>
         <h1 className='text-xl font-bold text-center mb-5 text-white'>Upload Your CV</h1>
-        <div className="flex items-center justify-center bg-gray-500 p-6 rounded-lg">
-          <label className="w-64 flex flex-col items-center px-4 py-6 bg-gray-200 text-blue-600 rounded-lg shadow-lg tracking-wide uppercase border border-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white">
+        <div className="flex items-center justify-center bg-gray-100 p-6 rounded-lg">
+          <form>
+          <label className="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue-600 rounded-lg shadow-lg tracking-wide uppercase border border-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white">
             <svg
               className="w-8 h-8"
               fill="currentColor"
@@ -45,8 +125,9 @@ const ModalCV: React.FC<ModalProps> = ({ onClose }) => {
               <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
             </svg>
             <span className="mt-2 text-base leading-normal">Select a file</span>
-            <input type="file" className="hidden" />
+            <input type="file" className="hidden" onChange={handleSubmit}/>
           </label>
+          </form>
         </div>
       </div>
     </div>

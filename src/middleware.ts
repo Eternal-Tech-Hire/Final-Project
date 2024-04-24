@@ -40,7 +40,7 @@ export async function middleware(request: NextRequest) {
     }
 
     if (request.nextUrl.pathname.startsWith('/api/auth/users')) {
-        // console.log("masuk?");
+        console.log("masuk?");
         
         const tokenCookie = cookies().get('Authorization')
         // console.log(tokenCookie, "<><><><><><><> di api auth users");
@@ -65,7 +65,7 @@ export async function middleware(request: NextRequest) {
         // console.log(decodeToken)
         const requestHeaders = new Headers(request.headers);
         requestHeaders.set('x-user-id', decodeToken._id);
-    
+        requestHeaders.set('x-user-role', decodeToken.role);
         const response = NextResponse.next({
             request: {
                 headers: requestHeaders,

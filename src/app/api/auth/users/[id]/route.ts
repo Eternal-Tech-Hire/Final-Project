@@ -19,6 +19,8 @@ export async function GET(request: Request, { params }: RequestParam) {
 
 export async function POST (request: Request,  { params }: RequestParam){
     try{
+        console.log("gamasuk yah?");
+        
         const body = await request.json();
         console.log(body);
 

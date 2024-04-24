@@ -12,11 +12,10 @@ export default function register() {
             name: formData.get("name"),
             email: formData.get("email"),
             password: formData.get("password"),
-            phoneNumber: formData.get("phoneNumber"),
-            cv: ""
+            jobOffer: formData.get("jobOffer"),
         };
 
-        const response = await fetch(`http://localhost:3000/api/auth/register`, {
+        const response = await fetch(`http://localhost:3000/api/auth/company/register`, {
             method: "post",
             cache: "no-store",
             headers: {
@@ -24,15 +23,15 @@ export default function register() {
             },
             body: JSON.stringify(rawFormData),
         });
-        redirect("/test_api/login");
+        redirect("http://localhost:3000/test_api/company");
     }
 
     return (
         <>
         <form action={registerAction} className="space-y-4">
-            <h1>TEST REGISTER</h1>
+            <h1>TEST REGISTER SEBAGAI COMPANY</h1>
             <div>
-                <span>Name</span>
+                <span>Name Company</span>
                 <input type="text" name="name" id="name" className="border broder-2 ml-2" />
             </div>
             <div>
@@ -44,8 +43,8 @@ export default function register() {
                 <input type="password" name="password" id="password" className="border broder-2 ml-2" />
             </div>
             <div>
-                <span>Phone Number</span>
-                <input type="text" name="phoneNumber" id="phoneNumber" className="border broder-2 ml-2" />
+                <span>Job Offer</span>
+                <input type="text" name="jobOffer" id="jobOffer" className="border broder-2 ml-2" />
             </div>
             <button type="submit">REGISTER</button>
         </form>

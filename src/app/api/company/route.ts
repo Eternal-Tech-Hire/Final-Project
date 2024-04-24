@@ -25,7 +25,8 @@ export const GET = async (request: NextRequest) => {
     let response;
 
     if (search) {
-
+        // console.log("masuk?");
+        // console.log(search);
         response = await db
             .collection("Company")
             .find({

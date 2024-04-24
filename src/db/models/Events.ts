@@ -8,6 +8,7 @@ interface EventsTypesLocal {
 	date: string;
 	location: string;
 	categoryId: string;
+	companyId: []
 }
 
 
@@ -19,7 +20,8 @@ class Events {
 			description: data.description,
 			date: data.date,
 			location: data.location,
-			categoryId: data.categoryId
+			categoryId: data.categoryId,
+			companyId: []
 		}
 		return await db.collection('Events').insertOne(Events_add)
 	}
@@ -40,6 +42,31 @@ class Events {
 		return (await db.collection('Events').deleteOne({ _id: instanceTicketId }))
 	}
 
+	static async addCompanyJoin(_id: string, idCompany: string ){
+		const idEventObject = new ObjectId(_id);
+		const idCompanyObject = new ObjectId(idCompany)
+		let data = await db.collection('Events').findOne({ _id: idEventObject });
+		const companyIds = data!.companyId;
+		const validation = companyIds.filter((e : {id_company : string})=>{
+			return e.id_company == idCompany 
+		})
+		console.error(validation);
+		if(validation.length == 0){
+			companyIds.push({
+				id_company: idCompanyObject,
+				date_join: Date()
+			})
+
+			console.error("Company Berhasil Join")
+
+			return await db.collection("Events").updateOne({ _id: idEventObject }, {
+				$set: {
+					companyId: companyIds
+				}
+			})
+		}
+	}
+
 	static async update(data: EventsTypes, _id: string) {
 		const id = new ObjectId(_id)
 		return await db.collection("Events").updateOne({ _id: id }, {
@@ -52,11 +79,6 @@ class Events {
 			}
 		})
 	}
-
-	static async findFeaturedEvents() {
-        const find = await this.getAll()
-        return find?.slice(0, 3)    
-    }
 }
 
 export default Events;

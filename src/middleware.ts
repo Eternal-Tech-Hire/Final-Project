@@ -4,7 +4,6 @@ import type { NextRequest } from 'next/server'
 import { readPayload, readPayloadJose } from '@/db/utils/jwt'
 
 export async function middleware(request: NextRequest) {
-    // console.log('url', request.url);
     
     if (request.nextUrl.pathname.startsWith('/api/ticket')) {
         const tokenCookie = cookies().get('Authorization')
@@ -30,6 +29,7 @@ export async function middleware(request: NextRequest) {
         // console.log(decodeToken)
         const requestHeaders = new Headers(request.headers);
         requestHeaders.set('x-user-id', decodeToken._id);
+        requestHeaders.set('x-user-role', decodeToken.role);
     
         const response = NextResponse.next({
             request: {
@@ -135,6 +135,7 @@ export async function middleware(request: NextRequest) {
         // console.log(decodeToken)
         const requestHeaders = new Headers(request.headers);
         requestHeaders.set('x-user-id', decodeToken._id);
+
         requestHeaders.set('x-user-role', decodeToken.role);
     
         const response = NextResponse.next({
@@ -142,11 +143,6 @@ export async function middleware(request: NextRequest) {
                 headers: requestHeaders,
             }
         })
-
-        // const userRole = request.headers.get("x-user-role");
-        // const id = request.headers.get("x-user-id");
-        // console.log(userRole," di middleware", id);
-        
         return response
     }
 
@@ -156,7 +152,7 @@ export async function middleware(request: NextRequest) {
         const auth = cookies().get("Authorization")?.value;
         if (auth) {
           request.nextUrl.pathname = "/"
-          return NextResponse.redirect(request.nextUrl)
+          return NextResponse.redirect(new URL("/", request.nextUrl))
         }
       }
 

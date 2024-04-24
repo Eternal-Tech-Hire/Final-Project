@@ -15,7 +15,7 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
       >
         <div className="relative w-full max-w-md px-4 h-full md:h-auto">
           {/* Modal content */}
-          <div className="bg-white rounded-lg shadow relative dark:bg-gray-700">
+          <div className="bg-white rounded-lg shadow relative dark:bg-cyan-950">
             <div className="flex justify-end p-2">
               <button
                 type="button"

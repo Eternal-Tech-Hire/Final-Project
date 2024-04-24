@@ -1,6 +1,40 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 const RegisterPage = () => {
+  async function registerAction(formData: FormData) {
+    "use server";
+
+    const rawFormData = {
+        name: formData.get("name"),
+        email: formData.get("email"),
+        password: formData.get("password"),
+        role : formData.get("role"),
+        phoneNumber: formData.get("phoneNumber"),
+    };
+
+    if (rawFormData.role === "jobSeeker") {
+      const response = await fetch(`http://localhost:3000/api/auth/register`, {
+        method: "post",
+        cache: "no-store",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(rawFormData),
+    });
+    }else if(rawFormData.role === "company"){
+      const response = await fetch(`http://localhost:3000/api/auth/company/register`, {
+        method: "post",
+        cache: "no-store",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(rawFormData),
+    });
+    }
+
+    redirect("/login");
+}
   return (
     <>
       <link
@@ -36,8 +70,7 @@ const RegisterPage = () => {
       <div className="flex min-h-screen justify-center sm:flex sm:flex-row py-5 bg-transparent rounded-3xl shadow-xl">
         <div className="flex w-3/4 justify-center lg:justify-end self-end z-10 overflow-auto">
           <form
-            action="#"
-            method="#"
+            action={registerAction}
             className="lg:px-8 lg:py-8 p-8 bg-blue-950  rounded-3xl lg:w-96 w-full "
           >
             <div className="flex flex-col items-center mb-6">
@@ -63,6 +96,7 @@ const RegisterPage = () => {
                 </label>
                 <input
                   id="fullName"
+                  name="name"
                   className="w-full text-sm px-4 py-3 bg-gray-200 focus:bg-gray-100 border border-gray-200 rounded-lg focus:outline-none focus:border-purple-400"
                   type="text"
                   placeholder="John Doe"
@@ -77,8 +111,9 @@ const RegisterPage = () => {
                 </label>
                 <input
                   id="email"
+                  name="email"
                   placeholder="johndoe@mail.com"
-                  type="text"
+                  type="email"
                   className="text-sm text-black px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
                 />
               </div>
@@ -91,6 +126,7 @@ const RegisterPage = () => {
                 </label>
                 <input
                   id="phoneNumber"
+                  name="phoneNumber"
                   placeholder="+62 812 345 678.."
                   type="number"
                   className="text-sm text-black px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
@@ -105,6 +141,7 @@ const RegisterPage = () => {
                 </label>
                 <input
                   id="password"
+                  name="password"
                   placeholder="******"
                   type="password"
                   className="text-sm text-black px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
@@ -119,13 +156,14 @@ const RegisterPage = () => {
                 </label>
                 <select
                   id="userType"
+                  name="role"
+                  defaultValue={""}
                   className="text-sm text-black px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
                 >
                   <option
                     style={{ color: "#9CA3AF" }}
                     value=""
                     disabled
-                    selected
                   >
                     Select Role
                   </option>
@@ -146,7 +184,7 @@ const RegisterPage = () => {
                   </p>
                 </div>
               </div>
-              <div>
+              <div> 
                 <button className="bg-gradient-to-br bg-violet-800 hover:bg-violet-600 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-indigo-700 focus:outline-none transition duration-500 ease-in-out transform hover:-translate-x hover:scale-105">
                   Sign Up
                 </button>

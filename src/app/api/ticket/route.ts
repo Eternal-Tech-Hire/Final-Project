@@ -10,6 +10,8 @@ export const GET = async (request: Request) => {
 
 export const POST = async (request: Request) => {
     try{
+        console.log("masuk sini ga gan");
+        
         const userId = request.headers.get("x-user-id");
         if (!userId) {
             return NextResponse.json({

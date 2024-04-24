@@ -1,10 +1,37 @@
+"use client"
 import { EventsTypes } from "@/types";
 import { useState, useEffect } from "react";
 
-const CardFair = ({ data }: { data: EventsTypes }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
+  interface CardFairProps {
+    data: EventsTypes;
+    userRole?: string;
+  }
+  
+  const CardFair = ({ data, userRole }: CardFairProps) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // console.log(userRole);
+    const joinFair = async () => {
+      const input = {eventId : data?._id, name: data?.name, paymentStatus: "false"}
+      console.log(userRole);
+      if (userRole === "jobSeeker") {
+        
+         await fetch('/api/ticket',{
+          method:"POST",
+          body: JSON.stringify(input)
+         })
+      }else if(userRole === "company"){
+        
+        await fetch('/api/events/company_join',{
+          method:"POST",
+          body: JSON.stringify({
+            _id: data?._id
+            }), 
+        })
+      }
+    };
+    
+    useEffect(() => {
     const authorizationCookie = document.cookie
       .split(";")
       .find((cookie) => cookie.trim().startsWith("Authorization="));
@@ -25,12 +52,13 @@ const CardFair = ({ data }: { data: EventsTypes }) => {
             </div>
             {isLoggedIn && (
               <div className="flex justify-end mt-6">
-                <button className="rounded-md bg-gradient-to-br from-emerald-400 to-sky-600 px-4 py-2 font-dm text-sm font-medium text-white shadow-md hover:shadow-lg transition-transform duration-200 ease-in-out hover:scale-[1.03]">
+                <button onClick={joinFair} className="rounded-md bg-gradient-to-br from-emerald-400 to-sky-600 px-4 py-2 font-dm text-sm font-medium text-white shadow-md hover:shadow-lg transition-transform duration-200 ease-in-out hover:scale-[1.03]">
                   Join Now
                 </button>
               </div>
             )}
           </div>
+
         </div>
         <hr className="my-2 border-b border-gray-300" />
       </div>

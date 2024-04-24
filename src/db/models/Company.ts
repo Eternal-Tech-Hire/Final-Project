@@ -97,11 +97,9 @@ class Company {
 		console.log(url, id_company, idSeeker);
 		
 		let data = await db.collection('Company').findOne({ _id: id_company });
-		console.log(data);
-		
 		const favs = data!.fav;
 		favs.push({
-			seekerId: idSeeker,
+			// id_event: idEventObject
 			url: url
 		})
 		return await db.collection("Company").updateOne({ _id: id_company }, {

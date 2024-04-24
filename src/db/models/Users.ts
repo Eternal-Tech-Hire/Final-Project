@@ -60,7 +60,8 @@ class UserModel {
 
         const user = {
             ...newUser,
-            role: "member",
+            role: "jobSeeker",
+            cv: "",
             password: bcryptjs.hashSync(newUser.password)
         }
 

@@ -28,7 +28,7 @@ class Ticket {
 				eventId: eventId,
 				userId: new ObjectId(userId)
 			}
-			// console.log(ticket_order);
+			console.log(ticket_order, "ticket order");
 
 			return await db.collection('Tickets').insertOne(ticket_order)
 		}

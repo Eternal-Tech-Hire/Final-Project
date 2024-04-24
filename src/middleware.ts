@@ -113,14 +113,18 @@ export async function middleware(request: NextRequest) {
         // console.log("masuk events");
         
         const tokenCookie = cookies().get('Authorization')
-        console.log(tokenCookie, "<><><><><><><>");
+        // console.log(tokenCookie, "<><><><><><><>");
         if (!tokenCookie?.value){
-            return NextResponse.json(
-                {message: 'Token Invalid'},
-                {
-                    status: 400
-                }
-            )
+            return undefined
+            // request.nextUrl.pathname = "/login"
+            // return NextResponse.redirect(new URL("/login", request.nextUrl))
+            // return NextResponse.json(
+            //     {message: 'Token Invalid'},
+            //     {
+            //         status: 400
+            //     }
+            // )
+            
         }
         
         const splitTokenCookie = tokenCookie.value.split(' ')[1]
@@ -135,7 +139,6 @@ export async function middleware(request: NextRequest) {
         // console.log(decodeToken)
         const requestHeaders = new Headers(request.headers);
         requestHeaders.set('x-user-id', decodeToken._id);
-
         requestHeaders.set('x-user-role', decodeToken.role);
     
         const response = NextResponse.next({
@@ -143,6 +146,11 @@ export async function middleware(request: NextRequest) {
                 headers: requestHeaders,
             }
         })
+
+        // const userRole = request.headers.get("x-user-role");
+        // const id = request.headers.get("x-user-id");
+        // console.log(userRole," di middleware", id);
+        
         return response
     }
 
@@ -176,9 +184,44 @@ export async function middleware(request: NextRequest) {
           return NextResponse.redirect(request.nextUrl)
         }
       }
+
+      if (request.nextUrl.pathname.startsWith('/api/events/company_join')) {
+        // console.log("masuk ke add join company");
+        
+        const tokenCookie = cookies().get('Authorization')
+        // console.log(tokenCookie, "<><><><><><><>");
+        if (!tokenCookie?.value){
+            return NextResponse.json(
+                {message: 'Token Invalid'},
+                {
+                    status: 400
+                }
+            )
+        }
+        
+        const splitTokenCookie = tokenCookie.value.split(' ')[1]
+        // console.log(splitTokenCookie);
+        
+        const decodeToken = await readPayloadJose<{
+            _id: string;
+            email: string;
+            role: string;
+        }>(splitTokenCookie)
+
+        // console.log(decodeToken)
+        const requestHeaders = new Headers(request.headers);
+        requestHeaders.set('x-user-id', decodeToken._id);
+        
+        const response = NextResponse.next({
+            request: {
+                headers: requestHeaders,
+            }
+        })
+        return response
+    }
 }   
 
 export const config = {
-    matcher: ["/api/ticket/:path*","/api/company/add_fav/:path*", "/api/auth/users/:path*", "/login/:path*", "/register/:path*", "/profile/:path*","/events/:path*"],
+    matcher: ["/api/ticket/:path*", "/api/events/company_join/:path*","/api/company/add_fav/:path*", "/api/auth/users/:path*", "/login/:path*", "/register/:path*", "/profile/:path*","/events/:path*"],
   };
   //,

@@ -56,12 +56,16 @@ class Events {
 		const idEventObject = new ObjectId(_id);
 		const idCompanyObject = new ObjectId(idCompany)
 		let data = await db.collection('Events').findOne({ _id: idEventObject });
+		// console.log(data, "data event");
+		
 		const companyIds = data!.companyId;
+
 		const validation = companyIds.filter((e: { id_company: string }) => {
 			return e.id_company == idCompany
 		})
 		console.error(validation);
 		if (validation.length == 0) {
+
 			companyIds.push({
 				id_company: idCompanyObject,
 				date_join: Date()
@@ -89,6 +93,12 @@ class Events {
 			}
 		})
 	}
+	
+	static async findFeaturedEvents() {
+        const find = await this.getAll()
+
+        return find?.slice(0, 3)    
+    }
 }
 
 export default Events;

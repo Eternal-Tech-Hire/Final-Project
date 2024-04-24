@@ -8,7 +8,8 @@ const CardCompany = ({data} : {data : CompanyTypes}) => {
           <div className="px-6 py-4">
             <div className="font-bold text-xl mb-2">{data?.name}</div>
             <p className="text-gray-700 text-base">
-              {data?.jobOffer} === Job Offer
+
+              {data?.jobOffer}
             </p>
           </div>
           <div className="px-6 pt-4 pb-2">

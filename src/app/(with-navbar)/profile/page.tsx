@@ -7,6 +7,8 @@ const ProfilePage = () => {
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => {
+    console.log("ok");
+    
     setShowModal(!showModal);
     if (!showModal) {
       document.body.classList.add("modal-open");

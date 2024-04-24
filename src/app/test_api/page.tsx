@@ -1,9 +1,54 @@
+"use client";
 import Link from "next/link";
+import React, { useEffect, useState} from "react";
+
+interface AuthTypes{
+  _id: string;
+  email: string;
+  role: string;
+}
 
 export default function Home() {
+  const [data, setData] = useState<AuthTypes>();
+  const [loading, setLoading] = useState<>(true);
+
+  useEffect(() => {
+    async function fetchData() {
+        try{
+            "use client";
+            // gunakan link ini untuk select semua data (http://localhost:3000/api/ticket)
+           // link yang digunakan saat ini merupakan data yang di input oleh user (yang login saat ini)
+            const response = await fetch(`http://localhost:3000/api/auth/users`, {
+                method: "GET",
+                cache: "no-store",
+                headers: {},
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch items");
+            }
+
+            const responseJson = await response.json();
+            console.log(responseJson)
+            if(responseJson != null){
+                setData(responseJson.data);
+                setLoading(false);
+            }
+        }catch (error){
+            console.error("Error fetching item:", error)
+        }finally{            
+        }
+    };
+    fetchData();
+  }, []);
 
   return (
     <>
+      {loading?(
+       <p>BELUM LOGIN</p>
+       ):(
+       <p>Email {data!.email || "Kosong"} sebagai {data!.role} </p>
+       )}
       <main>
       <h1 className="font-bold">LINK TESTING API</h1>
       <h2>Authetication</h2>

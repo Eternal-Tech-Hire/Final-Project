@@ -1,18 +1,44 @@
 "use client";
 import Modal from "@/components/Modal";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { FaPencil } from "react-icons/fa6";
+import { TbBarcode } from "react-icons/tb";
+import { FaCloudArrowUp } from "react-icons/fa6";
 import QRCode from "qrcode";
 import { newUser } from "@/db/models/Users";
+import ModalQR from "@/components/QR";
+import ModalCV from "@/components/UploadCV";
 
 const ProfilePage = () => {
   const [showModal, setShowModal] = useState(false);
-  const [data, setData] = useState<newUser>()
-  const [qr, setQR] = useState<string>()
+  const [showQR, setShowQR] = useState(false);
+  const [showUpload, setShowUpload] = useState(false);
+  const [data, setData] = useState<newUser>();
+  const [qr, setQR] = useState<string>();
 
   const toggleModal = () => {
+    console.log("ok");
+    
     setShowModal(!showModal);
     if (!showModal) {
+      document.body.classList.add("modal-open");
+    } else {
+      document.body.classList.remove("modal-open");
+    }
+  };
+
+  const toggleModalQR = () => {
+    setShowQR(!showQR);
+    if (!showQR) {
+      document.body.classList.add("modal-open");
+    } else {
+      document.body.classList.remove("modal-open");
+    }
+  };
+
+  const toggleModalUpload = () => {
+    setShowUpload(!showUpload);
+    if (!showUpload) {
       document.body.classList.add("modal-open");
     } else {
       document.body.classList.remove("modal-open");
@@ -46,13 +72,13 @@ const ProfilePage = () => {
 
   const generate = () => {
     console.log("masuk?");
-    
-    QRCode.toDataURL('http://localhost:3000/profile/' + data?._id).then(setQR)
+
+    QRCode.toDataURL("http://localhost:3000/profile/" + data?._id).then(setQR);
     // setQR(generateQR)
-  }
+    toggleModalQR();
+  };
 
   console.log(qr);
-  
 
   return (
     <>
@@ -71,7 +97,7 @@ const ProfilePage = () => {
               className="w-40 border-4 border-white rounded-full"
             />
             <div className="flex items-center space-x-2 mt-2">
-              <p className="text-2xl">{data?.name}</p>
+              <p className="text-2xl">Amanda Ross</p>
               <span className="bg-blue-500 rounded-full p-1" title="Verified">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -93,10 +119,17 @@ const ProfilePage = () => {
               Senior Software Engineer at Tailwind CSS
             </p>
             <p className="text-sm text-gray-500">{data?.email}</p>
-            {qr ? <img src={qr} alt="" /> : ""}
+            {/* {qr ? <img src={qr} alt="" /> : ""} */}
           </div>
           <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
             <div className="flex items-center space-x-4 mt-2">
+              <button
+                className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
+                onClick={toggleModalUpload}
+              >
+                <FaCloudArrowUp className="h-4 w-4" />
+                <span>Upload CV</span>
+              </button>
               <button
                 className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
                 onClick={toggleModal}
@@ -104,9 +137,22 @@ const ProfilePage = () => {
                 <FaPencil className="h-4 w-4" />
                 <span>Edit Profile</span>
               </button>
-              <button onClick={generate}>generate QR</button>
+              <button
+                className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
+                onClick={generate}
+              >
+                <TbBarcode className="h-5 w-5" />
+                <span>Generate QR</span>
+              </button>
             </div>
           </div>
+          {showQR && (
+            <div
+              className="fixed inset-0 w-screen h-screen bg-black opacity-50 z-50"
+              onClick={toggleModalQR}
+            ></div>
+          )}
+          {showQR && <ModalQR qr={qr || ""} onClose={toggleModalQR} />}
           {showModal && (
             <div
               className="fixed inset-0 bg-black opacity-50 z-50"
@@ -114,6 +160,13 @@ const ProfilePage = () => {
             ></div>
           )}
           {showModal && <Modal onClose={toggleModal} />}
+          {showUpload && (
+            <div
+              className="fixed inset-0 bg-black opacity-50 z-50"
+              onClick={toggleModalUpload}
+            ></div>
+          )}
+          {showUpload && <ModalCV onClose={toggleModalUpload} />}
         </div>
       </div>
     </>

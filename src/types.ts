@@ -20,7 +20,11 @@ export interface CategoryTypes {
 export interface CompanyTypes {
   _id: ObjectId;
   name: string;
+  email: string;
+  password: string;
+  role: string;
   jobOffer: string;
+  companyId: []
 }
 
 export interface EventsTypes{

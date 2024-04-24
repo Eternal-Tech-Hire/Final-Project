@@ -3,9 +3,10 @@ import { NextResponse } from "next/server";
 
 export async function POST (request: Request) {
     try{
+        // console.log("masuk post api");
         
         const companyId = request.headers.get("x-user-id");
-        console.log(companyId, "companyid");
+        // console.log(companyId, "companyid");
         
         if (!companyId) {
             return NextResponse.json({
@@ -18,7 +19,7 @@ export async function POST (request: Request) {
         const body = await request.json();
         console.log(body);
         
-        const response = await Company.updateFavEvent(companyId, body.seekerId, body.url)
+        const response = await Company.updateFavEvent(companyId, body.userId, body.url)
         return NextResponse.json({
             data: response
         }, {status : 200})

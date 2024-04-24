@@ -8,10 +8,13 @@ import { cookies } from "next/headers";
 
 async function fetchData() {
   try {
-    const response = await fetch(`http://localhost:3000/api/events`, {
+    const response = await fetch(`http://localhost:3000/api/company`, {
       method: "GET",
       cache: "no-store",
-      headers: {},
+      headers: {"Content-Type": "application/json",
+      // Cookie: cookies().toString()
+    },
+      
     });
 
     if (!response.ok) {
@@ -52,9 +55,13 @@ const Header = async () => {
 
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 lg:px-28 lg:py-28 px-10 py-10">
         {/* {events.map((item,index) => (
-          <CardFair data={item} userRole={userRole} key={index} />
+          <CardProfile data={item} userRole={userRole} key={index} />
         ))} */}
+
+        {/* {events.map((item,index)=>{
+
         <CardProfile />
+        })} */}
         <CardProfile />
         <CardProfile />
       </div>

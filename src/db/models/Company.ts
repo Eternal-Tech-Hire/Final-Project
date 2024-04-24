@@ -139,8 +139,14 @@ class Company {
 	static async updateFavEvent(companyId: string, seekerId: string, url: string) {
 		const id_company = new ObjectId(companyId)
 		const idSeeker = new ObjectId(seekerId);
-		console.log(url, id_company, idSeeker);
+		// console.log(url, id_company, idSeeker);
 		
+		let dataUser = await db.collection('Users').findOne({ _id: idSeeker });
+		if (dataUser) {
+			console.log("duplicate");
+			throw new Error ("Duplicate")
+		}
+
 		let data = await db.collection('Company').findOne({ _id: id_company });
 		console.log(data);
 		

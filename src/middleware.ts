@@ -4,6 +4,7 @@ import type { NextRequest } from 'next/server'
 import { readPayload, readPayloadJose } from '@/db/utils/jwt'
 
 export async function middleware(request: NextRequest) {
+    console.log(request.nextUrl.pathname);
     
     if (request.nextUrl.pathname.startsWith('/api/ticket')) {
         const tokenCookie = cookies().get('Authorization')
@@ -74,8 +75,8 @@ export async function middleware(request: NextRequest) {
         return response
     }
 
-    if (request.nextUrl.pathname.startsWith('/api/company/add_fav')) {
-        console.log("masuk ke add fav?");
+    if (request.nextUrl.pathname.startsWith('/api/company')) {
+        // console.log("masuk ke add fav?");
         
         const tokenCookie = cookies().get('Authorization')
         // console.log(tokenCookie, "<><><><><><><>");
@@ -222,6 +223,6 @@ export async function middleware(request: NextRequest) {
 }   
 
 export const config = {
-    matcher: ["/api/ticket/:path*", "/api/events/company_join/:path*","/api/company/add_fav/:path*", "/api/auth/users/:path*", "/login/:path*", "/register/:path*", "/profile/:path*","/events/:path*"],
+    matcher: ["/api/ticket/:path*", "/api/events/company_join/:path*","/api/company/:path*", "/api/auth/users/:path*", "/login/:path*", "/register/:path*", "/profile/:path*","/events/:path*"],
   };
   //,

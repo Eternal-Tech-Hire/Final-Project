@@ -26,9 +26,18 @@ class Events {
 		return await db.collection('Events').insertOne(Events_add)
 	}
 
-
 	static async getAll() {
-		return (await db.collection('Events').find({}).toArray()) as EventsTypes[];
+		const aggregate = [
+			{
+				'$lookup': {
+					'from': 'Company',
+					'localField': 'companyId.id_company',
+					'foreignField': '_id',
+					'as': 'Company'
+				}
+			}
+		]
+		return (await db.collection('Events').aggregate(aggregate).toArray()) as EventsTypes[];
 	}
 
 	static async getById(_id: string) {
@@ -42,16 +51,16 @@ class Events {
 		return (await db.collection('Events').deleteOne({ _id: instanceTicketId }))
 	}
 
-	static async addCompanyJoin(_id: string, idCompany: string ){
+	static async addCompanyJoin(_id: string, idCompany: string) {
 		const idEventObject = new ObjectId(_id);
 		const idCompanyObject = new ObjectId(idCompany)
 		let data = await db.collection('Events').findOne({ _id: idEventObject });
 		const companyIds = data!.companyId;
-		const validation = companyIds.filter((e : {id_company : string})=>{
-			return e.id_company == idCompany 
+		const validation = companyIds.filter((e: { id_company: string }) => {
+			return e.id_company == idCompany
 		})
 		console.error(validation);
-		if(validation.length == 0){
+		if (validation.length == 0) {
 			companyIds.push({
 				id_company: idCompanyObject,
 				date_join: Date()

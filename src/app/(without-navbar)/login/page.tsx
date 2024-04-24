@@ -12,7 +12,7 @@ const LoginPage = () => {
       password: formData.get("password"),
     };
 
-    const response = await fetch("http://localhost:3000/api/auth/login", {
+    let response = await fetch("http://localhost:3000/api/auth/login", {
       method: "POST",
       cache: "no-store",
       headers: {
@@ -22,7 +22,7 @@ const LoginPage = () => {
     });
 
     if (response.status != 200) {
-      const response = await fetch(
+       response = await fetch(
         "http://localhost:3000/api/auth/company/login",
         {
           method: "POST",
@@ -38,8 +38,10 @@ const LoginPage = () => {
       }
     }
     const responseJson = await response.json();
-
+    console.log(responseJson);
+    
     cookies().set("Authorization", `Bearer ${responseJson.data.accessToken}`);
+    cookies().set("Role", `${responseJson.data.role}`);
     return redirect("/");
   }
 

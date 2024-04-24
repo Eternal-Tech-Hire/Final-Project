@@ -52,6 +52,7 @@ const Navbar = () => {
     setIsLoggedIn(false);
     setCookiesStore(null);
     deleteCookie("Authorization");
+    deleteCookie("Role");
     Swal.fire({
       title: "Logged Out",
       text: "You have been successfully logged out",

@@ -14,7 +14,6 @@ const RegisterPage = () => {
     };
 
     if (rawFormData.role === "jobSeeker") {
-      // rawFormData.cv = ""
       const response = await fetch(`http://localhost:3000/api/auth/register`, {
         method: "post",
         cache: "no-store",
@@ -23,7 +22,7 @@ const RegisterPage = () => {
         },
         body: JSON.stringify(rawFormData),
     });
-    }else if(rawFormData.role === "seeker"){
+    }else if(rawFormData.role === "company"){
       const response = await fetch(`http://localhost:3000/api/auth/company/register`, {
         method: "post",
         cache: "no-store",

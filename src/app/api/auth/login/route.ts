@@ -48,7 +48,8 @@ export async function POST(request: Request) {
         return NextResponse.json({
             message: "Login Success",
             data: {
-                accessToken
+                accessToken,
+                role: dataLogin.role
             }
         }, {
             status: 200

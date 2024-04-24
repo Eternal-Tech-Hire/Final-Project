@@ -46,12 +46,20 @@ class Events {
 		const idEventObject = new ObjectId(_id);
 		const idCompanyObject = new ObjectId(idCompany)
 		let data = await db.collection('Events').findOne({ _id: idEventObject });
+		// console.log(data, "data event");
+		
 		const companyIds = data!.companyId;
+
+		// if (!companyIds) {
+		// 	data!.companyId = []
+		// }
+		// console.log(data);
+		
 		const validation = companyIds.filter((e : {id_company : string})=>{
 			return e.id_company == idCompany 
 		})
-		console.error(validation);
-		if(validation.length == 0){
+		console.error(validation, "hasil validation");
+		if(validation.length === 0){
 			companyIds.push({
 				id_company: idCompanyObject,
 				date_join: Date()

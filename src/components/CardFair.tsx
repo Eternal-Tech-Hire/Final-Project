@@ -31,8 +31,7 @@ import { useState, useEffect } from "react";
       }
     };
 
-    console.log(data);
-    
+    // console.log(data.Company, "data companies");
     
     useEffect(() => {
     const authorizationCookie = document.cookie
@@ -40,6 +39,7 @@ import { useState, useEffect } from "react";
       .find((cookie) => cookie.trim().startsWith("Authorization="));
     setIsLoggedIn(!!authorizationCookie);
   }, []);
+
   return (
     <div className="rounded overflow-hidden shadow-lg">
       <div className="px-6 py-4">
@@ -68,18 +68,18 @@ import { useState, useEffect } from "react";
       <div className="px-6 pb-2">
         <h1 className="font-bold text-lg text-start mb-2">List Of Companies</h1>
         <div>
-          {data?.companyId.map((item)=>(
-            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-            asd
+          {data?.Company.map((item, index)=>(
+            <span key={index} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+            {item.name}
           </span>
           ))}
           
-          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+          {/* <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
             #Software Engineering
           </span>
           <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
             #Web Developer
-          </span>
+          </span> */}
         </div>
       </div>
     </div>

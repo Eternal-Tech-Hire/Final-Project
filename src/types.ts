@@ -37,6 +37,7 @@ export interface EventsTypes{
   location: string;
   categoryId: string;
   companyId: []
+  Company:[CompanyTypes]
 }
 
 export interface TicketTypes {

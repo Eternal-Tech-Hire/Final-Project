@@ -40,7 +40,7 @@ export async function middleware(request: NextRequest) {
     }
 
     if (request.nextUrl.pathname.startsWith('/api/auth/users')) {
-        console.log("masuk?");
+        // console.log("masuk?");
         
         const tokenCookie = cookies().get('Authorization')
         // console.log(tokenCookie, "<><><><><><><> di api auth users");

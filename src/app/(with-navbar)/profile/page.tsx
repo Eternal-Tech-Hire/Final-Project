@@ -2,13 +2,17 @@
 import Modal from "@/components/Modal";
 import { useState, useEffect } from "react";
 import { FaPencil } from "react-icons/fa6";
+import { TbBarcode } from "react-icons/tb";
+import { FaCloudArrowUp } from "react-icons/fa6";
 import QRCode from "qrcode";
 import { newUser } from "@/db/models/Users";
 import ModalQR from "@/components/QR";
+import ModalCV from "@/components/UploadCV";
 
 const ProfilePage = () => {
   const [showModal, setShowModal] = useState(false);
   const [showQR, setShowQR] = useState(false);
+  const [showUpload, setShowUpload] = useState(false);
   const [data, setData] = useState<newUser>();
   const [qr, setQR] = useState<string>();
 
@@ -26,6 +30,15 @@ const ProfilePage = () => {
   const toggleModalQR = () => {
     setShowQR(!showQR);
     if (!showQR) {
+      document.body.classList.add("modal-open");
+    } else {
+      document.body.classList.remove("modal-open");
+    }
+  };
+
+  const toggleModalUpload = () => {
+    setShowUpload(!showUpload);
+    if (!showUpload) {
       document.body.classList.add("modal-open");
     } else {
       document.body.classList.remove("modal-open");
@@ -112,6 +125,13 @@ const ProfilePage = () => {
             <div className="flex items-center space-x-4 mt-2">
               <button
                 className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
+                onClick={toggleModalUpload}
+              >
+                <FaCloudArrowUp className="h-4 w-4" />
+                <span>Upload CV</span>
+              </button>
+              <button
+                className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
                 onClick={toggleModal}
               >
                 <FaPencil className="h-4 w-4" />
@@ -121,7 +141,8 @@ const ProfilePage = () => {
                 className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
                 onClick={generate}
               >
-                Generate QR
+                <TbBarcode className="h-5 w-5" />
+                <span>Generate QR</span>
               </button>
             </div>
           </div>
@@ -139,6 +160,13 @@ const ProfilePage = () => {
             ></div>
           )}
           {showModal && <Modal onClose={toggleModal} />}
+          {showUpload && (
+            <div
+              className="fixed inset-0 bg-black opacity-50 z-50"
+              onClick={toggleModalUpload}
+            ></div>
+          )}
+          {showUpload && <ModalCV onClose={toggleModalUpload} />}
         </div>
       </div>
     </>

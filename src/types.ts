@@ -25,6 +25,7 @@ export interface CompanyTypes {
   companyLogo: string;
   role: string;
   jobOffer: string;
+  fields:[];
   companyId: []
 }
 

@@ -13,6 +13,7 @@ interface CompanyTypesLocal {
 	companyLogo: string;
 	role: string;
 	jobOffer: string;
+	fields:[];
 	fav: [];
 }
 

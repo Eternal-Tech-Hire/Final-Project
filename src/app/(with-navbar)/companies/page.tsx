@@ -10,12 +10,14 @@ const Header = () => {
   const [loading, setLoading] = useState(true);
 
   const fetchSearch = async () => {
-
     if (search) {
       // console.log(search, "didalem fetch");
-      const res = await fetch("http://localhost:3000/api/company?search=" + search, {
-        cache: "no-store",
-      });
+      const res = await fetch(
+        "http://localhost:3000/api/company?search=" + search,
+        {
+          cache: "no-store",
+        }
+      );
 
       if (!res.ok) {
         throw new Error("Failed to fetch items");
@@ -51,11 +53,9 @@ const Header = () => {
   }
   // ======================
   // console.log(search);
-  
+
   useEffect(() => {
-    setLoading(true);
     async function fetchData() {
-      
       try {
         const response = await fetch(`http://localhost:3000/api/company`, {
           method: "GET",
@@ -74,16 +74,16 @@ const Header = () => {
         }
       } catch (error) {
         console.error("Error fetching item:", error);
-      } finally {
-        setLoading(false);
-      }
+      }                                                                         
     }
 
     if (search) {
-      fetchSearch()
-    }else{
-      fetchData();}
-
+      fetchSearch();
+    } else {
+      setLoading(true);
+      fetchData();
+      setLoading(false);
+    }
   }, [search]);
 
   if (loading) {

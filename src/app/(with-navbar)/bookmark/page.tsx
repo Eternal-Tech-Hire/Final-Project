@@ -1,6 +1,7 @@
 // "use client";
 "use server"
 import CardFair from "@/components/CardFair";
+import CardProfile from "@/components/CardProfile";
 
 import { EventsTypes } from "@/types";
 import { cookies } from "next/headers";
@@ -50,9 +51,12 @@ const Header = async () => {
       </header>
 
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 lg:px-28 lg:py-28 px-10 py-10">
-        {events.map((item,index) => (
+        {/* {events.map((item,index) => (
           <CardFair data={item} userRole={userRole} key={index} />
-        ))}
+        ))} */}
+        <CardProfile />
+        <CardProfile />
+        <CardProfile />
       </div>
     </div>
   );

@@ -51,7 +51,7 @@ export default function Home() {
     fetchDataEvents();
   }, []);
 
-  console.log(listEvents, "<<<<<");
+  // console.log(listCompany, "<<<<< compnay");
   
   if (loading) {
     return (
@@ -107,13 +107,13 @@ export default function Home() {
           {/* Indicator dots */}
           <div className="flex justify-center mt-4">
             {[...Array(3)].map((_, index) => (
-              <button
+              <ul
                 key={index}
                 className={`w-3 h-3 mx-1 rounded-full ${
                   index === activeSlide ? "bg-gray-700" : "bg-gray-400"
                 }`}
                 onClick={() => handleSlideChange(index)}
-              ></button>
+              ></ul>
             ))}
           </div>
         </div>

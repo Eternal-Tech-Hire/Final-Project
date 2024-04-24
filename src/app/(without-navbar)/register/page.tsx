@@ -16,7 +16,7 @@ const RegisterPage = () => {
     };
 
     let response;
-    console.log(rawFormData, "<<< RAW DATA");
+    // console.log(rawFormData, "<<< RAW DATA");
 
     if (rawFormData.role === "jobSeeker") {
       response = await fetch(`http://localhost:3000/api/auth/register`, {

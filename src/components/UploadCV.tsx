@@ -13,7 +13,6 @@ const ModalCV: React.FC<ModalProps> = ({ onClose, userId}) => {
     onClose();
   };
 
-  // const [file, setFile] = useState<File | undefined>();
 
   async function handleSubmit(event: ChangeEvent<HTMLInputElement>) {
     event.preventDefault();
@@ -21,9 +20,6 @@ const ModalCV: React.FC<ModalProps> = ({ onClose, userId}) => {
     const target = event.target as HTMLInputElement & {
       files: FileList;
     };
-    // console.log(target.files);
-
-    // setFile(target.files[0]);
 
     console.log(target.files[0], "di handle ");
     
@@ -81,18 +77,6 @@ const ModalCV: React.FC<ModalProps> = ({ onClose, userId}) => {
       console.error("Error uploading image:", error);
     }
   }
-
-  // function handleChange(event: ChangeEvent<HTMLInputElement>) {
-  //   // console.log("masuk?");
-
-  //   const target = event.target as HTMLInputElement & {
-  //     files: FileList;
-  //   };
-  //   // console.log(target.files);
-
-  //   setFile(target.files[0]);
-  // }
-  // console.log(file);
   
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">

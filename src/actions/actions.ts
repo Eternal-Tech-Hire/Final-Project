@@ -1,11 +1,6 @@
 "use server"
 import { cookies } from "next/headers";
 
-// export default function getCookies(){
-
-//     return cookies().get("Role")?.value;
-// }
-
 export default async function addFav(userId : string | undefined) {
 
     const userRole = cookies().get("Role")?.value;

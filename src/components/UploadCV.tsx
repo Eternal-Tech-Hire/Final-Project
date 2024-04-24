@@ -12,7 +12,7 @@ const ModalCV: React.FC<ModalProps> = ({ onClose }) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="bg-gray-900 bg-opacity-75 fixed inset-0"></div>
-      <div className="bg-blue-900 rounded-lg shadow-xl relative z-50 max-w-md w-full p-4">
+      <div className="dark:bg-cyan-950 rounded-lg shadow-xl relative z-50 max-w-md w-full p-4">
         <div className="flex justify-end p-2">
           <button
             type="button"

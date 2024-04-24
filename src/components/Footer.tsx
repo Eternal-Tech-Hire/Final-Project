@@ -1,3 +1,5 @@
+import { AiOutlineMail, AiOutlinePhone } from 'react-icons/ai';
+
 const Footer = () => {
   return (
     <>
@@ -13,223 +15,51 @@ const Footer = () => {
           />
         </svg>
         <div className="px-4 pt-12 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-          <div className="grid gap-16 row-gap-10 mb-8 lg:grid-cols-6">
-            <div className="md:max-w-md lg:col-span-2">
-              <a
-                href="/"
-                aria-label="Go home"
-                title="Company"
-                className="inline-flex items-center"
-              >
-                <svg
-                  className="w-8 text-teal-accent-400"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeMiterlimit="10"
-                  stroke="currentColor"
-                  fill="none"
-                >
-                  <rect x="3" y="1" width="7" height="12" />
-                  <rect x="3" y="17" width="7" height="6" />
-                  <rect x="14" y="1" width="7" height="6" />
-                  <rect x="14" y="11" width="7" height="12" />
-                </svg>
-                <span className="ml-2 text-xl font-bold tracking-wide text-gray-100 uppercase">
-                  Company
-                </span>
-              </a>
-              <div className="mt-4 lg:max-w-sm">
-                <p className="text-sm text-gray-100">
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                  accusantium doloremque laudantium, totam rem aperiam.
-                </p>
-                <p className="mt-4 text-sm text-gray-100">
-                  Eaque ipsa quae ab illo inventore veritatis et quasi
-                  architecto beatae vitae dicta sunt explicabo.
-                </p>
+          <div className="grid gap-1 row-gap-10 mb-8 lg:grid-cols-6">
+            <div className="md:max-w-md lg:col-span-2 flex flex-col lg:items-start items-center mb-10 lg:mb-0 justify-center mr-10 pl-20">
+              <img
+                src="/logo_v2.png"
+                loading="lazy"
+                style={{ color: "transparent" }}
+                className="w-48"
+              />
+              <div className="text-gray-100 text-sm mt-5 flex items-center">
+                <AiOutlineMail className="mr-2" />
+                <p>Email: example@example.com</p>
+              </div>
+              <div className="text-gray-100 text-sm mt-2 flex items-center">
+                <AiOutlinePhone className="mr-2" />
+                <p>Phone: 123-456-7890</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-5 row-gap-8 lg:col-span-4 md:grid-cols-4">
-              <div>
-                <p className="font-semibold tracking-wide text-teal-accent-400">
-                  Category
+            <div className="lg:col-span-4">
+              <div className="">
+                <h1 className="text-white font-bold text-lg md:text-xl lg:text-2xl mb-2">
+                  About Us
+                </h1>
+                <p className="text-sm text-gray-100">
+                  "Eternal Tech Hire" Job Fair / Job Market Service is more than
+                  just a platform – it's a dynamic hub that connects talented
+                  job seekers with forward-thinking employers. Our mission is to
+                  bridge the gap between aspiring professionals and innovative
+                  companies, facilitating meaningful connections that drive
+                  career growth and organizational success. <br />
+                  At "Eternal Tech Hire," we believe in the power of talent,
+                  diversity, and opportunity. Our platform is designed to
+                  empower individuals to showcase their skills and expertise
+                  while providing employers with access to a diverse pool of
+                  exceptional candidates. Whether you're a job seeker looking to
+                  take the next step in your career or an employer seeking
+                  top-tier talent, "Eternal Tech Hire" is your trusted partner
+                  in navigating the ever-evolving job market landscape.
                 </p>
-                <ul className="mt-2 space-y-2">
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      News
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      World
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      Games
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      References
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-semibold tracking-wide text-teal-accent-400">
-                  Cherry
-                </p>
-                <ul className="mt-2 space-y-2">
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      Web
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      eCommerce
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      Business
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      Entertainment
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      Portfolio
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-semibold tracking-wide text-teal-accent-400">
-                  Apples
-                </p>
-                <ul className="mt-2 space-y-2">
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      Media
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      Brochure
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      Nonprofit
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      Educational
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      Projects
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-semibold tracking-wide text-teal-accent-400">
-                  Business
-                </p>
-                <ul className="mt-2 space-y-2">
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      Infopreneur
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      Personal
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      Wiki
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/"
-                      className="transition-colors duration-300 text-gray-100 hover:text-teal-accent-400"
-                    >
-                      Forum
-                    </a>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
           <div className="flex flex-col justify-between pt-5 pb-10 border-t border-deep-purple-accent-200 sm:flex-row">
-            <p className="text-sm text-gray-100">
-            Eternal Tech Hire © Copyright 2024 All Rights Reserved
-            </p>
+            <div className="text-sm text-gray-100 flex-1">
+              <p>Eternal Tech Hire © Copyright 2024 All Rights Reserved</p>
+            </div>
             <div className="flex items-center mt-4 space-x-4 sm:mt-0">
               <a
                 href="/"

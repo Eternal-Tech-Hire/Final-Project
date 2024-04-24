@@ -51,9 +51,9 @@ const Header = async () => {
           </div>
         </div>
       </header>
-      {company.fav && company.fav.length > 0 ? (
+      {company.fav_info && company.fav_info.length > 0 ? (
         <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 lg:px-28 lg:py-28 px-10 py-10">
-          {company.fav.map((item, index) => (
+          {company.fav_info.map((item, index) => (
             <CardProfile data={item} key={index} />
           ))}
         </div>

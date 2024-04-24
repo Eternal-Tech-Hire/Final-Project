@@ -12,8 +12,10 @@ import { ClientFlashComponent } from "@/components/ClientFlash";
 const ProfilePage = ({ params }: { params: { id: string } }) => {
   // const data = await fetchData(params.id);
   const [data, setData] = useState<User>();
+  const [loading, setLoading] = useState(true);
 
   async function fetchData(userId: string) {
+    setLoading(true);
     try {
       const res = await fetch(
         `http://localhost:3000/api/auth/users/${userId}`,
@@ -32,6 +34,8 @@ const ProfilePage = ({ params }: { params: { id: string } }) => {
       setData(userData.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
   // console.log(userRole);
@@ -46,7 +50,15 @@ const ProfilePage = ({ params }: { params: { id: string } }) => {
   }, []);
 
   console.log(data, "<<< daatata");
-  
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-white">
+        <span className="loading loading-bars loading-lg"></span>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="h-full bg-gradient-to-b from-gray-900 via-gray-900 to-purple-800 lg:px-16 px-0 pb-24">
@@ -86,19 +98,21 @@ const ProfilePage = ({ params }: { params: { id: string } }) => {
             <p className="text-sm text-gray-500">{data?.email}</p>
             {/* <p className="text-sm text-gray-500">{data?.cv}</p> */}
             {/* Render PDF */}
-            {/* <ClientFlashComponent /> */}
+            <div className="my-3">
+              <ClientFlashComponent />
+            </div>
           </div>
           <div className="flex-1 flex flex-col items-center lg:items-center justify-end px-8 mt-2">
             <div className="flex items-center space-x-4 mt-2">
               {/* {data?.role === "jobSeeker" ? <BookmartButton userRole={data?.role}  userId={params.id} /> : ""} */}
-              <BookmartButton  userId={params.id} />
-                <button
-                  onClick={handleButtonClick}
-                  className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
-                >
-                  <FaRegFileAlt className="h-4 w-4" />
-                  <span>Show CV</span>
-                </button>
+              <BookmartButton userId={params.id} />
+              <button
+                onClick={handleButtonClick}
+                className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
+              >
+                <FaRegFileAlt className="h-4 w-4" />
+                <span>Show CV</span>
+              </button>
               {/* <button onClick={handleButtonClick}>Show CV</button> */}
             </div>
             <div className="mt-10">

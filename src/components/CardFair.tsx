@@ -9,7 +9,12 @@ interface CardFairProps {
 
 const CardFair = ({ data, userRole }: CardFairProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [joinButtonText, setJoinButtonText] = useState("Join Now");
+  // const [data, setData] = useState([])
   // console.log(userRole);
+  const fetchData = async () => {
+  
+  }
   const joinFair = async () => {
     const input = {
       eventId: data?._id,
@@ -30,6 +35,7 @@ const CardFair = ({ data, userRole }: CardFairProps) => {
         }),
       });
     }
+    setJoinButtonText("Joined");
   };
 
   // console.log(data.Company, "data companies");
@@ -58,41 +64,46 @@ const CardFair = ({ data, userRole }: CardFairProps) => {
           </div>
 
           <div className="px-6 pb-2">
-              <div className="text-right">
-                <div className="text-gray-700 text-base">
-                  <p>Location: {data?.location}</p>
-                  <p>Date: {data?.date}</p>
-                </div>
-                {isLoggedIn && (
-                  <div className="flex justify-end mt-6">
-                    <button
-                      onClick={joinFair}
-                      className="rounded-md bg-gradient-to-br from-emerald-400 to-sky-600 px-4 py-2 font-dm text-sm font-medium text-white shadow-md hover:shadow-lg transition-transform duration-200 ease-in-out hover:scale-[1.03]"
-                    >
-                      Join Now
-                    </button>
-                  </div>
-                )}
+            <div className="text-right">
+              <div className="text-gray-700 text-base">
+                <p>Location: {data?.location}</p>
+                <p>Date: {data?.date}</p>
               </div>
-          </div>
-        </div>
-            <hr className="my-2 border-b border-gray-300" />
-          <div className="px-6 pb-2">
-            <h1 className="font-bold text-lg text-start mb-2">
-              List Of Companies
-            </h1>
-            <div>
-              {data &&
-                data?.Company.map((item, index) => (
-                  <span
-                    key={index}
-                    className="inline-block mt-3 bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+              {isLoggedIn && (
+                <div className="flex justify-end mt-6">
+                  <button
+                    onClick={joinFair}
+                    className={`rounded-md bg-gradient-to-br from-emerald-400 to-sky-600 px-4 py-2 font-dm text-sm font-medium text-white shadow-md hover:shadow-lg transition-transform duration-200 ease-in-out hover:scale-[1.03] ${
+                      joinButtonText === "Joined"
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : ""
+                    }`}
+                    disabled={joinButtonText === "Joined"} // Menonaktifkan tombol jika sudah bergabung
                   >
-                    {item.name}
-                  </span>
-                ))}
+                    {joinButtonText}
+                  </button>
+                </div>
+              )}
             </div>
           </div>
+        </div>
+        <hr className="my-2 border-b border-gray-300" />
+        <div className="px-6 pb-2">
+          <h1 className="font-bold text-lg text-start mb-2">
+            List Of Companies
+          </h1>
+          <div>
+            {data &&
+              data?.Company.map((item, index) => (
+                <span
+                  key={index}
+                  className="inline-block mt-3 bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                >
+                  {item.name}
+                </span>
+              ))}
+          </div>
+        </div>
       </div>
     </div>
   );

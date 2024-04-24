@@ -34,8 +34,8 @@ const ModalCV: React.FC<ModalProps> = ({ onClose }) => {
           </button>
         </div>
         <h1 className='text-xl font-bold text-center mb-5 text-white'>Upload Your CV</h1>
-        <div className="flex items-center justify-center bg-gray-100 p-6 rounded-lg">
-          <label className="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue-600 rounded-lg shadow-lg tracking-wide uppercase border border-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white">
+        <div className="flex items-center justify-center bg-gray-500 p-6 rounded-lg">
+          <label className="w-64 flex flex-col items-center px-4 py-6 bg-gray-200 text-blue-600 rounded-lg shadow-lg tracking-wide uppercase border border-blue-600 cursor-pointer hover:bg-blue-600 hover:text-white">
             <svg
               className="w-8 h-8"
               fill="currentColor"

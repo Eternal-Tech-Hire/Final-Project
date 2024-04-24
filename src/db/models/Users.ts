@@ -55,6 +55,8 @@ class UserModel {
         const validation = UserValidation.safeParse(newUser);
         if (!validation.success) {
             const errors = validation.error
+            console.log(errors);
+            
             throw errors
         }
 

@@ -1,37 +1,43 @@
-// "use client";
+"use client";
 import BookmartButton from "@/components/BookmarkButton";
-import { newUser } from "@/db/models/Users";
-import { cookies } from "next/headers";
+import PDFViewer from "@/components/PdfViewer";
+// import UserModel, { newUser } from "@/db/models/Users";
+import { User } from "@/types";
 import Link from "next/link";
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegBookmark } from "react-icons/fa6";
 
-async function fetchData(userId: string) {
-  try {
-    const res = await fetch(`http://localhost:3000/api/auth/users/${userId}`, {
-      cache: "no-store",
-      headers: {
-        "Content-Type": "application/json",
-        Cookie: cookies().toString()
-      },
-    });
-    // console.log(res);
 
-    const userData = await res.json();
-    // setData(userData.data);
-    return userData.data;
-  } catch (error) {
-    console.log(error);
-  }
-}
+const ProfilePage = ({ params }: { params: { id: string } }) => {
+  // const data = await fetchData(params.id);
+  const [data,setData] = useState<User>()
 
-const ProfilePage = async ({ params }: { params: { id: string } }) => {
-  const data = await fetchData(params.id);
-  const userRole = cookies().get("Role")?.value;
-  // console.log(userRole);
+  async function fetchData(userId: string) {
+    try {
+      const res = await fetch(`http://localhost:3000/api/auth/users/${userId}`, {
+        cache: "no-store",
+        headers: {
+          "Content-Type": "application/json",
+          // Cookie: cookies().toString()
+        },
+      });
+      // console.log(res);
   
+      const userData = await res.json();
+      // setData(userData.data);
+      setData(userData.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  // console.log(userRole);
+  const [showPDF, setShowPDF] = useState(false);
   // const pdfUrl = 'http://res.cloudinary.com/dzdi4yqlr/raw/upload/v1713784516/finalproject/c3avbbqul2jlmhrbrzgv.pdf';
+  const handleButtonClick = () => {
+    setShowPDF(!showPDF);
+  }
 
+  useEffect(()=>{fetchData(params.id)},[])
   return (
     <>
       <div className="h-full bg-gray-200 px-8 pb-8">
@@ -76,10 +82,12 @@ const ProfilePage = async ({ params }: { params: { id: string } }) => {
           </div>
           <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
             <div className="flex items-center space-x-4 mt-2">
-              <BookmartButton userRole={userRole} userId={params.id}/>
+              <BookmartButton userId={params.id}/>
               <Link href={`${data?.cv}`} type="button">
                 asd
               </Link>
+              <button onClick={handleButtonClick}>Show CV</button>
+              {showPDF && <PDFViewer url={data?.cv} />}
             </div>
           </div>
         </div>

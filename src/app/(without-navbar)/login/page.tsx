@@ -25,6 +25,7 @@ const LoginPage = () => {
       if (response.status != 200) {
         throw new Error("Failed to Login" + response.status);
       }
+      
       const responseJson = await response.json();
       console.error(responseJson);
       cookies().set("Authorization", `Bearer ${responseJson.data.accessToken}`);

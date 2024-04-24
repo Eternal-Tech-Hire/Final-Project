@@ -6,6 +6,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
   const [activeSlide, setActiveSlide] = useState(0);
   const [listCompany, setlistCompany] = useState([]);
   const [listEvents, setlistEvents] = useState([]);
@@ -14,6 +15,7 @@ export default function Home() {
     setActiveSlide(index);
   };
   async function fetchDataCompany() {
+    setLoading(true);
     try {
       const response = await fetch("http://localhost:3000/api/home/company", {
         cache: "no-store",
@@ -23,10 +25,13 @@ export default function Home() {
       setlistCompany(data.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
   async function fetchDataEvents() {
+    setLoading(true);
     try {
       const response = await fetch("http://localhost:3000/api/home/events", {
         cache: "no-store",
@@ -36,6 +41,8 @@ export default function Home() {
       setlistEvents(data.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -43,6 +50,16 @@ export default function Home() {
     fetchDataCompany();
     fetchDataEvents();
   }, []);
+
+  
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-white">
+        <span className="loading loading-bars loading-lg"></span>
+      </div>
+    );
+  }
+
   return (
     <>
       <main>

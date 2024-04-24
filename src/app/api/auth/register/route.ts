@@ -7,6 +7,7 @@ export const POST = async (request: Request) => {
     try {
         const body = await request.json()
         const data = await UserModel.create(body)
+console.log("masukk");
 
         return NextResponse.json({
             message: "Register success"
@@ -20,7 +21,7 @@ export const POST = async (request: Request) => {
 
             return NextResponse.json(
                 {
-                    message: `${errorPath} ${message}`
+                    message: `${message}`
                 }, {
                     status: 400
                 }

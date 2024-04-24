@@ -28,22 +28,22 @@ interface updateUser {
 }
 
 const UserValidation = z.object({
-    email: z.string({
-        required_error: "Email can't be empty"
-    }).email(),
-    password: z.string({
-        required_error: "Password can't be empty"
-    })
-})
-
-const UpdateValidation = z.object({
     name: z.string({
         required_error: "Name can't be empty"
     }),
+    email: z.string({
+        required_error: "Email can't be empty"
+    }).email({
+        message: "Must be Email Format"
+    }),
     phoneNumber: z.string({
         required_error: "Phone Number can't be empty"
-    })
+    }),
+    password: z.string({
+        required_error: "Password can't be empty"
+    }).min(6, {message: "Password must be at least 6 characters"})
 })
+
 
 
 class UserModel {
@@ -53,9 +53,10 @@ class UserModel {
 
     static async create(newUser: newUser) {
         const validation = UserValidation.safeParse(newUser);
+        // console.log(validation, "<< validate");
+        
         if (!validation.success) {
             const errors = validation.error
-            console.log(errors);
             
             throw errors
         }

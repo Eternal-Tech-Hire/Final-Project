@@ -53,6 +53,7 @@ const Header = () => {
   // console.log(search);
   
   useEffect(() => {
+    setLoading(true);
     async function fetchData() {
       
       try {
@@ -84,6 +85,14 @@ const Header = () => {
       fetchData();}
 
   }, [search]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-white">
+        <span className="loading loading-bars loading-lg"></span>
+      </div>
+    );
+  }
 
   return (
     <div>

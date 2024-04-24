@@ -1,10 +1,14 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { getCookie, deleteCookie } from "cookies-next";
 import Link from "next/link";
 import Swal from 'sweetalert2'
+import { useRouter } from "next/navigation";
+
 
 const Navbar = () => {
+  const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [cookiesStore, setCookiesStore] = useState<string | null>(null);
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -58,6 +62,8 @@ const Navbar = () => {
       text: "You have been successfully logged out",
       icon: "success",
       confirmButtonColor: "#3085d6",
+    }).then(() => {
+      router.push("/");
     });
   };
 

@@ -10,18 +10,47 @@ interface CompanyTypesLocal {
 	name: string;
 	email: string;
 	password: string;
+	companyLogo: string;
 	role: string;
 	jobOffer: string;
 	fav: [];
 }
 
+const CompanyValidation = z.object({
+	name: z.string({
+        required_error: "Name can't be empty"
+    }),
+    email: z.string({
+        required_error: "Email can't be empty"
+    }).email({
+        message: "Must be Email Format"
+    }),
+    phoneNumber: z.string({
+        required_error: "Phone Number can't be empty"
+    }),
+    password: z.string({
+        required_error: "Password can't be empty"
+    }).min(6, {message: "Password must be at least 6 characters"})
+})
+
+
 
 class Company {
 	static async store(data: CompanyTypesLocal) {
+		const validation = CompanyValidation.safeParse(data);
+        // console.log(validation, "<< validate");
+        
+        if (!validation.success) {
+            const errors = validation.error
+            
+            throw errors
+        }
+
 		const data_object = {
 			name: data.name,
 			email: data.email,
 			password: bcryptjs.hashSync(data.password),
+			companyLogo: data.companyLogo,
 			role: "company",
 			jobOffer: data.jobOffer,
 			fav: []
@@ -97,9 +126,11 @@ class Company {
 		console.log(url, id_company, idSeeker);
 		
 		let data = await db.collection('Company').findOne({ _id: id_company });
+		console.log(data);
+		
 		const favs = data!.fav;
 		favs.push({
-			// id_event: idEventObject
+			seekerId: idSeeker,
 			url: url
 		})
 		return await db.collection("Company").updateOne({ _id: id_company }, {

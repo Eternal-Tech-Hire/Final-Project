@@ -80,9 +80,24 @@ class Company {
         return await db.collection('Company').findOne({ email }) as CompanyTypes | null;
     }
 
+	// static async getAll() {
+	// 	return (await db.collection('Company').find({}).toArray()) as CompanyTypes[];
+	// }
+
 	static async getAll() {
-		return (await db.collection('Company').find({}).toArray()) as CompanyTypes[];
+		const aggregate = [
+			{
+				'$lookup': {
+					'from': 'Users',
+					'localField': 'fav.seekerId',
+					'foreignField': '_id',
+					'as': 'Users'
+				}
+			}
+		]
+		return (await db.collection('Company').aggregate(aggregate).toArray()) as CompanyTypes[];
 	}
+
 
 	static async getById(_id: string) {
 		const instanceTicketId = new ObjectId(_id)

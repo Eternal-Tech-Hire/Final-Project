@@ -13,6 +13,8 @@ const ProfilePage = () => {
   const [qr, setQR] = useState<string>();
 
   const toggleModal = () => {
+    console.log("ok");
+    
     setShowModal(!showModal);
     if (!showModal) {
       document.body.classList.add("modal-open");

@@ -6,7 +6,7 @@ export async function GET(request: Request,
     ) {
     const response = await Company.getById(params.id)
     return NextResponse.json({
-        data: response
+        data: response[0]
     }, {status : 200})
 }
 

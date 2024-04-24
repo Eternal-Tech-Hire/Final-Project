@@ -6,7 +6,7 @@ export async function POST (request: Request,
     ) {
     try{
         const body = await request.json();
-        const response = await Company.updateFavEvent(params.id, body.id_event, body.url_cv)
+        const response = await Company.updateFavEvent(params.id, body.id_seeker, body.url_cv)
         return NextResponse.json({
             data: response
         }, {status : 200})

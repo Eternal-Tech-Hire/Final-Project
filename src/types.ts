@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 
 export interface User {
-  _id: ObjectId;
+  _id: string;
   name: string;
   email: string;
   password: string;
@@ -20,13 +20,19 @@ export interface CategoryTypes {
 export interface CompanyTypes {
   _id: ObjectId;
   name: string;
+  email: string;
+  password: string;
+  companyLogo: string;
+  role: string;
   jobOffer: string;
+  company: [];
 }
 
 export interface EventsTypes{
   _id: ObjectId;
   name: string;
   description: string;
+  imgUrl: string;
   date: string;
   location: string;
   categoryId: string;

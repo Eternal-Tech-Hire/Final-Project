@@ -107,6 +107,8 @@ class UserModel {
             },
                 { status: 404 })
         };
+
+        
         return data
     }
 

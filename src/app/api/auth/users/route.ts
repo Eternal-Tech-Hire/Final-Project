@@ -7,6 +7,8 @@ export async function GET(request: Request) {
 
     const userId = request.headers.get("x-user-id") as string
     const userRole = request.headers.get("x-user-role") as string
+    console.log(userRole);
+    
     if(userRole == "company"){
         const users = await Company.getById(userId)
         return NextResponse.json({
@@ -20,9 +22,12 @@ export async function GET(request: Request) {
     }, {status : 200})
 }
 
+// export async function POST(request: Request) {
+//     const userId = request.headers.get("x-user-id") as string
+//     const body = await request.json()
 
 
-
+// }
 // export async function PATCH(request: Request) {
 //     const users = await Users.findAll()
 //     return NextResponse.json({

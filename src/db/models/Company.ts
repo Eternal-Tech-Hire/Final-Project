@@ -81,9 +81,24 @@ class Company {
         return await db.collection('Company').findOne({ email }) as CompanyTypes | null;
     }
 
+	// static async getAll() {
+	// 	return (await db.collection('Company').find({}).toArray()) as CompanyTypes[];
+	// }
+
 	static async getAll() {
-		return (await db.collection('Company').find({}).toArray()) as CompanyTypes[];
+		const aggregate = [
+			{
+				'$lookup': {
+					'from': 'Users',
+					'localField': 'fav.seekerId',
+					'foreignField': '_id',
+					'as': 'Users'
+				}
+			}
+		]
+		return (await db.collection('Company').aggregate(aggregate).toArray()) as CompanyTypes[];
 	}
+
 
 	static async getById(_id: string) {
 		const instanceTicketId = new ObjectId(_id)
@@ -125,8 +140,14 @@ class Company {
 	static async updateFavEvent(companyId: string, seekerId: string, url: string) {
 		const id_company = new ObjectId(companyId)
 		const idSeeker = new ObjectId(seekerId);
-		console.log(url, id_company, idSeeker);
+		// console.log(url, id_company, idSeeker);
 		
+		let dataUser = await db.collection('Users').findOne({ _id: idSeeker });
+		if (dataUser) {
+			console.log("duplicate");
+			throw new Error ("Duplicate")
+		}
+
 		let data = await db.collection('Company').findOne({ _id: id_company });
 		console.log(data);
 		

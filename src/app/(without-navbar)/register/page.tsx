@@ -1,40 +1,60 @@
+("");
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { ClientFlashComponent } from "@/components/ClientFlash";
 
 const RegisterPage = () => {
   async function registerAction(formData: FormData) {
     "use server";
 
     const rawFormData = {
-        name: formData.get("name"),
-        email: formData.get("email"),
-        password: formData.get("password"),
-        role : formData.get("role"),
-        phoneNumber: formData.get("phoneNumber"),
+      name: formData.get("name"),
+      email: formData.get("email"),
+      password: formData.get("password"),
+      role: formData.get("role"),
+      phoneNumber: formData.get("phoneNumber"),
     };
 
+    let response;
+
     if (rawFormData.role === "jobSeeker") {
-      const response = await fetch(`http://localhost:3000/api/auth/register`, {
+      response = await fetch(`http://localhost:3000/api/auth/register`, {
         method: "post",
         cache: "no-store",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(rawFormData),
-    });
-    }else if(rawFormData.role === "company"){
-      const response = await fetch(`http://localhost:3000/api/auth/company/register`, {
-        method: "post",
-        cache: "no-store",
-        headers: {
+      });
+      const result = await response.json()
+      if (response.status !== 201) {
+        return redirect(`/register?error=${result.message}`);
+      }
+    } else if (rawFormData.role === "company") {
+      response = await fetch(
+        `http://localhost:3000/api/auth/company/register`,
+        {
+          method: "post",
+          cache: "no-store",
+          headers: {
             "Content-Type": "application/json",
-        },
-        body: JSON.stringify(rawFormData),
-    });
+          },
+          body: JSON.stringify(rawFormData),
+        }
+      );
+      if (response.status !== 201) {
+        console.log(response.status, "<<<< RES REGIS");
+        return redirect(`/register?error=Wrong Email/Password`);
+      }
+    } else {
+      if (!response) {
+        return redirect(`/register?error=Please Complete Input Below`);
+      }
+  
     }
 
     redirect("/login");
-}
+  }
   return (
     <>
       <link
@@ -42,31 +62,31 @@ const RegisterPage = () => {
         rel="stylesheet"
       />
       <div className="bg-purple-900 fixed top-0 left-0 bg-gradient-to-b from-gray-900 via-gray-900 to-purple-800 bottom-0 leading-5 h-full w-full overflow-hidden"></div>
-        <div className="flex-col flex fixed w-3/4 ml-72 justify-center items-center min-h-screen  lg:px-14 lg:mb-24 z-10">
-          <div className="self-start hidden lg:flex flex-col text-white sticky mb-36 top-0 w-96">
-            <h1 className="my-3 font-semibold text-3xl">
-              Welcome to <br />
-              <span className="font-extrabold text-4xl">
-                <span className="bg-gradient-to-r from-blue-700 to-emerald-500 text-transparent bg-clip-text">
-                  Eternal{" "}
-                </span>
-                <span className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-transparent bg-clip-text">
-                  Tech{" "}
-                </span>
-                <span className="bg-gradient-to-r from-cyan-500 to-blue-700 text-transparent bg-clip-text">
-                  Hire
-                </span>
+      <div className="flex-col flex fixed w-3/4 ml-72 justify-center items-center min-h-screen  lg:px-14 lg:mb-24 z-10">
+        <div className="self-start hidden lg:flex flex-col text-white sticky mb-36 top-0 w-96">
+          <h1 className="my-3 font-semibold text-3xl">
+            Welcome to <br />
+            <span className="font-extrabold text-4xl">
+              <span className="bg-gradient-to-r from-blue-700 to-emerald-500 text-transparent bg-clip-text">
+                Eternal{" "}
               </span>
-            </h1>
-            <p className="pr-3 text-sm">
-              We bring you a series of job fair events focused on technology,
-              where you can find career opportunities that match your skills. We
-              collaborate with various leading companies in the technology
-              industry. Don't miss this opportunity, register your account now
-              to join our events!
-            </p>
-          </div>
+              <span className="bg-gradient-to-r from-emerald-500 to-cyan-500 text-transparent bg-clip-text">
+                Tech{" "}
+              </span>
+              <span className="bg-gradient-to-r from-cyan-500 to-blue-700 text-transparent bg-clip-text">
+                Hire
+              </span>
+            </span>
+          </h1>
+          <p className="pr-3 text-sm">
+            We bring you a series of job fair events focused on technology,
+            where you can find career opportunities that match your skills. We
+            collaborate with various leading companies in the technology
+            industry. Don't miss this opportunity, register your account now to
+            join our events!
+          </p>
         </div>
+      </div>
       <div className="flex min-h-screen justify-center sm:flex sm:flex-row py-5 bg-transparent rounded-3xl shadow-xl">
         <div className="flex w-3/4 justify-center lg:justify-end self-end z-10 overflow-auto">
           <form
@@ -87,6 +107,7 @@ const RegisterPage = () => {
               </label>
             </div>
             <div className="space-y-6">
+              <ClientFlashComponent />
               <div className="mb-4">
                 <label
                   htmlFor="fullName"
@@ -160,11 +181,7 @@ const RegisterPage = () => {
                   defaultValue={""}
                   className="text-sm text-black px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
                 >
-                  <option
-                    style={{ color: "#9CA3AF" }}
-                    value=""
-                    disabled
-                  >
+                  <option style={{ color: "#9CA3AF" }} value="" disabled>
                     Select Role
                   </option>
                   <option value="jobSeeker">Job Seeker</option>
@@ -184,7 +201,7 @@ const RegisterPage = () => {
                   </p>
                 </div>
               </div>
-              <div> 
+              <div>
                 <button className="bg-gradient-to-br bg-violet-800 hover:bg-violet-600 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-indigo-700 focus:outline-none transition duration-500 ease-in-out transform hover:-translate-x hover:scale-105">
                   Sign Up
                 </button>

@@ -53,8 +53,11 @@ class UserModel {
 
     static async create(newUser: newUser) {
         const validation = UserValidation.safeParse(newUser);
+        // console.log(validation, "<< validate");
+        
         if (!validation.success) {
             const errors = validation.error
+            
             throw errors
         }
 

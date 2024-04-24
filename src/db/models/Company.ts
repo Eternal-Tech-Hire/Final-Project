@@ -29,7 +29,7 @@ class Company {
 		const [validateUser] = await db.collection('Company').find({
                     email: data.email
         }).toArray()
-        if (validateUser) throw new Error("Email/Username Already Registered")
+        if (validateUser) throw new Error("Email/Username Already Registered bla bla")
 		return await db.collection('Company').insertOne(data_object)
 	}
 

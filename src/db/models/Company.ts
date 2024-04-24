@@ -10,6 +10,7 @@ interface CompanyTypesLocal {
 	name: string;
 	email: string;
 	password: string;
+	companyLogo: string;
 	role: string;
 	jobOffer: string;
 	fav: [];
@@ -49,6 +50,7 @@ class Company {
 			name: data.name,
 			email: data.email,
 			password: bcryptjs.hashSync(data.password),
+			companyLogo: data.companyLogo,
 			role: "company",
 			jobOffer: data.jobOffer,
 			fav: []
@@ -124,9 +126,11 @@ class Company {
 		console.log(url, id_company, idSeeker);
 		
 		let data = await db.collection('Company').findOne({ _id: id_company });
+		console.log(data);
+		
 		const favs = data!.fav;
 		favs.push({
-			// id_event: idEventObject
+			seekerId: idSeeker,
 			url: url
 		})
 		return await db.collection("Company").updateOne({ _id: id_company }, {

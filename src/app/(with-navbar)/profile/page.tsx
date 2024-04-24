@@ -6,7 +6,7 @@ import { TbBarcode } from "react-icons/tb";
 import { FaCloudArrowUp } from "react-icons/fa6";
 import { FaRegFileAlt } from "react-icons/fa";
 import QRCode from "qrcode";
-import { newUser } from "@/db/models/Users";
+import { User } from "@/types";
 import ModalQR from "@/components/QR";
 import ModalCV from "@/components/UploadCV";
 import PDFViewer from "@/components/PdfViewer";
@@ -43,7 +43,7 @@ const ProfilePage = () => {
   const [showModal, setShowModal] = useState(false);
   const [showQR, setShowQR] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
-  const [data, setData] = useState<newUser>();
+  const [data, setData] = useState<User>();
   const [qr, setQR] = useState<string>();
   const [showPDF, setShowPDF] = useState(false);
 
@@ -155,7 +155,7 @@ const ProfilePage = () => {
             {/* {qr ? <img src={qr} alt="" /> : ""} */}
           </div>
           <div className="flex-1 flex flex-col items-center lg:items-center justify-center px-8 mt-2">
-            <div className="flex items-center space-x-4 mt-2">
+            {data?.role === "jobSeeker" ?             <div className="flex items-center space-x-4 mt-2">
               <button
                 className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
                 onClick={toggleModalUpload}
@@ -184,7 +184,8 @@ const ProfilePage = () => {
                 <FaRegFileAlt className="h-5 w-5" />
                 <span>Show CV</span>
               </button>
-            </div>
+            </div> : "" }
+
             <div className="mt-10">
               {showPDF && <PDFViewer url={data?.cv} />}
             </div>

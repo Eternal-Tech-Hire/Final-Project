@@ -1,5 +1,7 @@
 "use server"
+import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import SweetAlert from "@/components/SweetAlert";
 
 export default async function addFav(userId : string | undefined) {
 
@@ -15,7 +17,7 @@ export default async function addFav(userId : string | undefined) {
         body: JSON.stringify(body),
         cache:"no-store",
         headers:{
-          "Content-Type": "application/json",
+          "Content-Type": "application/json", 
         Cookie: cookies().toString()
         }
       })
@@ -23,7 +25,7 @@ export default async function addFav(userId : string | undefined) {
         console.log("failed to add fav");
       }
     }else{
-        console.log("LU HARUS JADI COMPANY DULU");
-        
+      SweetAlert("Only Company Can Bookmark")
+        // redirect(`${url}?error=Only Company Can Bookmark`)
       }
   }

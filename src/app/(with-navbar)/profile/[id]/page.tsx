@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaRegBookmark } from "react-icons/fa6";
 import { FaRegFileAlt } from "react-icons/fa";
+import { ClientFlashComponent } from "@/components/ClientFlash";
 
 const ProfilePage = ({ params }: { params: { id: string } }) => {
   // const data = await fetchData(params.id);
@@ -82,10 +83,11 @@ const ProfilePage = ({ params }: { params: { id: string } }) => {
             <p className="text-sm text-gray-500">{data?.email}</p>
             {/* <p className="text-sm text-gray-500">{data?.cv}</p> */}
             {/* Render PDF */}
+            {/* <ClientFlashComponent /> */}
           </div>
           <div className="flex-1 flex flex-col items-center lg:items-center justify-end px-8 mt-2">
             <div className="flex items-center space-x-4 mt-2">
-              <BookmartButton userId={params.id} />
+              {data?.role === "company" ? <BookmartButton userId={params.id} /> : ""}
 
                 <button
                   onClick={handleButtonClick}

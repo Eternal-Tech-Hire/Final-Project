@@ -10,6 +10,7 @@ interface CompanyTypesLocal {
 	name: string;
 	email: string;
 	password: string;
+	companyLogo: string;
 	role: string;
 	jobOffer: string;
 	fav: [];
@@ -22,6 +23,7 @@ class Company {
 			name: data.name,
 			email: data.email,
 			password: bcryptjs.hashSync(data.password),
+			companyLogo: data.companyLogo,
 			role: "company",
 			jobOffer: data.jobOffer,
 			fav: []
@@ -29,7 +31,7 @@ class Company {
 		const [validateUser] = await db.collection('Company').find({
                     email: data.email
         }).toArray()
-        if (validateUser) throw new Error("Email/Username Already Registered bla bla")
+        if (validateUser) throw new Error("Email/Username Already Registered")
 		return await db.collection('Company').insertOne(data_object)
 	}
 
@@ -97,9 +99,11 @@ class Company {
 		console.log(url, id_company, idSeeker);
 		
 		let data = await db.collection('Company').findOne({ _id: id_company });
+		console.log(data);
+		
 		const favs = data!.fav;
 		favs.push({
-			// id_event: idEventObject
+			seekerId: idSeeker,
 			url: url
 		})
 		return await db.collection("Company").updateOne({ _id: id_company }, {

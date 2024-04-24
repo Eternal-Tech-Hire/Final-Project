@@ -22,6 +22,7 @@ export interface CompanyTypes {
   name: string;
   email: string;
   password: string;
+  companyLogo: string;
   role: string;
   jobOffer: string;
   companyId: []
@@ -31,6 +32,7 @@ export interface EventsTypes{
   _id: ObjectId;
   name: string;
   description: string;
+  imgUrl: string;
   date: string;
   location: string;
   categoryId: string;

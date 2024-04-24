@@ -6,6 +6,7 @@ interface EventsTypesLocal {
 	name: string;
 	description: string;
 	date: string;
+	imgUrl: string;
 	location: string;
 	categoryId: string;
 	companyId: []
@@ -19,6 +20,7 @@ class Events {
 			name: data.name,
 			description: data.description,
 			date: data.date,
+			imgUrl: data.imgUrl,
 			location: data.location,
 			categoryId: data.categoryId,
 			companyId: []

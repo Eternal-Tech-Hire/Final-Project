@@ -10,6 +10,7 @@ interface CompanyTypesLocal {
 	name: string;
 	email: string;
 	password: string;
+	companyLogo: string;
 	role: string;
 	jobOffer: string;
 	fav: [];
@@ -22,6 +23,7 @@ class Company {
 			name: data.name,
 			email: data.email,
 			password: bcryptjs.hashSync(data.password),
+			companyLogo: data.companyLogo,
 			role: "company",
 			jobOffer: data.jobOffer,
 			fav: []

@@ -52,10 +52,21 @@ const CardFair = ({ data, userRole }: CardFairProps) => {
       <div className="">
         <p className="text-gray-700 text-md">{data?.description}</p>
       </div>
+      
+      <div className="px-6 pb-2">
+        <h1 className="font-bold text-lg text-start mb-2">List Of Companies</h1>
+        <div>
+          {data && data?.Company.map((item, index)=>(
+            <span key={index} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+            {item.name}
+          </span>
+          ))}
+
       <div className="text-right">
         <div className="text-gray-700 text-base">
           <p>Location: {data?.location}</p>
           <p>Date: {data?.date}</p>
+
         </div>
         {isLoggedIn && (
           <div className="flex justify-end mt-6">

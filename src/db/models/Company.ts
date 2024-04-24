@@ -85,24 +85,14 @@ class Company {
 		})
 	}
 
-	static async findFeaturedCompany() {
-        const find = await this.getAll()
-		
-        return find?.slice(0, 5)    
-    }
-
-	static async updateFavEvent(companyId: string, seekerId: string, url: string) {
-		const id_company = new ObjectId(companyId)
-		const idSeeker = new ObjectId(seekerId);
-		console.log(url, id_company, idSeeker);
-		
+	static async updateFavEvent(idCompany: string, idEvent: string, url_fav: string) {
+		const id_company = new ObjectId(idCompany)
+		const idEventObject = new ObjectId(idEvent);
 		let data = await db.collection('Company').findOne({ _id: id_company });
-		console.log(data);
-		
 		const favs = data!.fav;
 		favs.push({
-			seekerId: idSeeker,
-			url: url
+			id_event: idEventObject,
+			url: url_fav
 		})
 		return await db.collection("Company").updateOne({ _id: id_company }, {
 			$set: {
@@ -110,6 +100,12 @@ class Company {
 			}
 		})
 	}
+
+	static async findFeaturedCompany() {
+        const find = await this.getAll()
+
+        return find?.slice(0, 5)    
+    }
 }
 
 export default Company;

@@ -22,7 +22,20 @@ const LoginPage = () => {
     });
 
     if (response.status != 200) {
-      return redirect(`/login?error=Wrong Email/Password`);
+      const response = await fetch(
+        "http://localhost:3000/api/auth/company/login",
+        {
+          method: "POST",
+          cache: "no-store",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(rawFormData),
+        }
+      );
+      if (response.status !== 200) {
+        return redirect(`/login?error=Wrong Email/Password`);
+      }
     }
     const responseJson = await response.json();
 
@@ -131,6 +144,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
-
-

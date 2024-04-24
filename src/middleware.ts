@@ -116,12 +116,16 @@ export async function middleware(request: NextRequest) {
         const tokenCookie = cookies().get('Authorization')
         console.log(tokenCookie, "<><><><><><><>");
         if (!tokenCookie?.value){
-            return NextResponse.json(
-                {message: 'Token Invalid'},
-                {
-                    status: 400
-                }
-            )
+            return undefined
+            // request.nextUrl.pathname = "/login"
+            // return NextResponse.redirect(new URL("/login", request.nextUrl))
+            // return NextResponse.json(
+            //     {message: 'Token Invalid'},
+            //     {
+            //         status: 400
+            //     }
+            // )
+            
         }
         
         const splitTokenCookie = tokenCookie.value.split(' ')[1]

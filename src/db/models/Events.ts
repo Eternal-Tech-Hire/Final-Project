@@ -79,6 +79,12 @@ class Events {
 			}
 		})
 	}
+	
+	static async findFeaturedEvents() {
+        const find = await this.getAll()
+
+        return find?.slice(0, 3)    
+    }
 }
 
 export default Events;

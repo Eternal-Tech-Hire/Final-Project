@@ -30,6 +30,8 @@ async function fetchData() {
 
 const Header = async () => {
   const userRole = cookies().get('Role')?.value
+  // console.log("userRole", userRole);
+  
   const events : EventsTypes[]  = await fetchData()
   if(loading){
     return (

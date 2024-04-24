@@ -1,6 +1,15 @@
 import { EventsTypes } from "@/types";
+import { useState, useEffect } from "react";
 
 const CardFair = ({ data }: { data: EventsTypes }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const authorizationCookie = document.cookie
+      .split(";")
+      .find((cookie) => cookie.trim().startsWith("Authorization="));
+    setIsLoggedIn(!!authorizationCookie);
+  }, []);
   return (
     <div className="rounded overflow-hidden shadow-lg">
       <div className="px-6 py-4">
@@ -14,11 +23,13 @@ const CardFair = ({ data }: { data: EventsTypes }) => {
               <p>Location: {data?.location}</p>
               <p>Date: {data?.date}</p>
             </div>
-            <div className="flex justify-end mt-6">
-              <button className="rounded-md bg-gradient-to-br from-emerald-400 to-sky-600 px-4 py-2 font-dm text-sm font-medium text-white shadow-md hover:shadow-lg transition-transform duration-200 ease-in-out hover:scale-[1.03]">
-                Join Now
-              </button>
-            </div>
+            {isLoggedIn && (
+              <div className="flex justify-end mt-6">
+                <button className="rounded-md bg-gradient-to-br from-emerald-400 to-sky-600 px-4 py-2 font-dm text-sm font-medium text-white shadow-md hover:shadow-lg transition-transform duration-200 ease-in-out hover:scale-[1.03]">
+                  Join Now
+                </button>
+              </div>
+            )}
           </div>
         </div>
         <hr className="my-2 border-b border-gray-300" />

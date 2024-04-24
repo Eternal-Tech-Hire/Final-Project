@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
+import Swal from 'sweetalert2';
 
 interface ModalProps {
   onClose: () => void;
@@ -68,7 +69,12 @@ const ModalCV: React.FC<ModalProps> = ({ onClose, userId}) => {
           }),
         }
       );
-      alert("Berhasil");
+      Swal.fire({
+        icon: 'success',
+        title: 'Success Upload CV',
+        showConfirmButton: false,
+        timer: 2000 
+      });
       closeModal()
       console.log(res);
     } catch (error) {

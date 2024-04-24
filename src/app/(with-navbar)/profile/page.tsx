@@ -115,7 +115,7 @@ const ProfilePage = () => {
               </span>
             </div>
             <p className="text-gray-700">
-              Senior Software Engineer at Tailwind CSS
+              Fullstack Web Developer
             </p>
             <p className="text-sm text-gray-500">{data?.email}</p>
             {/* {qr ? <img src={qr} alt="" /> : ""} */}

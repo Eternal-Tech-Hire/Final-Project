@@ -15,9 +15,36 @@ interface CompanyTypesLocal {
 	fav: [];
 }
 
+const CompanyValidation = z.object({
+	name: z.string({
+        required_error: "Name can't be empty"
+    }),
+    email: z.string({
+        required_error: "Email can't be empty"
+    }).email({
+        message: "Must be Email Format"
+    }),
+    phoneNumber: z.string({
+        required_error: "Phone Number can't be empty"
+    }),
+    password: z.string({
+        required_error: "Password can't be empty"
+    }).min(6, {message: "Password must be at least 6 characters"})
+})
+
+
 
 class Company {
 	static async store(data: CompanyTypesLocal) {
+		const validation = CompanyValidation.safeParse(data);
+        // console.log(validation, "<< validate");
+        
+        if (!validation.success) {
+            const errors = validation.error
+            
+            throw errors
+        }
+
 		const data_object = {
 			name: data.name,
 			email: data.email,
@@ -29,7 +56,7 @@ class Company {
 		const [validateUser] = await db.collection('Company').find({
                     email: data.email
         }).toArray()
-        if (validateUser) throw new Error("Email/Username Already Registered bla bla")
+        if (validateUser) throw new Error("Email/Username Already Registered")
 		return await db.collection('Company').insertOne(data_object)
 	}
 

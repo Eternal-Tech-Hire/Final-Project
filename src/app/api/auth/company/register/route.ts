@@ -20,7 +20,7 @@ export const POST = async (request: Request) => {
 
             return NextResponse.json(
                 {
-                    message: `${errorPath} ${message}`
+                    message: `${message}`
                 }, {
                     status: 400
                 }

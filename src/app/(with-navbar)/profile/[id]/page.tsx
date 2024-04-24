@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 // import { useEffect, useState } from "react";
 import { FaRegBookmark } from "react-icons/fa6";
+import { FaRegFileAlt } from "react-icons/fa";
 
 async function fetchData(userId: string) {
   try {
@@ -12,7 +13,7 @@ async function fetchData(userId: string) {
       cache: "no-store",
       headers: {
         "Content-Type": "application/json",
-        Cookie: cookies().toString()
+        Cookie: cookies().toString(),
       },
     });
     // console.log(res);
@@ -29,12 +30,12 @@ const ProfilePage = async ({ params }: { params: { id: string } }) => {
   const data = await fetchData(params.id);
   const userRole = cookies().get("Role")?.value;
   // console.log(userRole);
-  
+
   // const pdfUrl = 'http://res.cloudinary.com/dzdi4yqlr/raw/upload/v1713784516/finalproject/c3avbbqul2jlmhrbrzgv.pdf';
 
   return (
     <>
-      <div className="h-full bg-gray-200 px-8 pb-8">
+      <div className="h-full bg-gradient-to-b from-gray-900 via-gray-900 to-purple-800 px-16 pb-24">
         <div className="bg-white rounded-lg shadow-xl pb-8">
           <div className="absolute right-12 mt-4 rounded"></div>
           <div className="w-full h-[250px]">
@@ -68,17 +69,22 @@ const ProfilePage = async ({ params }: { params: { id: string } }) => {
               </span>
             </div>
             <p className="text-gray-700">
-              Senior Software Engineer at Tailwind CSS
+              Fullstack Web Developer
             </p>
             <p className="text-sm text-gray-500">{data?.email}</p>
-            <p className="text-sm text-gray-500">{data?.cv}</p>
+            {/* <p className="text-sm text-gray-500">{data?.cv}</p> */}
             {/* Render PDF */}
           </div>
           <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
             <div className="flex items-center space-x-4 mt-2">
-              <BookmartButton userRole={userRole} userId={params.id}/>
+              <BookmartButton userRole={userRole} userId={params.id} />
               <Link href={`${data?.cv}`} type="button">
-                asd
+                <button
+                  className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
+                >
+                  <FaRegFileAlt className="h-4 w-4" />
+                  <span>Show CV</span>
+                </button>
               </Link>
             </div>
           </div>

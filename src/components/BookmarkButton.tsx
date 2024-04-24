@@ -1,6 +1,7 @@
 "use client"
 
 import { FaRegBookmark } from "react-icons/fa6";
+import Swal from "sweetalert2";
 
 export default function BookmartButton({ userRole, userId }: { userRole: string | undefined, userId: string | undefined }) {
     // console.log(userRole);
@@ -21,17 +22,24 @@ export default function BookmartButton({ userRole, userId }: { userRole: string 
             console.log("failed to add fav");
           }
         }else{
-            console.log("LU HARUS JADI COMPANY DULU");
+          Swal.fire({
+            icon: 'warning',
+            title: 'Only Company Can Bookmark',
+            showConfirmButton: false,
+            timer: 2000 
+          });
             
           }
       }
 
   return (
     <>
-      <button onClick={addFav} className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
-        <FaRegBookmark className="h-4 w-4" />
-        <span>BookMark</span>
-      </button>
+      {userRole === 'company' && (
+        <button onClick={addFav} className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+          <FaRegBookmark className="h-4 w-4" />
+          <span>BookMark</span>
+        </button>
+      )}
     </>
   );
 }

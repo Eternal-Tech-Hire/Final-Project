@@ -21,7 +21,7 @@ console.log("masukk");
 
             return NextResponse.json(
                 {
-                    message: `${errorPath} ${message}`
+                    message: `${message}`
                 }, {
                     status: 400
                 }

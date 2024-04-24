@@ -16,6 +16,7 @@ const RegisterPage = () => {
     };
 
     let response;
+    console.log(rawFormData, "<<< RAW DATA");
 
     if (rawFormData.role === "jobSeeker") {
       response = await fetch(`http://localhost:3000/api/auth/register`, {
@@ -26,10 +27,18 @@ const RegisterPage = () => {
         },
         body: JSON.stringify(rawFormData),
       });
-      const result = await response.json()
+      const result = await response.json();
+      if (rawFormData.name === "") {
+        return redirect(`/register?error=Name Can't Be Empty`);
+      }
+
+      if (rawFormData.phoneNumber === "") {
+        return redirect(`/register?error=Phone Number Can't Be Empty`);
+      }
       if (response.status !== 201) {
         return redirect(`/register?error=${result.message}`);
       }
+
     } else if (rawFormData.role === "company") {
       response = await fetch(
         `http://localhost:3000/api/auth/company/register`,
@@ -42,15 +51,21 @@ const RegisterPage = () => {
           body: JSON.stringify(rawFormData),
         }
       );
+      const result = await response.json();
+
+      if (rawFormData.name === "") {
+        return redirect(`/register?error=Name Can't Be Empty`);
+      }
+      if (rawFormData.phoneNumber === "") {
+        return redirect(`/register?error=Phone Number Can't Be Empty`);
+      }
       if (response.status !== 201) {
-        console.log(response.status, "<<<< RES REGIS");
-        return redirect(`/register?error=Wrong Email/Password`);
+        return redirect(`/register?error=${result.message}`);
       }
     } else {
       if (!response) {
         return redirect(`/register?error=Please Complete Input Below`);
       }
-  
     }
 
     redirect("/login");

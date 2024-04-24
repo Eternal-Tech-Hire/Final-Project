@@ -5,11 +5,8 @@ import CardFair from "@/components/CardFair";
 import { EventsTypes } from "@/types";
 import { cookies } from "next/headers";
 
-let loading = false
-
 async function fetchData() {
   try {
-    loading = true
     const response = await fetch(`http://localhost:3000/api/events`, {
       method: "GET",
       cache: "no-store",
@@ -21,7 +18,7 @@ async function fetchData() {
     }
 
     const responseJson = await response.json();
-    loading = false
+
     return responseJson.data
   } catch (error) {
     console.error("Error fetching item: ", error);
@@ -29,15 +26,10 @@ async function fetchData() {
 }
 
 const Header = async () => {
+
   const userRole = cookies().get('Role')?.value
   const events : EventsTypes[]  = await fetchData()
-  if(loading){
-    return (
-      <div className="flex justify-center items-center h-screen bg-white">
-        <span className="loading loading-bars loading-lg"></span>
-      </div>
-    );
-  }
+
   return (
     <div>
       <header className="">
@@ -49,9 +41,9 @@ const Header = async () => {
             <h1 className="relative top-0 w-fit h-auto py-4 mx-auto justify-center flex bg-gradient-to-r items-center from-blue-700 via-emerald-500 to-cyan-500 bg-clip-text lg:text-6xl text-5xl font-extrabold text-transparent text-center select-auto">
               Eternal Tech Hire
             </h1>
-            <h1 className="lg:text-4xl text-2xl font-bold mb-4">Job Fairs.</h1>
+            <h1 className="lg:text-4xl text-2xl font-bold mb-4">Bookmarked.</h1>
             <p className="text-lg inline-block sm:block">
-              Join The Job Fair Events Now.
+              These are the Job Seeker Bookmarks.
             </p>
           </div>
         </div>

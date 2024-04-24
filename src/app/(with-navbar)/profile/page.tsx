@@ -4,6 +4,7 @@ import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { FaPencil } from "react-icons/fa6";
 import { TbBarcode } from "react-icons/tb";
 import { FaCloudArrowUp } from "react-icons/fa6";
+import { FaRegFileAlt } from "react-icons/fa";
 import QRCode from "qrcode";
 import { newUser } from "@/db/models/Users";
 import ModalQR from "@/components/QR";
@@ -31,7 +32,7 @@ import PDFViewer from "@/components/PdfViewer";
 //     <>
 //     <Document file={{url}}>
 //     <Page >
-                
+
 //               </Page>
 //             </Document>
 //     </>
@@ -106,16 +107,16 @@ const ProfilePage = () => {
     toggleModalQR();
   };
 
- const handleButtonClick = () => {
-        setShowPDF(!showPDF);
-    }
+  const handleButtonClick = () => {
+    setShowPDF(!showPDF);
+  };
 
   console.log(data?.cv);
-  
+
   return (
     <>
-      <div className="h-full bg-gradient-to-b from-gray-900 via-gray-900 to-purple-800 px-16 pb-24">
-        <div className="bg-white rounded-lg shadow-xl pb-8">
+      <div className="h-full bg-gradient-to-b from-gray-900 via-gray-900 to-purple-800 lg:px-16 px-0 pb-24">
+        <div className="bg-white rounded-lg shadow-xl pb-0 lg:pb-8">
           <div className="absolute right-12 mt-4 rounded"></div>
           <div className="w-full h-[250px]">
             <img
@@ -147,16 +148,13 @@ const ProfilePage = () => {
                 </svg>
               </span>
             </div>
-            <p className="text-gray-700">
-              Fullstack Web Developer
-            </p>
+            <p className="text-gray-700">Fullstack Web Developer</p>
             <p className="text-sm text-gray-500">{data?.email}</p>
             {/* {ReactPDF.render(<PDFViewer><MyDoc /></PDFViewer>, `${data?.cv}`)} */}
-            <button onClick={handleButtonClick}>Show CV</button>
-            {showPDF && <PDFViewer url={data?.cv} />}
+            {/* <button onClick={handleButtonClick}>Show CV</button>*/}
             {/* {qr ? <img src={qr} alt="" /> : ""} */}
           </div>
-          <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
+          <div className="flex-1 flex flex-col items-center lg:items-center justify-center px-8 mt-2">
             <div className="flex items-center space-x-4 mt-2">
               <button
                 className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
@@ -165,13 +163,13 @@ const ProfilePage = () => {
                 <FaCloudArrowUp className="h-4 w-4" />
                 <span>Upload CV</span>
               </button>
-              <button
+              {/* <button
                 className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
                 onClick={toggleModal}
               >
                 <FaPencil className="h-4 w-4" />
                 <span>Edit Profile</span>
-              </button>
+              </button> */}
               <button
                 className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
                 onClick={generate}
@@ -179,6 +177,16 @@ const ProfilePage = () => {
                 <TbBarcode className="h-5 w-5" />
                 <span>Generate QR</span>
               </button>
+              <button
+                className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
+                onClick={handleButtonClick}
+              >
+                <FaRegFileAlt className="h-5 w-5" />
+                <span>Show CV</span>
+              </button>
+            </div>
+            <div className="mt-10">
+              {showPDF && <PDFViewer url={data?.cv} />}
             </div>
           </div>
           {showQR && (
@@ -204,7 +212,6 @@ const ProfilePage = () => {
           {showUpload && (
             <ModalCV onClose={toggleModalUpload} userId={data?._id} />
           )}
-          
         </div>
       </div>
     </>

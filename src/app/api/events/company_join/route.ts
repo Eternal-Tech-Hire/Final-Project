@@ -4,7 +4,7 @@ import Events from "@/db/models/Events";
 export const POST = async (request: Request) => {
   try {
     const idCompany = request.headers.get("x-user-id");
-    console.log(idCompany);
+    // console.log(idCompany, "<<<<>>");
     
     if (!idCompany) {
       return NextResponse.json(

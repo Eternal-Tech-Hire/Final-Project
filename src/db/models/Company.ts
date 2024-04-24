@@ -51,9 +51,10 @@ class Company {
 			name: data.name,
 			email: data.email,
 			password: bcryptjs.hashSync(data.password),
-			companyLogo: data.companyLogo,
+			companyLogo: "https://d3g5ywftkpzr0e.cloudfront.net/wp-content/uploads/2020/01/15094433/hacktiv8-1.png",
 			role: "company",
-			jobOffer: data.jobOffer,
+			fields: ["Technology"],
+			jobOffer: "Fullstack Developer",
 			fav: []
 		}
 		const [validateUser] = await db.collection('Company').find({

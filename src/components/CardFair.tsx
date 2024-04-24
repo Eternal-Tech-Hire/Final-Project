@@ -31,7 +31,7 @@ import { useState, useEffect } from "react";
       }
     };
 
-    // console.log(data.Company, "data companies");
+    console.log(data.Company, "data companies");
     
     useEffect(() => {
     const authorizationCookie = document.cookie
@@ -68,7 +68,7 @@ import { useState, useEffect } from "react";
       <div className="px-6 pb-2">
         <h1 className="font-bold text-lg text-start mb-2">List Of Companies</h1>
         <div>
-          {data?.Company.map((item, index)=>(
+          {data && data?.Company.map((item, index)=>(
             <span key={index} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
             {item.name}
           </span>

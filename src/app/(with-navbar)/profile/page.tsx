@@ -9,34 +9,6 @@ import { newUser } from "@/db/models/Users";
 import ModalQR from "@/components/QR";
 import ModalCV from "@/components/UploadCV";
 import PDFViewer from "@/components/PdfViewer";
-// import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
-// import ReactPDF from "@react-pdf/renderer";
-// import { PDFViewer } from "@react-pdf/renderer";
-// import { Document, Page } from "react-pdf";
-
-// const styles = StyleSheet.create({
-//   page: {
-//     flexDirection: 'row',
-//     backgroundColor: '#E4E4E4',
-//   },
-//   section: {
-//     margin: 10,
-//     padding: 10,
-//     flexGrow: 1,
-//   },
-// });
-
-// const MyDoc = (url: string | undefined) => {
-//   return(
-//     <>
-//     <Document file={{url}}>
-//     <Page >
-                
-//               </Page>
-//             </Document>
-//     </>
-//   )
-// }
 
 const ProfilePage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -110,7 +82,6 @@ const ProfilePage = () => {
         setShowPDF(!showPDF);
     }
 
-  // console.log(data?.cv);
   
   return (
     <>

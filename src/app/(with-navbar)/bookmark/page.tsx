@@ -2,19 +2,18 @@
 "use server"
 import CardFair from "@/components/CardFair";
 import CardProfile from "@/components/CardProfile";
-
-import { EventsTypes } from "@/types";
+import { CompanyTypes, EventsTypes } from "@/types";
 import { cookies } from "next/headers";
 
 async function fetchData() {
   try {
-    const response = await fetch(`http://localhost:3000/api/company`, {
+    
+    const response = await fetch(`http://localhost:3000/api/company/getOne`, {
       method: "GET",
       cache: "no-store",
       headers: {"Content-Type": "application/json",
-      // Cookie: cookies().toString()
+      Cookie: cookies().toString()
     },
-      
     });
 
     if (!response.ok) {
@@ -32,7 +31,8 @@ async function fetchData() {
 const Header = async () => {
 
   const userRole = cookies().get('Role')?.value
-  const events : EventsTypes[]  = await fetchData()
+  const company : CompanyTypes  = await fetchData()
+  // console.log(company);
 
   return (
     <div>
@@ -54,16 +54,9 @@ const Header = async () => {
       </header>
 
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 lg:px-28 lg:py-28 px-10 py-10">
-        {/* {events.map((item,index) => (
-          <CardProfile data={item} userRole={userRole} key={index} />
-        ))} */}
-
-        {/* {events.map((item,index)=>{
-
-        <CardProfile />
-        })} */}
-        <CardProfile />
-        <CardProfile />
+        {company.fav_info.map((item,index) => (
+          <CardProfile data={item} key={index}/>
+        ))}
       </div>
     </div>
   );

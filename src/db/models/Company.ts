@@ -101,7 +101,25 @@ class Company {
 
 	static async getById(_id: string) {
 		const instanceTicketId = new ObjectId(_id)
-		return await db.collection('Company').findOne({ _id: instanceTicketId });
+		const aggregate = [
+			{
+				'$match' : {'_id': instanceTicketId}
+			},
+			{
+				'$limit' : 1
+
+			},
+			{
+				'$lookup': {
+					'from': 'Users',
+					'localField': 'fav.seekerId',
+					'foreignField': '_id',
+					'as': 'fav_info'
+				}
+			}
+		]
+		const data = await db.collection('Company').aggregate(aggregate).toArray()
+		return data[0];
 	}
 
 

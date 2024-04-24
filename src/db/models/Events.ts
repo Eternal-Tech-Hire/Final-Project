@@ -53,6 +53,12 @@ class Events {
 		return (await db.collection('Events').deleteOne({ _id: instanceTicketId }))
 	}
 
+	static async findFeaturedEvents() {
+        const find = await this.getAll()
+		
+        return find?.slice(0, 3)    
+    }
+
 	static async addCompanyJoin(_id: string, idCompany: string) {
 		const idEventObject = new ObjectId(_id);
 		const idCompanyObject = new ObjectId(idCompany)

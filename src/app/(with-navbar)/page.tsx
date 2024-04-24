@@ -51,6 +51,7 @@ export default function Home() {
     fetchDataEvents();
   }, []);
 
+  console.log(listEvents, "<<<<<");
   
   if (loading) {
     return (

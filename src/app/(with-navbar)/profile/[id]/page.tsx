@@ -44,6 +44,9 @@ const ProfilePage = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     fetchData(params.id);
   }, []);
+
+  console.log(data, "<<< daatata");
+  
   return (
     <>
       <div className="h-full bg-gradient-to-b from-gray-900 via-gray-900 to-purple-800 lg:px-16 px-0 pb-24">
@@ -87,8 +90,8 @@ const ProfilePage = ({ params }: { params: { id: string } }) => {
           </div>
           <div className="flex-1 flex flex-col items-center lg:items-center justify-end px-8 mt-2">
             <div className="flex items-center space-x-4 mt-2">
-              {data?.role === "company" ? <BookmartButton userId={params.id} /> : ""}
-
+              {/* {data?.role === "jobSeeker" ? <BookmartButton userRole={data?.role}  userId={params.id} /> : ""} */}
+              <BookmartButton  userId={params.id} />
                 <button
                   onClick={handleButtonClick}
                   className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"

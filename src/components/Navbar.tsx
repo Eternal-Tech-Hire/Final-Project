@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import { getCookie, deleteCookie } from "cookies-next";
 import Link from "next/link";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-
+import { User } from "@/types";
 
 const Navbar = () => {
   const router = useRouter();
@@ -14,6 +14,28 @@ const Navbar = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [maxScroll, setMaxScroll] = useState(0);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [data, setData] = useState<User>();
+
+  async function fetchData() {
+    try {
+      const res = await fetch(`/api/auth/users/`, {
+        cache: "no-store",
+      });
+
+      if (res.ok) {
+        const userData = await res.json();
+        setData(userData.data);
+      } else {
+        console.error("Failed to fetch user data.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const accessToken = getCookie("Authorization") as string;
@@ -85,7 +107,9 @@ const Navbar = () => {
           ? "bg-transparent"
           : ""
       } ${
-        scrollPosition >= 90 && scrollPosition !== maxScroll ? "bg-cyan-950" : ""
+        scrollPosition >= 90 && scrollPosition !== maxScroll
+          ? "bg-cyan-950"
+          : ""
       } transition-all duration-100 ease-in-out`}
     >
       <nav className="mx-auto flex max-w-6xl gap-8 px-6 lg:px-12 py-4">
@@ -126,6 +150,18 @@ const Navbar = () => {
               </button>
             </Link>
           </li>
+          {data?.role === "jobSeeker" ? (
+            ""
+          ) : (
+            <li className="pt-1.5 font-dm text-sm font-medium text-white">
+              <Link href="/bookmark">
+                <button className="text-lg font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
+                  Bookmarks
+                  <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
+                </button>
+              </Link>
+            </li>
+          )}
         </ul>
         <div className="flex-grow" />
         <div className="hidden items-center justify-center gap-6 md:flex">
@@ -133,7 +169,7 @@ const Navbar = () => {
             <>
               <Link href="/profile">
                 <button className="rounded-md  bg-gradient-to-br from-emerald-400 to-sky-600 px-3 py-2 font-dm text-sm font-medium text-white shadow-md  hover:shadow-cyan-400 transition-transform duration-200 ease-in-out hover:scale-[1.03]">
-                 My Profie
+                  My Profie
                 </button>
               </Link>
               <button
@@ -159,8 +195,77 @@ const Navbar = () => {
             </>
           )}
         </div>
+        {isMobileNavOpen && (
+          <ul className="flex flex-col gap-4 items-end justify-end md:hidden">
+            <li className="pt-1.5 font-dm text-sm font-medium text-white">
+              <Link href="/">
+                <button className="text-md font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
+                  Home
+                  <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
+                </button>
+              </Link>
+            </li>
+            <li className="pt-1.5 font-dm text-sm font-medium text-white">
+              <Link href="/events">
+                <button className="text-md font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
+                  Job Fairs
+                  <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
+                </button>
+              </Link>
+            </li>
+            <li className="pt-1.5 font-dm text-sm font-medium text-white">
+              <Link href="/companies">
+                <button className="text-md font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
+                  Companies
+                  <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
+                </button>
+              </Link>
+            </li>
+            {data?.role === "jobSeeker" ? (
+            ""
+          ) : (
+            <li className="pt-1.5 font-dm text-sm font-medium text-white">
+              <Link href="/bookmark">
+                <button className="text-md font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
+                  Bookmarks
+                  <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
+                </button>
+              </Link>
+            </li>
+          )}
+            {isLoggedIn ? (
+              <>
+                <Link href="/profile">
+                  <button className="rounded-md  bg-gradient-to-br from-emerald-400 to-sky-600 px-3 py-2 font-dm text-sm font-medium text-white shadow-md  hover:shadow-cyan-400 transition-transform duration-200 ease-in-out hover:scale-[1.03]">
+                    My Profie
+                  </button>
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="rounded-md bg-gradient-to-br from-purple-700 to-rose-500 px-3 py-2 font-dm text-sm font-medium text-white shadow-md hover:shadow-rose-500 transition-transform duration-200 ease-in-out hover:scale-[1.05]"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link href="/login">
+                  <button className="text-sm text-white font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
+                    Sign In
+                    <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
+                  </button>
+                </Link>
+                <Link href="/register">
+                  <h1 className="rounded-md bg-gradient-to-br bg-sky-600 px-2 py-1 font-dm text-sm font-medium text-white shadow-md  hover:shadow-cyan-400 transition-transform duration-200 ease-in-out hover:scale-[1.03]">
+                    Sign up for free
+                  </h1>
+                </Link>
+              </>
+            )}
+          </ul>
+        )}
         <div className="relative flex items-center justify-center md:hidden">
-          <button type="button">
+          <button type="button" onClick={toggleMobileNav}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -180,7 +285,7 @@ const Navbar = () => {
         </div>
       </nav>
     </header>
-  );  
+  );
 };
 
 export default Navbar;

@@ -27,7 +27,7 @@ export interface CompanyTypes {
   jobOffer: string;
   fields:[];
   companyId: []
-  fav_info:[User]
+  fav:[User]
 }
 
 export interface EventsTypes{

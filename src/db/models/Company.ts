@@ -156,9 +156,12 @@ class Company {
     }
 
 	static async updateFavEvent(companyId: string, seekerId: string, url: string) {
+		// console.log(seekerId, "????");
+		
 		const id_company = new ObjectId(companyId)
 		const idSeeker = new ObjectId(seekerId);
 		// console.log(url, id_company, idSeeker);
+		console.log("masukkk");
 		
 		let dataUser = await db.collection('Users').findOne({ _id: idSeeker });
 		if (dataUser) {
@@ -170,6 +173,8 @@ class Company {
 		console.log(data);
 		
 		const favs = data!.fav;
+
+		console.log(favs, '<< FAv')
 		favs.push({
 			seekerId: idSeeker,
 			url: url

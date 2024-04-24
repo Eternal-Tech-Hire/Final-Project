@@ -43,53 +43,58 @@ const CardFair = ({ data, userRole }: CardFairProps) => {
 
   return (
     <div className="rounded overflow-hidden shadow-lg">
-  <div className="px-6 py-4">
-    <div className="flex justify-center mb-5">
-      <img src={data?.imgUrl} alt={data?.name} className="w-full h-48 object-cover rounded-t-lg" />
-    </div>
-    <h1 className="font-bold text-xl text-center mb-5">{data?.name}</h1>
-    <div className="grid grid-cols-2 gap-x-0 mb-6">
-      <div className="">
-        <p className="text-gray-700 text-md">{data?.description}</p>
-      </div>
-      
-      <div className="px-6 pb-2">
-        <h1 className="font-bold text-lg text-start mb-2">List Of Companies</h1>
-        <div>
-          {data && data?.Company.map((item, index)=>(
-            <span key={index} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-            {item.name}
-          </span>
-          ))}
-
-      <div className="text-right">
-        <div className="text-gray-700 text-base">
-          <p>Location: {data?.location}</p>
-          <p>Date: {data?.date}</p>
-
+      <div className="px-6 py-4">
+        <div className="flex justify-center mb-5">
+          <img
+            src={data?.imgUrl}
+            alt={data?.name}
+            className="w-full h-48 object-cover rounded-t-lg"
+          />
         </div>
-        {isLoggedIn && (
-          <div className="flex justify-end mt-6">
-            <button onClick={joinFair} className="rounded-md bg-gradient-to-br from-emerald-400 to-sky-600 px-4 py-2 font-dm text-sm font-medium text-white shadow-md hover:shadow-lg transition-transform duration-200 ease-in-out hover:scale-[1.03]">
-              Join Now
-            </button>
+        <h1 className="font-bold text-xl text-center mb-5">{data?.name}</h1>
+        <div className="grid grid-cols-2 gap-x-0 mb-6">
+          <div className="">
+            <p className="text-gray-700 text-md">{data?.description}</p>
           </div>
-        )}
+
+          <div className="px-6 pb-2">
+              <div className="text-right">
+                <div className="text-gray-700 text-base">
+                  <p>Location: {data?.location}</p>
+                  <p>Date: {data?.date}</p>
+                </div>
+                {isLoggedIn && (
+                  <div className="flex justify-end mt-6">
+                    <button
+                      onClick={joinFair}
+                      className="rounded-md bg-gradient-to-br from-emerald-400 to-sky-600 px-4 py-2 font-dm text-sm font-medium text-white shadow-md hover:shadow-lg transition-transform duration-200 ease-in-out hover:scale-[1.03]"
+                    >
+                      Join Now
+                    </button>
+                  </div>
+                )}
+              </div>
+          </div>
+        </div>
+            <hr className="my-2 border-b border-gray-300" />
+          <div className="px-6 pb-2">
+            <h1 className="font-bold text-lg text-start mb-2">
+              List Of Companies
+            </h1>
+            <div>
+              {data &&
+                data?.Company.map((item, index) => (
+                  <span
+                    key={index}
+                    className="inline-block mt-3 bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                  >
+                    {item.name}
+                  </span>
+                ))}
+            </div>
+          </div>
       </div>
     </div>
-    <hr className="my-2 border-b border-gray-300" />
-  </div>
-  <div className="px-6 pb-2">
-    <h1 className="font-bold text-lg text-start mb-2">List Of Companies</h1>
-    <div>
-      {data && data?.Company.map((item, index) => (
-        <span key={index} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-          {item.name}
-        </span>
-      ))}
-    </div>
-  </div>
-</div>
   );
 };
 

@@ -87,7 +87,7 @@ export default function Home() {
               ready to provide you with the job you desire!
             </h1>
             <div className="flex justify-end -mt-8">
-              <Link href="/events">
+              <Link href="/companies">
                 <h1 className="rounded-md bg-gradient-to-br from-emerald-400 to-sky-600 px-4 py-2 font-dm text-md font-medium text-white shadow-md hover:shadow-lg transition-transform duration-200 ease-in-out hover:scale-[1.03]">
                   See More
                 </h1>

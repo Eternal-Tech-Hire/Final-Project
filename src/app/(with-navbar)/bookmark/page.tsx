@@ -1,5 +1,5 @@
 // "use client";
-"use server"
+"use server";
 import CardFair from "@/components/CardFair";
 import CardProfile from "@/components/CardProfile";
 import { CompanyTypes, EventsTypes } from "@/types";
@@ -7,13 +7,13 @@ import { cookies } from "next/headers";
 
 async function fetchData() {
   try {
-    
     const response = await fetch(`http://localhost:3000/api/company/getOne`, {
       method: "GET",
       cache: "no-store",
-      headers: {"Content-Type": "application/json",
-      Cookie: cookies().toString()
-    },
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookies().toString(),
+      },
     });
 
     if (!response.ok) {
@@ -22,16 +22,15 @@ async function fetchData() {
 
     const responseJson = await response.json();
 
-    return responseJson.data
+    return responseJson.data;
   } catch (error) {
     console.error("Error fetching item: ", error);
-  } 
+  }
 }
 
 const Header = async () => {
-
-  const userRole = cookies().get('Role')?.value
-  const company : CompanyTypes  = await fetchData()
+  const userRole = cookies().get("Role")?.value;
+  const company: CompanyTypes = await fetchData();
   // console.log(company);
 
   return (
@@ -52,12 +51,17 @@ const Header = async () => {
           </div>
         </div>
       </header>
-
-      <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 lg:px-28 lg:py-28 px-10 py-10">
-        {company.fav_info.map((item,index) => (
-          <CardProfile data={item} key={index}/>
-        ))}
-      </div>
+      {company.fav && company.fav.length > 0 ? (
+        <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 lg:px-28 lg:py-28 px-10 py-10">
+          {company.fav.map((item, index) => (
+            <CardProfile data={item} key={index} />
+          ))}
+        </div>
+      ) : (
+        <div>
+          <h1 className="font-semibold text-4xl text-center lg:px-28 lg:py-28 px-10 py-10">Your Bookmark Still Empty..</h1>
+        </div>
+      )}
     </div>
   );
 };

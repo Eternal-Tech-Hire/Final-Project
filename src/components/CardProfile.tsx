@@ -8,15 +8,14 @@ const CardProfile = ({data} : {data : User}) => {
         <div className="card w-96 mx-auto bg-white  shadow-xl hover:shadow">
           <img
             className="w-32 mx-auto rounded-full -mt-20 border-8 border-white"
-            src="https://avatars.githubusercontent.com/u/67946056?v=4"
+            src="https://vojislavd.com/ta-template-demo/assets/img/profile.jpg"
             alt=""
           />
           <div className="text-center mt-2 text-3xl font-medium">{data.name}</div>
           <div className="text-center mt-2 font-light text-sm">{data.email}</div>
-          <div className="text-center font-normal text-lg">Kerala</div>
-          <div className="px-6 text-center mt-2 font-light text-sm">
+          <div className="px-6 text-center mt-2 mb-2 font-light text-sm">
             <p>
-              Front end Developer, avid reader. Love to take a long walk, swim
+              Fullstack Developer
             </p>
           </div>
         </div>

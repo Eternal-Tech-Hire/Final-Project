@@ -8,7 +8,35 @@ import QRCode from "qrcode";
 import { newUser } from "@/db/models/Users";
 import ModalQR from "@/components/QR";
 import ModalCV from "@/components/UploadCV";
+import PDFViewer from "@/components/PdfViewer";
+// import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+// import ReactPDF from "@react-pdf/renderer";
+// import { PDFViewer } from "@react-pdf/renderer";
+// import { Document, Page } from "react-pdf";
 
+// const styles = StyleSheet.create({
+//   page: {
+//     flexDirection: 'row',
+//     backgroundColor: '#E4E4E4',
+//   },
+//   section: {
+//     margin: 10,
+//     padding: 10,
+//     flexGrow: 1,
+//   },
+// });
+
+// const MyDoc = (url: string | undefined) => {
+//   return(
+//     <>
+//     <Document file={{url}}>
+//     <Page >
+                
+//               </Page>
+//             </Document>
+//     </>
+//   )
+// }
 
 const ProfilePage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -16,7 +44,8 @@ const ProfilePage = () => {
   const [showUpload, setShowUpload] = useState(false);
   const [data, setData] = useState<newUser>();
   const [qr, setQR] = useState<string>();
- 
+  const [showPDF, setShowPDF] = useState(false);
+
   const toggleModal = () => {
     // console.log("ok");
 
@@ -67,7 +96,6 @@ const ProfilePage = () => {
     }
   }
 
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -78,7 +106,12 @@ const ProfilePage = () => {
     toggleModalQR();
   };
 
+ const handleButtonClick = () => {
+        setShowPDF(!showPDF);
+    }
 
+  console.log(data?.cv);
+  
   return (
     <>
       <div className="h-full bg-gradient-to-b from-gray-900 via-gray-900 to-purple-800 px-16 pb-24">
@@ -118,6 +151,9 @@ const ProfilePage = () => {
               Fullstack Web Developer
             </p>
             <p className="text-sm text-gray-500">{data?.email}</p>
+            {/* {ReactPDF.render(<PDFViewer><MyDoc /></PDFViewer>, `${data?.cv}`)} */}
+            <button onClick={handleButtonClick}>Show CV</button>
+            {showPDF && <PDFViewer url={data?.cv} />}
             {/* {qr ? <img src={qr} alt="" /> : ""} */}
           </div>
           <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
@@ -165,7 +201,10 @@ const ProfilePage = () => {
               onClick={toggleModalUpload}
             ></div>
           )}
-          {showUpload && <ModalCV onClose={toggleModalUpload} userId={data?._id}/>}
+          {showUpload && (
+            <ModalCV onClose={toggleModalUpload} userId={data?._id} />
+          )}
+          
         </div>
       </div>
     </>

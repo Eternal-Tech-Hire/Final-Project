@@ -1,7 +1,36 @@
-"use client";
+// "use client";
+import BookmartButton from "@/components/BookmarkButton";
+import { newUser } from "@/db/models/Users";
+import { cookies } from "next/headers";
+import Link from "next/link";
+// import { useEffect, useState } from "react";
 import { FaRegBookmark } from "react-icons/fa6";
 
-const ProfilePage = () => {
+async function fetchData(userId: string) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/auth/users/${userId}`, {
+      cache: "no-store",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookies().toString()
+      },
+    });
+    // console.log(res);
+
+    const userData = await res.json();
+    // setData(userData.data);
+    return userData.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const ProfilePage = async ({ params }: { params: { id: string } }) => {
+  const data = await fetchData(params.id);
+  const userRole = cookies().get("Role")?.value;
+  // console.log(userRole);
+  
+  // const pdfUrl = 'http://res.cloudinary.com/dzdi4yqlr/raw/upload/v1713784516/finalproject/c3avbbqul2jlmhrbrzgv.pdf';
 
   return (
     <>
@@ -20,7 +49,7 @@ const ProfilePage = () => {
               className="w-40 border-4 border-white rounded-full"
             />
             <div className="flex items-center space-x-2 mt-2">
-              <p className="text-2xl">Amanda Ross</p>
+              <p className="text-2xl">{data?.name}</p>
               <span className="bg-blue-500 rounded-full p-1" title="Verified">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -41,16 +70,16 @@ const ProfilePage = () => {
             <p className="text-gray-700">
               Senior Software Engineer at Tailwind CSS
             </p>
-            <p className="text-sm text-gray-500">New York, USA</p>
+            <p className="text-sm text-gray-500">{data?.email}</p>
+            <p className="text-sm text-gray-500">{data?.cv}</p>
+            {/* Render PDF */}
           </div>
           <div className="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
             <div className="flex items-center space-x-4 mt-2">
-              <button
-                className="flex items-center bg-gradient-to-br from-cyan-400 to-sky-600 hover:shadow-lg hover:scale-[1.05] text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100"
-              >
-                <FaRegBookmark className="h-4 w-4" />
-                <span>BookMark</span>
-              </button>
+              <BookmartButton userRole={userRole} userId={params.id}/>
+              <Link href={`${data?.cv}`} type="button">
+                asd
+              </Link>
             </div>
           </div>
         </div>

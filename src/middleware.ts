@@ -79,14 +79,9 @@ export async function middleware(request: NextRequest) {
         // console.log("masuk ke api company?");
         
         const tokenCookie = cookies().get('Authorization')
-        // console.log(tokenCookie, "api company <><><><><><><>");
+        console.log(tokenCookie, "api company <><><><><><><>");
         if (!tokenCookie?.value){
-            return NextResponse.json(
-                {message: 'Token Invalid'},
-                {
-                    status: 400
-                }
-            )
+            return null
         }
         
         const splitTokenCookie = tokenCookie.value.split(' ')[1]

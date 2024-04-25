@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb';
+import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import Swal from 'sweetalert2';
 
@@ -9,6 +10,7 @@ interface ModalProps {
 const CLOUD_API = process.env.CLOUD_API as string;
 
 const ModalCV: React.FC<ModalProps> = ({ onClose, userId}) => {
+  const router = useRouter()
   const closeModal = () => {
     onClose();
   };
@@ -72,6 +74,7 @@ const ModalCV: React.FC<ModalProps> = ({ onClose, userId}) => {
         timer: 2000 
       });
       closeModal()
+      router.refresh()
       console.log(res);
     } catch (error) {
       console.error("Error uploading image:", error);

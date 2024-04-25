@@ -38,8 +38,6 @@ const CardFair = ({ data, userRole }: CardFairProps) => {
     setJoinButtonText("Joined");
   };
 
-  // console.log(data.Company, "data companies");
-
   useEffect(() => {
     const authorizationCookie = document.cookie
       .split(";")
@@ -78,7 +76,7 @@ const CardFair = ({ data, userRole }: CardFairProps) => {
                         ? "bg-gray-400 cursor-not-allowed"
                         : ""
                     }`}
-                    disabled={joinButtonText === "Joined"} // Menonaktifkan tombol jika sudah bergabung
+                    disabled={joinButtonText === "Joined"} 
                   >
                     {joinButtonText}
                   </button>

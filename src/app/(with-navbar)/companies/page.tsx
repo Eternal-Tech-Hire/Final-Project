@@ -57,7 +57,7 @@ const Header = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(`http://localhost:3000/api/company`, {
+        const response = await fetch(`http://localhost:3000/api/getCompany`, {
           method: "GET",
           cache: "no-store",
           headers: {},

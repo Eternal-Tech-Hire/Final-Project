@@ -71,7 +71,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [showPDF]);
 
   const generate = () => {
     QRCode.toDataURL("http://localhost:3000/profile/" + data?._id).then(setQR);

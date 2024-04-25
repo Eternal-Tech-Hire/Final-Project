@@ -5,7 +5,6 @@ export const POST = async (request: Request) => {
   try {
     const idCompany = request.headers.get("x-user-id");
     // console.log(idCompany, "<<<<>>");
-    
     if (!idCompany) {
       return NextResponse.json(
         {
@@ -19,6 +18,9 @@ export const POST = async (request: Request) => {
 
     const { _id }: { _id: string } = await request.json();
     const response = await Events.addCompanyJoin(_id, idCompany);
+
+    console.log(response, " di company joinn");
+    
     return NextResponse.json(
       {
         data: response,
@@ -28,6 +30,8 @@ export const POST = async (request: Request) => {
       }
     );
   } catch (error) {
+    console.log("masuk? error");
+    
     return NextResponse.json(
       {
         message: "Internal Server Error",

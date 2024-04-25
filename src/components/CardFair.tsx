@@ -2,6 +2,7 @@
 import { EventsTypes } from "@/types";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 
 
 interface CardFairProps {
@@ -26,23 +27,40 @@ const CardFair = ({ data, userRole }: CardFairProps) => {
     };
     // console.log(userRole);
     if (userRole === "jobSeeker") {
-      await fetch("/api/ticket", {
+      const res = await fetch("/api/ticket", {
         method: "POST",
         body: JSON.stringify(input),
       });
+      console.log(res, " di card");
+      
+      if (!res.ok) {
+        Swal.fire({
+          icon:"error",
+          title:"Duplicate",
+          showConfirmButton:false,
+          timer:2000
+        })
+      }
     } else if (userRole === "company") {
-      await fetch("/api/events/company_join", {
+      const res = await fetch("/api/events/company_join", {
         method: "POST",
         body: JSON.stringify({
           _id: data?._id,
         }),
       });
+      console.log(res, " di card");
+      if (!res.ok) {
+        Swal.fire({
+          icon:"error",
+          title:"Duplicate",
+          showConfirmButton:false,
+          timer:2000
+        })
+      }
     }
     router.refresh()
     setJoinButtonText("Joined");
   };
-
-  // console.log(data.Company, "data companies");
 
   useEffect(() => {
     const authorizationCookie = document.cookie
@@ -68,7 +86,7 @@ const CardFair = ({ data, userRole }: CardFairProps) => {
           </div>
 
           <div className="px-6 pb-2">
-            <div className="text-right">
+            <div className="text-right">+
               <div className="text-gray-700 text-base">
                 <p>Location: {data?.location}</p>
                 <p>Date: {data?.date}</p>
@@ -82,7 +100,7 @@ const CardFair = ({ data, userRole }: CardFairProps) => {
                         ? "bg-gray-400 cursor-not-allowed"
                         : ""
                     }`}
-                    disabled={joinButtonText === "Joined"} // Menonaktifkan tombol jika sudah bergabung
+                    disabled={joinButtonText === "Joined"} 
                   >
                     {joinButtonText}
                   </button>

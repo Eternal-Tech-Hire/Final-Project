@@ -10,7 +10,7 @@ export const GET = async (request: Request) => {
 
 export const POST = async (request: Request) => {
     try{
-        console.log("masuk sini ga gan");
+        // console.log("masuk sini ga gan");
         
         const userId = request.headers.get("x-user-id");
         if (!userId) {
@@ -24,7 +24,7 @@ export const POST = async (request: Request) => {
         const body = await request.json();
         const { eventId } = body;
         const ticket = await Ticket.addTicket(body, userId, eventId)
-        // console.error(ticket, "Error dari api/ticket/route.ts <><><><><><>");
+        console.error(ticket, "Error dari api/ticket/route.ts <><><><><><>");
         return NextResponse.json({
             data: ticket
         }, {status : 200})

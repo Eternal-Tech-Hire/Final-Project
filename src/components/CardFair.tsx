@@ -1,6 +1,8 @@
 "use client";
 import { EventsTypes } from "@/types";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+
 
 interface CardFairProps {
   data: EventsTypes;
@@ -8,9 +10,10 @@ interface CardFairProps {
 }
 
 const CardFair = ({ data, userRole }: CardFairProps) => {
+  let router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [joinButtonText, setJoinButtonText] = useState("Join Now");
-  // const [data, setData] = useState([])
+  // const [ticket, setTicket] = useState([])
   // console.log(userRole);
   const fetchData = async () => {
   
@@ -35,6 +38,7 @@ const CardFair = ({ data, userRole }: CardFairProps) => {
         }),
       });
     }
+    router.refresh()
     setJoinButtonText("Joined");
   };
 

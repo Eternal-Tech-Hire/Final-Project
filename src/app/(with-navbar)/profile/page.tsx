@@ -83,7 +83,7 @@ const ProfilePage = () => {
     setShowPDF(!showPDF);
   };
 
-  console.log(data?.cv);
+  // console.log(data?.cv);
   
   return (
     <>

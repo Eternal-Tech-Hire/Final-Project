@@ -67,7 +67,7 @@ class Events {
 		const validation = companyIds.filter((e: { id_company: string }) => {
 			return e.id_company == idCompany
 		})
-		console.error(validation, '<<<');
+		// console.error(validation, '<<<');
 		if (validation.length == 0) {
 			companyIds.push({
 				id_company: idCompanyObject,
@@ -81,6 +81,8 @@ class Events {
 					companyId: companyIds
 				}
 			})
+		}else{
+			throw new Error ("Duplicate")
 		}
 	}
 

@@ -1,7 +1,7 @@
 import { CompanyTypes } from "@/types";
 
 const CardCompany = ({ data }: { data: CompanyTypes }) => {
-  console.log(data, "<<<>>>>>");
+  // console.log(data, "<<<>>>>>");
 
   return (
     <>

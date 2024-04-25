@@ -6,6 +6,7 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { User } from "@/types";
+import { Modal, Button } from "react-bootstrap";
 
 const Navbar = () => {
   const router = useRouter();
@@ -15,6 +16,15 @@ const Navbar = () => {
   const [maxScroll, setMaxScroll] = useState(0);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [data, setData] = useState<User>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   async function fetchData() {
     try {
@@ -150,6 +160,30 @@ const Navbar = () => {
               </button>
             </Link>
           </li>
+          <li className="pt-1.5 font-dm text-sm font-medium text-white">
+            <button
+              className="text-lg font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"
+              onClick={openModal} // Ketika tombol diklik, buka modal
+            >
+              Customer Service
+              <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
+            </button>
+          </li>
+          <Modal
+            isOpen={isModalOpen} // Menentukan apakah modal terbuka atau tidak
+            onRequestClose={closeModal} // Fungsi yang dipanggil ketika modal ditutup
+            contentLabel="Customer Service Modal" // Label aksesibilitas untuk modal
+          >
+            {/* Isi modal berisi iframe */}
+            <iframe
+              height="430"
+              width="350"
+              src="https://bot.dialogflow.com/fd00bc66-65ca-4707-81ca-693b5792b6bf"
+              title="Customer Service"
+            ></iframe>
+            {/* Tombol untuk menutup modal */}
+            <button onClick={closeModal}>Close Modal</button>
+          </Modal>
           {data?.role === "jobSeeker" ? (
             ""
           ) : (
@@ -222,17 +256,17 @@ const Navbar = () => {
               </Link>
             </li>
             {data?.role === "jobSeeker" ? (
-            ""
-          ) : (
-            <li className="pt-1.5 font-dm text-sm font-medium text-white">
-              <Link href="/bookmark">
-                <button className="text-md font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
-                  Bookmarks
-                  <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
-                </button>
-              </Link>
-            </li>
-          )}
+              ""
+            ) : (
+              <li className="pt-1.5 font-dm text-sm font-medium text-white">
+                <Link href="/bookmark">
+                  <button className="text-md font-bold relative transition duration-300 ease-in-out hover:text-gray-300 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out">
+                    Bookmarks
+                    <span className="absolute inset-0 hover:after:absolute hover:after:w-full hover:after:h-0.5 hover:after:bg-gray-300 hover:after:bottom-0 hover:after:left-0 hover:after:content-[''] hover:after:transition-all hover:after:duration-300 hover:after:ease-in-out"></span>
+                  </button>
+                </Link>
+              </li>
+            )}
             {isLoggedIn ? (
               <>
                 <Link href="/profile">

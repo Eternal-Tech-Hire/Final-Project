@@ -28,6 +28,7 @@
     "pdfjs-dist": "^4.1.392",
     "qrcode": "^1.5.3",
     "react": "^18",
+    "react-bootstrap": "^2.10.2",
     "react-dom": "^18",
     "react-icons": "^5.1.0",
     "react-infinite-scroll-component": "^6.1.0",
